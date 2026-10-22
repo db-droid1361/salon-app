@@ -1313,6 +1313,11 @@ max-width:none}
 .sync-indicator.error{background:var(--dangerS);color:var(--dangerI)}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:currentColor;animation:pulse 2s infinite}
 </style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// Supabase Configuration - Hardcoded for GitHub Pages
+window.SB_ENV_URL = 'https://zlrdfouybybhejdohyfx.supabase.co';
+window.SB_ENV_KEY = 'sb_publishable_VfBj3h4lehs18scCaqYe7Q_4KcakOur';
+</script>
 </head><body><div class="app">  <header class="top">    <div class="top-brand">      <button class="menu-btn ghost small" onclick="toggleNav()" style="width:auto">☰</button>      <div class="top-logo">🏛</div>      <div>        <h1>سامانه مدیریت سالن‌ها</h1>        <p>واحد تولید محتوا، رسانه و مستندسازی</p>      </div>    </div>    <div class="top-actions">      <button class="storage-badge" id="storageBadge" onclick="openStorageManager()" style="background:var(--surface3);color:var(--text2)">⚪ غیرمتصل</button>      <button class="ghost small" onclick="toggleTheme()" id="themeBtn">🌙</button>      <div class="pill today" id="todayPill">—</div><span class="sync-indicator offline" id="syncIndicator" title="وضعیت همگام‌سازی"><span class="sync-dot"></span> <span id="syncText">محلی</span></span><div id="userChip"></div>    </div>  </header>  <div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>  <div class="layout">    <aside class="nav" id="nav"></aside>    <main class="content" id="content"></main>  </div></div><div id="authRoot" class="auth-root"></div><div id="toastContainer" aria-live="polite"></div><div id="modalRoot"></div><div id="printArea" aria-hidden="true"></div><div id="savingIndicator" class="hidden">در حال ذخیره…</div><script>
 'use strict';/* ============ Jalaali ============ */const jalaali=(function(){function toJalaali(gy,gm,gd){if(Object.prototype.toString.call(gy)==='[object Date]'){gd=gy.getDate();gm=gy.getMonth()+1;gy=gy.getFullYear()}return d2j(g2d(gy,gm,gd))}function toGregorian(jy,jm,jd){return d2g(j2d(jy,jm,jd))}function isLeapJalaaliYear(jy){return jalCalLeap(jy)===0}function jalaaliMonthLength(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;if(isLeapJalaaliYear(jy))return 30;return 29}function jalCal(jy,withoutLeap){var breaks=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];var bl=breaks.length,gy=jy+621,leapJ=-14,jp=breaks[0],jm,jump=0,leap,leapG,n,i;if(jy<jp||jy>=breaks[bl-1])throw new Error('Invalid Jalaali year '+jy);for(i=1;i<bl;i+=1){jm=breaks[i];jump=jm-jp;if(jy<jm)break;leapJ=leapJ+div(jump,33)*8+div(mod(jump,33),4);jp=jm}n=jy-jp;leapJ=leapJ+div(n,33)*8+div(mod(n,33)+3,4);if(mod(jump,33)===4&&jump-n===4)leapJ+=1;leapG=div(gy,4)-div((div(gy,100)+1)*3,4)-150;leap=leapJ-leapG+4;jump=jump-n;if(jump<6)n=n-jump+div(jump+4,33)*33;leap=mod(mod(leap+1,33)-1,-4);if(leap===-1)leap=4;if(!withoutLeap)return{leap:leap,gy:gy,march:leapG+79};else return{leap:leap,gy:gy,march:leapG+79}}function div(a,b){return~~(a/b)}function mod(a,b){return a-~~(a/b)*b}function jalCalLeap(jy){return jalCal(jy,true).leap}function g2d(gy,gm,gd){var d=div((gy+div(gm-8,6)+100100)*1461,4)+div(153*mod(gm+9,12)+2,5)+gd-34840408;d=d-div(div(gy+100100+div(gm-8,6),100)*3,4)+752;return d}function d2g(jdn){var j,i,gd,gm,gy;j=4*jdn+139361631;j=j+div(div(4*jdn+183187720,146097)*3,4)*4-3908;i=div(mod(j,1461),4)*5+308;gd=div(mod(i,153),5)+1;gm=mod(div(i,153),12)+1;gy=div(j,1461)-100100+div(8-gm,6);return{gy:gy,gm:gm,gd:gd}}function j2d(jy,jm,jd){var r=jalCal(jy,true);return g2d(r.gy,3,r.march)+(jm-1)*31-div(jm,7)*(jm-7)+jd-1}function d2j(jdn){var gy=d2g(jdn).gy;var jy=gy-621;var r=jalCal(jy,false);var jdn1f=g2d(gy,3,r.march);var k=jdn-jdn1f;if(k>=0){if(k<=185){var jm=1+div(k,31);var jd=mod(k,31)+1;return{jy:jy,jm:jm,jd:jd}}else{k-=186}}else{jy-=1;k+=179;if(r.leap===1)k+=1}var jm=7+div(k,30);var jd=mod(k,30)+1;return{jy:jy,jm:jm,jd:jd}}return{toJalaali,toGregorian,isLeapJalaaliYear,jalaaliMonthLength}})();/* ============ Constants ============ */var KEY='hall_ops_v19';var LEGACY_KEYS=['hall_ops_v18','hall_ops_v17','hall_ops_v16','hall_ops_v15','hall_ops_v14','hall_ops_v13','hall_ops_v12','hall_ops_v11','hall_ops_v10'];var THEME_KEY='hall_ops_theme', DAY_KEY='hall_ops_last_dayview';var BACKUP_KEY='hall_ops_last_backup_at';var WIZARD_KEY='hall_ops_wizard_done';var APP_VERSION='v19';var FSAA_SUPPORTED = 'showSaveFilePicker' in window;var IDB_NAME='hall_ops_db_v1', IDB_STORE='handles', HANDLE_KEY='main_file_handle', SNAPSHOT_KEY='last_snapshot';var db, view='dashboard', editingResId=null, editingAppId=null, editingHallId=null, editingSlotId=null, dayDate=null;var persianMonths=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];/* ============ Utils ============ */function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}function lsSet(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}function today(){  try{    var parts=new Intl.DateTimeFormat('en-US-u-ca-persian',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Asia/Tehran'}).formatToParts(new Date());    var y='',m='',dd='';    for(var i=0;i<parts.length;i++){      if(parts[i].type==='year')y=parts[i].value;      if(parts[i].type==='month')m=parts[i].value;      if(parts[i].type==='day')dd=parts[i].value;    }    if(y&&m&&dd)return y+'-'+m+'-'+dd;  }catch(e){}  var d=new Date();  try{var j=jalaali.toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());return j.jy+'-'+String(j.jm).padStart(2,'0')+'-'+String(j.jd).padStart(2,'0')}  catch(e2){return '1405-01-01'}}function addDays(iso,n){var p=getJalaliParts(iso);var g=jalaali.toGregorian(p.jy,p.jm,p.jd);var d=new Date(g.gy,g.gm-1,g.gd);d.setDate(d.getDate()+n);var j=jalaali.toJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());return j.jy+'-'+String(j.jm).padStart(2,'0')+'-'+String(j.jd).padStart(2,'0')}function getJalaliParts(s){if(!s)return getJalaliParts(today());var p=String(s).split('-').map(Number);if(p.length<3||p.some(isNaN)||p[1]<1||p[1]>12){var t=today().split('-').map(Number);return{jy:t[0],jm:t[1],jd:t[2]}}return{jy:p[0],jm:p[1],jd:p[2]}}function faDate(iso){if(!iso)return '—';var p=String(iso).split('-').map(Number);if(p.length!==3||p.some(isNaN)||p[1]<1||p[1]>12)return iso;if(p[0]>1500){try{var j=jalaali.toJalaali(p[0],p[1],p[2]);return j.jd+' '+persianMonths[j.jm-1]+' '+j.jy}catch(e){return iso}}return p[2]+' '+persianMonths[p[1]-1]+' '+p[0]}function faNum(n){return String(n).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})}function weekdayName(iso){var p=getJalaliParts(iso);var g=jalaali.toGregorian(p.jy,p.jm,p.jd);var d=new Date(g.gy,g.gm-1,g.gd);return ['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'][d.getDay()]}function csvEscape(v){var s=String(v==null?'':v);if(/[",\n\r]/.test(s))return '"'+s.replace(/"/g,'""')+'"';return s}function uid(arr){return arr.reduce(function(m,x){return Math.max(m,Number(x.id)||0)},0)+1}function nextResId(){if(typeof db.maxResId!=='number')db.maxResId=0;db.maxResId+=1;return db.maxResId}function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}function daysBetween(d1,d2){var p1=getJalaliParts(d1),p2=getJalaliParts(d2);var g1=jalaali.toGregorian(p1.jy,p1.jm,p1.jd),g2=jalaali.toGregorian(p2.jy,p2.jm,p2.jd);var dt1=new Date(g1.gy,g1.gm-1,g1.gd),dt2=new Date(g2.gy,g2.gm-1,g2.gd);return Math.round((dt2-dt1)/86400000)}/* ============ IndexedDB ============ */
 
@@ -1517,13 +1522,22 @@ return 'error';
 
 if (data && data.json_data) {
 const cloudData = data.json_data;
-// FIX 5: Validate cloud data before using it
-if (!Array.isArray(cloudData.reservations) || !Array.isArray(cloudData.halls)) {
-console.error('[Supabase] Cloud data invalid structure');
+// FIX 5: Flexible validation - ensure required arrays exist (don't fail if missing)
+if (typeof cloudData !== 'object' || cloudData === null) {
+console.error('[Supabase] Cloud data is not an object');
 setSyncStatus('error', 'داده نامعتبر');
 isInitialLoad = false;
 return 'error';
 }
+// Auto-fix missing arrays
+if (!Array.isArray(cloudData.reservations)) cloudData.reservations = [];
+if (!Array.isArray(cloudData.halls)) cloudData.halls = [];
+if (!Array.isArray(cloudData.equipment)) cloudData.equipment = [];
+if (!Array.isArray(cloudData.slots)) cloudData.slots = [];
+if (!Array.isArray(cloudData.applicants)) cloudData.applicants = [];
+if (!Array.isArray(cloudData.users)) cloudData.users = [];
+if (!Array.isArray(cloudData.logs)) cloudData.logs = [];
+if (!cloudData._meta) cloudData._meta = { appVersion: APP_VERSION, savedAt: null };
 
 const cloudTime = new Date(data.updated_at).getTime();
 const localTime = db._meta && db._meta.savedAt ? new Date(db._meta.savedAt).getTime() : 0;
@@ -1582,8 +1596,14 @@ await syncToCloud();
 return 'pushed';
 }
 } else {
-// No data in cloud yet - push local
-console.log('[Supabase] No data in cloud - pushing local');
+// No data in cloud yet
+console.log('[Supabase] No data in cloud');
+// FIX: Don't blindly push if local has real data (avoid overwriting)
+if (db._meta && db._meta.savedAt && (db.users.length > 0 || db.reservations.length > 0)) {
+console.warn('[Supabase] Cloud empty but local has data — refusing to push blindly');
+isInitialLoad = false;
+return 'empty';
+}
 cloudSyncReady = true;
 isInitialLoad = false;
 await syncToCloud();
