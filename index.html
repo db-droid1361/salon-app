@@ -416,9 +416,9 @@ fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stro
   <div class="overlay" id="navOverlay" onclick="toggleNav()"></div>
   <div class="main-wrapper">
     <header class="topbar">
-      <button type="button" class="icon-btn only-mobile" onclick="toggleNav()" aria-label="منو">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <button class="icon-btn only-mobile" onclick="toggleNav()" aria-label="منو">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path 
+d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
       <div class="breadcrumb">
         <span class="crumb-root">سامانه</span>
@@ -428,36 +428,34 @@ stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       <div class="topbar-actions">
         <div class="sync-badge offline" id="syncBadge" title="وضعیت اتصال به دیتابیس ابری">
           <span class="sync-dot"></span>
-          <span id="syncText">آفلاین</
-span>
+          <span id="syncText">آفلاین</span>
         </div>
-        <button type="button" class="icon-btn" onclick="manualSync()" title="سینک دستی با دیتابیس">
+        <button class="icon-btn" onclick="manualSync()" title="سینک دستی با دیتابیس">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>
           </svg>
         </button>
         <div id="userChipWrap" class="hidden" style="display:flex;align-items:center;gap:8px">
-          <div class="user-chip" 
-id="userChip" title="کاربر فعلی">
-            <div class="avatar" id="userAvatar">?</div>
+          <div class="user-chip" id="userChip" title="کاربر فعلی">
+            <div class="avatar" 
+id="userAvatar">?</div>
             <span id="userName">—</span>
             <span class="role-tag" id="userRole">کاربر</span>
           </div>
-          <button type="button" class="icon-btn" onclick="changeMyPassword()" title="تغییر رمز عبور من">
+          <button class="icon-btn" onclick="changeMyPassword()" title="تغییر رمز عبور من">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 
-0v4"/>
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
           </button>
-          <button type="button" class="icon-btn" onclick="logout()" title="خروج از سامانه" style="color:var(--red)">
+          <button class="icon-btn" onclick="logout()" title="خروج از سامانه" style="color:var(--red)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/>
             </svg>
           </button>
         </div>
-        <button type="button" class="icon-btn" 
-onclick="toggleTheme()" title="حالت نمایش" id="themeBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <button class="icon-btn" onclick="toggleTheme()" title="حالت نمایش" id="themeBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" 
+stroke-linejoin="round">
             <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
           </svg>
         </button>
@@ -468,7 +466,8 @@ onclick="toggleTheme()" title="حالت نمایش" id="themeBtn">
 </div>
 
 <div id="printArea"></div>
-<div id="pdatePopup" class="pdate-overlay hidden" onclick="if(event.target===this)pDate.close()">
+<div id="pdatePopup" class="pdate-overlay hidden" onclick="if(event.target===this)pDa
+te.close()">
   <div class="pdate-box"><div id="pdatePopupBody"></div></div>
 </div>
 <div id="toastContainer" class="toast-container"></div>
@@ -477,9 +476,9 @@ onclick="toggleTheme()" title="حالت نمایش" id="themeBtn">
   <div class="auth-card">
     <div class="auth-logo">
       <div class="auth-logo-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/><circle cx="12" cy="15" r="2"/>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 
+10h18"/><path d="M8 2v4M16 2v4"/><circle cx="12" cy="15" r="2"/>
         </svg>
       </div>
       <div>
@@ -495,11 +494,11 @@ stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
 
 <script>
 /* ============ JALAALI LIB ============ */
-const jalaali=(function(){function toJalaali(gy,gm,gd){if(Object.prototype.toString.call(gy)==='[object Date]'){gd=gy.getDate();gm=gy.getMonth()+1;gy=gy.getFullYear()}return d2j(g2d(gy,gm,gd))}function toGregorian(jy,jm,jd){return d2g(j2d(jy,jm,jd))}function isValidJalaaliDate(jy,jm,jd){return jy>=-61&&jy<=3177&&j
-m>=1&&jm<=12&&jd>=1&&jd<=jalaaliMonthLength(jy,jm)}function isLeapJalaaliYear(jy){return jalCalLeap(jy)===0}function jalaaliMonthLength(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;if(isLeapJalaaliYear(jy))return 30;return 29}function jalCal(jy,withoutLeap){var breaks=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];var bl=breaks.length,gy=jy+621,leapJ=-14,jp=breaks[0],jm,jump=0,leap,leapG,n,i;if(jy<jp||jy>=breaks[bl-1])throw new Error('Invalid Jalaali year '+jy);for(i=1;i<bl;i+=1)
-{jm=breaks[i];jump=jm-jp;if(jy<jm)break;leapJ=leapJ+div(jump,33)*8+div(mod(jump,33),4);jp=jm}n=jy-jp;leapJ=leapJ+div(n,33)*8+div(mod(n,33)+3,4);if(mod(jump,33)===4&&jump-n===4)leapJ+=1;leapG=div(gy,4)-div((div(gy,100)+1)*3,4)-150;leap=leapJ-leapG+4;jump=jump-n;if(jump<6)n=n-jump+div(jump+4,33)*33;leap=mod(mod(leap+1,33)-1,-4);if(leap===-1)leap=4;if(!withoutLeap)return{leap:leap,gy:gy,march:leapG+79};else return{leap:leap,gy:gy,march:leapG+79}}function div(a,b){return~~(a/b)}function mod(a,b){return a-~~(a/b)*b}function jalCalLeap(jy){return jalCal(jy,true).leap}function g2d(gy,gm,gd){var 
-d=div((gy+div(gm-8,6)+100100)*1461,4)+div(3*div(gm-8,6)+2,5)+gd-34840408;d=d-div(div(gy+100100+div(gm-8,6),100)*3,4)+752;return d}function d2g(jdn){var j,i,gd,gm,gy;j=4*jdn+139361631;j=j+div(div(4*jdn+183187720,146097)*3,4)*4-3908;i=div(mod(j,1461),4)*5+308;gd=div(mod(i,153),5)+1;gm=mod(div(i,153),12)+1;gy=div(j,1461)-100100+div(8-gm,6);return{gy:gy,gm:gm,gd:gd}}function j2d(jy,jm,jd){var r=jalCal(jy,true);return g2d(r.gy,3,r.march)+(jm-1)*31-div(jm,7)*(jm-7)+jd-1}function d2j(jdn){var gy=d2g(jdn).gy;var jy=gy-621;var r=jalCal(jy,false);var jdn1f=g2d(gy,3,r.march);var 
-k=jdn-jdn1f;if(k>=0){if(k<=185){var jm=1+div(k,31);var jd=mod(k,31)+1;return{jy:jy,jm:jm,jd:jd}}else{k-=186}}else{jy-=1;k+=179;if(r.leap===1)k+=1}var jm=7+div(k,30);var jd=mod(k,30)+1;return{jy:jy,jm:jm,jd:jd}}return{toJalaali,toGregorian,isValidJalaaliDate,isLeapJalaaliYear,jalaaliMonthLength,jalCalLeap,j2d,d2j,g2d,d2g}})();
+const jalaali=(function(){function toJalaali(gy,gm,gd){if(Object.prototype.toString.call(gy)==='[object Date]'){gd=gy.getDate();gm=gy.getMonth()+1;gy=gy.getFullYear()}return d2j(g2d(gy,gm,gd))}function toGregorian(jy,jm,jd){return d2g(j2d(jy,jm,jd))}function isValidJalaaliDate(jy,jm,jd){return jy>=-61&&jy<=3177&&jm>=1&&jm<=12&&jd>=1&&jd<=jalaaliMonthLength(jy,jm)}function isLeapJalaaliYear(jy){return jalCalLeap(jy)===0}function jalaaliMonthLength(jy,jm)
+{if(jm<=6)return 31;if(jm<=11)return 30;if(isLeapJalaaliYear(jy))return 30;return 29}function jalCal(jy,withoutLeap){var breaks=[-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];var bl=breaks.length,gy=jy+621,leapJ=-14,jp=breaks[0],jm,jump=0,leap,leapG,n,i;if(jy<jp||jy>=breaks[bl-1])throw new Error('Invalid Jalaali year '+jy);for(i=1;i<bl;i+=1){jm=breaks[i];jump=jm-jp;if(jy<jm)break;leapJ=leapJ+div(jump,33)*8+div(mod(jump,33),4);jp=jm}n=jy-jp;leapJ=leapJ+div(n,33)*8+div(mod(n,33)+3,4);if(mod(jump,33)
+===4&&jump-n===4)leapJ+=1;leapG=div(gy,4)-div((div(gy,100)+1)*3,4)-150;leap=leapJ-leapG+4;jump=jump-n;if(jump<6)n=n-jump+div(jump+4,33)*33;leap=mod(mod(leap+1,33)-1,-4);if(leap===-1)leap=4;if(!withoutLeap)return{leap:leap,gy:gy,march:leapG+79};else return{leap:leap,gy:gy,march:leapG+79}}function div(a,b){return~~(a/b)}function mod(a,b){return a-~~(a/b)*b}function jalCalLeap(jy){return jalCal(jy,true).leap}function g2d(gy,gm,gd){var d=div((gy+div(gm-8,6)+100100)*1461,4)+div(3*div(gm-8,6)+2,5)+gd-34840408;d=d-div(div(gy+100100+div(gm-8,6),100)*3,4)+752;return d}function d2g(jdn){var 
+j,i,gd,gm,gy;j=4*jdn+139361631;j=j+div(div(4*jdn+183187720,146097)*3,4)*4-3908;i=div(mod(j,1461),4)*5+308;gd=div(mod(i,153),5)+1;gm=mod(div(i,153),12)+1;gy=div(j,1461)-100100+div(8-gm,6);return{gy:gy,gm:gm,gd:gd}}function j2d(jy,jm,jd){var r=jalCal(jy,true);return g2d(r.gy,3,r.march)+(jm-1)*31-div(jm,7)*(jm-7)+jd-1}function d2j(jdn){var gy=d2g(jdn).gy;var jy=gy-621;var r=jalCal(jy,false);var jdn1f=g2d(gy,3,r.march);var k=jdn-jdn1f;if(k>=0){if(k<=185){var jm=1+div(k,31);var jd=mod(k,31)+1;return{jy:jy,jm:jm,jd:jd}}else{k-=186}}else{jy-=1;k+=179;if(r.leap===1)k+=1}var 
+jm=7+div(k,30);var jd=mod(k,30)+1;return{jy:jy,jm:jm,jd:jd}}return{toJalaali,toGregorian,isValidJalaaliDate,isLeapJalaaliYear,jalaaliMonthLength,jalCalLeap,j2d,d2j,g2d,d2g}})();
 
 'use strict';
 const KEY='hall_ops_local_v16';let db,view='dashboard';
@@ -507,33 +506,33 @@ const persianMonths=['فروردین','اردیبهشت','خرداد','تیر','
 
 /* ============ ICONS ============ */
 const IC={
-  dash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
-  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" 
-rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
-  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+  dash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" 
+stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
   plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
-  hall:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6M9 12h.01M15 12h.01"/
-></svg>',
-  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
-  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 
-4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.37.42.68.77.87.35.19.75.26 1.14.19H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
-  users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/
-></svg>',
-  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>',
+  hall:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6M9 12h.01M15 12h.01"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle 
+cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 
+2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.37.42.68.77.87.35.19.75.26 1.14.19H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+  users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path 
+d="M18 20V10M12 20V4M6 20v-6"/></svg>',
   db:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
-  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path 
-d="M20 6 9 17l-5-5"/></svg>',
-  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path 
+d="M18 6 6 18M6 6l12 12"/></svg>',
   warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
-  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path 
-d="M12 16v-4M12 8h.01"/></svg>',
-  print:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+  print:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path 
+d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>',
   trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6M10 11v6M14 11v6M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>',
-  edit:'<svg viewBox="0 0 24 24" 
-fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+  edit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path 
+d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
   block:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>',
-  empty:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H3M5 12 7 4h10l2 8M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 
-2-2v-6"/></svg>'
+  empty:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H3M5 12 7 4h10l2 8M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>'
 };
 </script>
 
@@ -543,8 +542,7 @@ function toast(msg,type='info',duration=3800){
   const c=document.getElementById('toastContainer');
   const el=document.createElement('div');
   const icon=type==='success'?IC.check:type==='error'?IC.x:type==='warning'?IC.warn:IC.info;
-  el.className=`toast toast-${type}
-`;
+  el.className=`toast toast-${type}`;
   el.innerHTML=`<div class="toast-icon">${icon}</div><div class="toast-msg">${esc(msg)}</div>`;
   c.appendChild(el);
   requestAnimationFrame(()=>el.classList.add('show'));
@@ -563,9 +561,9 @@ function toggleTheme(){
   document.documentElement.setAttribute('data-theme',next);
   try{localStorage.setItem('hall_theme',next)}catch(e){}
   document.getElementById('themeBtn').innerHTML=next==='dark'
-    ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" 
-stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
-    :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+    ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+    :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
 }
 (function initTheme(){try{const t=localStorage.getItem('hall_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 
@@ -585,7 +583,8 @@ function isoToParts(iso){
 }
 
 function partsToIso(p){
-  return `${p.jy}-${String(p.jm).padStart(2,'0')}-${String(p.jd).padStart(2,'0')}`;
+  return `${p.jy}-$
+{String(p.jm).padStart(2,'0')}-${String(p.jd).padStart(2,'0')}`;
 }
 
 function isValidIsoJalali(iso){
@@ -626,7 +625,8 @@ function getYearRange(){
 }
 
 const uid=(arr)=>arr.reduce((m,x)=>Math.max(m,Number(x.id)||0),0)+1;
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt
+;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 /* ============ DATE PICKER ============ */
 const pDate={
@@ -634,8 +634,7 @@ const pDate={
   open:function(inputEl){
     this.target=inputEl;
     if(inputEl.value) inputEl.value = toEnglishDigits(inputEl.value);
-    let 
-p=getJalaliParts(inputEl.value)||getJalaliParts(today());
+    let p=getJalaliParts(inputEl.value)||getJalaliParts(today());
     this.current.y=p.jy;this.current.m=p.jm;
     this.render();
     document.getElementById('pdatePopup').classList.remove('hidden');
@@ -655,8 +654,7 @@ p=getJalaliParts(inputEl.value)||getJalaliParts(today());
   },
   render:function(){
     let y=this.current.y,m=this.current.m;
-    let 
-gFirst=jalaali.toGregorian(y,m,1);
+    let gFirst=jalaali.toGregorian(y,m,1);
     let firstDay=new Date(gFirst.gy,gFirst.gm-1,gFirst.gd);
     let offset=(firstDay.getDay()+1)%7;
     let daysInMonth=jalaali.jalaaliMonthLength(y,m);
@@ -665,13 +663,13 @@ gFirst=jalaali.toGregorian(y,m,1);
     const disallowPast = (this.target && this.target.id === 'date');
     let yearOptions='';
     for(let yr=minY;yr<=maxY;yr++)yearOptions+=`<option value="${yr}" ${yr===y?'selected':''}>${yr}</option>`;
-    let monthOptions=persianMonths.map((mn,i)=>`<option value="${i+1}" ${i+1===m?'selected':''}>$
-{mn}</option>`).join('');
-    let html=`<div class="pdate-header"><div class="pdate-selects"><select onchange="pDate.setMonth(this.value)">${monthOptions}</select><select onchange="pDate.setYear(this.value)">${yearOptions}</select></div><button type="button" class="pdate-nav-btn" onclick="pDate.changeMonth(-1)">◀</button><button type="button" class="pdate-nav-btn" onclick="pDate.changeMonth(1)">▶</button></div><div class="pdate-grid">${['ش','ی','د','س','چ','پ','ج'].map(d=>`<div class="pdate-weekday">${d}</div>`).join('')}`;
-    for(let i=0;i<offset;i+
-+)html+='<div></div>';
+    let monthOptions=persianMonths.map((mn,i)=>`<option value="${i+1}" ${i+1===m?'selected':''}>${mn}</option>`).join('');
+    let html=`<div class="pdate-header"><div class="pdate-selects"><select onchange="pDate.setMonth(th
+is.value)">${monthOptions}</select><select onchange="pDate.setYear(this.value)">${yearOptions}</select></div><button type="button" class="pdate-nav-btn" onclick="pDate.changeMonth(-1)">◀</button><button type="button" class="pdate-nav-btn" onclick="pDate.changeMonth(1)">▶</button></div><div class="pdate-grid">${['ش','ی','د','س','چ','پ','ج'].map(d=>`<div class="pdate-weekday">${d}</div>`).join('')}`;
+    for(let i=0;i<offset;i++)html+='<div></div>';
     for(let d=1;d<=daysInMonth;d++){
-      let dateStr=`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      let dateStr=`${y}-${String(m).padStart(2,'0')}-$
+{String(d).padStart(2,'0')}`;
       let cls='pdate-day';
       let g=jalaali.toGregorian(y,m,d);
       let dow=new Date(g.gy,g.gm-1,g.gd).getDay();
@@ -679,16 +677,14 @@ gFirst=jalaali.toGregorian(y,m,1);
       if(dateStr===todayStr)cls+=' today';
       if(dateStr===this.target?.value)cls+=' selected';
       if(disallowPast && dateStr<todayStr)cls+=' past';
-      const clickable = !disallowPast 
-|| dateStr>=todayStr;
+      const clickable = !disallowPast || dateStr>=todayStr;
       html+=`<div class="${cls}" ${clickable?`onclick="pDate.select('${dateStr}')"`:''}>${d}</div>`;
     }
     html+=`</div><div class="pdate-actions"><button type="button" class="btn btn-secondary btn-sm" onclick="pDate.goToday()">امروز</button><button type="button" class="btn btn-ghost btn-sm" onclick="pDate.close()">بستن</button></div>`;
     document.getElementById('pdatePopupBody').innerHTML=html;
   }
 };
-document.addEventListener('keydo
-wn',e=>{if(e.key==='Escape')pDate.close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')pDate.close()});
 
 /* ============ SEED & STORAGE ============ */
 const seed=()=>({
@@ -697,20 +693,18 @@ const seed=()=>({
     {id:2,name:'سالن جلسات',code:'H02',min:2,max:20,location:'طبقه اول',active:true,blocks:[]},
     {id:3,name:'استودیو / سالن چندمنظوره',code:'H03',min:1,max:12,location:'طبقه سوم',active:true,blocks:[]}
   ],
-  equipment:[{id:1,name:'ویدئوپروژکتو
-ر',qty:2,notes:''},{id:2,name:'میکروفن بی‌سیم',qty:4,notes:''},{id:3,name:'دوربین',qty:2,notes:''},{id:4,name:'سه‌پایه',qty:3,notes:''},{id:5,name:'سیستم صوتی',qty:2,notes:''}],
+  equipment:[{id:1,name:'ویدئوپروژکتور',qty:2,notes:''},{id:2,name:'میکروفن بی‌سیم',qty:4,notes:''},{id:3,name:'دوربین',qty:2,notes:''},{id:4,name:'سه‌پایه',qty:3,notes:''},{id:5,name:'سیستم 
+صوتی',qty:2,notes:''}],
   slots:[{id:1,name:'صبح (۸ تا ۱۲)',start:'08:00',end:'12:00',active:true},{id:2,name:'عصر (۱۳ تا ۱۷)',start:'13:00',end:'17:00',active:true}],
   applicants:[{id:1,name:'علی رضایی',unit:'روابط عمومی',phone:'09123456789',active:true},{id:2,name:'مریم حسینی',unit:'تولید محتوا',phone:'09354443322',active:true}],
   reservations:[],checks:[],issues:[],units:['روابط عمومی','تولید محتوا','رسانه','مستندسازی'],logs:[],
   users:[],passwordRequests:[]
 });
-function migrateData(){if(!db)return;let needs=false;db.reservations.forEach(r=>{if(r.status==='pending'||r.status==='awaiting_sign'){r.status='approved';needs=true}if(r.guest===undefined){r.guest='';needs=true}});db.halls.forEach(h=>{if(!h.blocks){h.blocks=[];needs=true}});if(needs)save()}
-function autoCompletePassedReservations(){if(!db)return;let needs=false;const t=today();db.reservations.forEach(r=>{if(r.date<t&&(r.status==='approved'||r.status==='confirmed')){r.status='done';log('تغییر وضعیت خودکار',`رزرو ${r.id} به دلیل گذشت تاریخ 
-به «برگزار شد» تغییر یافت`);needs=true}});if(needs)save()}
-function load(){try{db=JSON.parse(localStorage.getItem(KEY));if(!db||!Array.isArray(db.reservations))throw 0;for(const k of ['halls','equipment','checks','issues','units','logs','slots','applicants','users','passwordRequests'])if(!Array.isArray(db[k]))db[k]=seed()[k]||[]}catch(e){db=seed();save()}sanitizeDB();migrateData();autoCompletePassedReservations()}
+function migrateData(){if(!db)return;let needs=false;db.reservations.forEach(r=>{if(r.status==='pending'||
+r.status==='awaiting_sign'){r.status='approved';needs=true}if(r.guest===undefined){r.guest='';needs=true}});db.halls.forEach(h=>{if(!h.blocks){h.blocks=[];needs=true}});if(needs)save()}
+function autoCompletePassedReservations(){if(!db)return;let needs=false;const t=today();db.reservations.forEach(r=>{if(r.date<t&&(r.status==='approved'||r.status==='confirmed')){r.status='done';log('تغییر وضعیت خودکار',`رزرو ${r.id} به دلیل گذشت تاریخ به «برگزار شد» تغییر یافت`);needs=true}});if(needs)save()}
 
 // ============ پاک‌سازی و اعتبارسنجی داده‌ها (جلوگیری از کرش) ============
-// این تابع همه‌ی آرایه‌ها را بررسی و رزروهای ناقص را اصلاح می‌کند
 function sanitizeDB(){
   if(!db) return;
   const arrays=['halls','equipment','slots','applicants','reservations','logs','users','passwordRequests'];
@@ -718,7 +712,6 @@ function sanitizeDB(){
     if(!Array.isArray(db[k])) db[k]=seed()[k]||[];
     else db[k]=db[k].filter(item=>item&&typeof item==='object');
   });
-  // اصلاح فیلدهای ناقص در رزروها
   if(Array.isArray(db.reservations)){
     db.reservations.forEach(r=>{
       if(!r.date) r.date='1970-01-01';
@@ -728,18 +721,19 @@ function sanitizeDB(){
       if(!Array.isArray(r.equipment)) r.equipment=[];
     });
   }
-  // اطمینان از وجود فیلدهای ضروری
   if(!db.units) db.units=seed().units||[];
   if(!db._localUpdatedAt) db._localUpdatedAt=new Date().toISOString();
 }
-function save(){try{db._localUpdatedAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(db));return true}catch(e){/* باگ ۵ اصلاح شد: safe fallback اگر toast هنوز تعریف نشده */if(typeof toast==='function'){toast('ذخیره‌سازی ناموفق بود! 
-فضای مرورگر پر است.','error')}else{console.error('[Save] Storage failed (toast not ready):',e);alert('ذخیره‌سازی ناموفق بود! فضای مرورگر پر است.')}return false}}
+
+function load(){try{db=JSON.parse(localStorage.getItem(KEY));if(!db||!Array.isArray(db.reservations))throw 0;for(const k of ['halls','equipment','checks','issues','units','logs','slots','applicants','users','passwordRequests'])if(!Array.isArray(db[k]))db[k]=seed()
+[k]||[]}catch(e){db=seed();save()}sanitizeDB();migrateData();autoCompletePassedReservations()}
+function save(){try{db._localUpdatedAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(db));return true}catch(e){toast('ذخیره‌سازی ناموفق بود! فضای مرورگر پر است.','error');return false}}
 function log(action,details=''){db.logs.unshift({at:new Date().toISOString(),action,details});db.logs=db.logs.slice(0,500)}
 
 /* ============ STATUS ============ */
-const statusText={approved:'رزرو اولیه',confirmed:'رزرو قطعی',cancelled:'لغو / آزادشده',done:'برگزار شد'};
-const statusFlow={approved:[{s:'confirmed',t:'تأیید امضا (قطعی)'},{s:'cancelled',t:'لغو 
-رزرو'}],confirmed:[{s:'cancelled',t:'لغو و آزادسازی'}],cancelled:[],done:[]};
+const statusText={approved:'رزرو اولیه',confirmed:'رزرو 
+قطعی',cancelled:'لغو / آزادشده',done:'برگزار شد'};
+const statusFlow={approved:[{s:'confirmed',t:'تأیید امضا (قطعی)'},{s:'cancelled',t:'لغو رزرو'}],confirmed:[{s:'cancelled',t:'لغو و آزادسازی'}],cancelled:[],done:[]};
 
 const navItems=[
   {k:'dashboard',t:'داشبورد',i:IC.dash},
@@ -757,7 +751,8 @@ const navItems=[
 const viewTitles={dashboard:'داشبورد',calendar:'تقویم رزرو',reservations:'فهرست رزروها',new:'ثبت رزرو جدید',halls:'سالن‌ها',slots:'سانس‌های زمانی',equipment:'تجهیزات',applicants:'متقاضیان',reports:'گزارش و چاپ',data:'مدیریت اطلاعات',users:'کاربران و دسترسی'};
 
 /* ============ NAV ============ */
-function toggleNav(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('navOverlay').classList.toggle('active')}
+function toggleNav()
+{document.getElementById('sidebar').classList.toggle('active');document.getElementById('navOverlay').classList.toggle('active')}
 function go(v){
   if(typeof hasPermission==='function'&&!hasPermission(v)){
     toast('شما به این بخش دسترسی ندارید.','error');
@@ -777,16 +772,14 @@ function shell(){
       if(n.adminOnly) return typeof isAdmin==='function'&&isAdmin();
       return typeof hasPermission==='function'?hasPermission(n.k):true;
     });
-    document.getElementById('nav').innerHTML=allowedNav.map(n=>`<button class="nav-item ${view===n.k?'active':''}" onclick="go('${n.k}')">${n.i}<span>${n.t}</span></button>`).join('');
-    document.getElementById('crumb').textContent=viewTitles[view]||'
-داشبورد';
+    document.getElementById('nav').innerHTML=allowedNav.map(n=>`<button class="nav-item ${view===n.k?'active':''}" 
+onclick="go('${n.k}')">${n.i}<span>${n.t}</span></button>`).join('');
+    document.getElementById('crumb').textContent=viewTitles[view]||'داشبورد';
     if(typeof updateUserChip==='function') updateUserChip();
-    const c=document.getElementById('content');
-    c.style.animation='none';void c.offsetHeight;c.style.animation='fadeUp .35s var(--ease)';c.innerHTML='';
-    // اگر کاربر هیچ دسترسی ندارد (منو خالی) پیام واضح نشان بده
+    const c=document.getElementById('content');c.style.animation='none';void c.offsetHeight;c.style.animation='fadeUp .35s var(--ease)';c.innerHTML='';
     if(allowedNav.length===0 && typeof currentUser==='function' && currentUser()){
-      c.innerHTML=`<section><div class="card"><div class="alert-danger">${IC.warn}<div>شما به هیچ بخشی دسترسی ندارید. 
-با مدیر سامانه تماس بگیرید تا دسترسی‌های شما را تنظیم کند.</div></div></div></section>`;
+      c.innerHTML=`<section><div 
+class="card"><div class="alert-danger">${IC.warn}<div>شما به هیچ بخشی دسترسی ندارید. با مدیر سامانه تماس بگیرید.</div></div></div></section>`;
       return;
     }
     if(view==='dashboard')dashboard(c);
@@ -796,33 +789,22 @@ function shell(){
     else if(view==='halls')halls(c);
     else if(view==='slots')slotsPage(c);
     else if(view==='equipment')equipment(c);
-    else if(view==='applicants')applicantsPage(c);
-    else 
-if(view==='reports')reports(c);
+    else if(view==='applicants')applic
+antsPage(c);
+    else if(view==='reports')reports(c);
     else if(view==='data')dataPage(c);
     else if(view==='users'&&typeof usersPage==='function')usersPage(c);
   } catch(err) {
-    // نمایش خطا در صفحه به جای سفید شدن
     console.error('[Shell Error]', err);
     const c=document.getElementById('content');
-    if(c) c.innerHTML=`
-      <section><div class="card" style="border-color:var(--red)">
-        <div class="card-head"><div class="card-title-icon" style="background:var(--red-soft);color:var(--red)">${IC.warn}</div><h2 style="color:var(--red)">خطای داخلی در رندر صفحه</h2></div>
-        <div class="alert-danger" style="display:block">
-          ${IC.warn}
-          <div>
-            <b>پیام خطا:</b> ${esc(err.message||String(err))}<br><br>
-            <b>راه‌حل:</b> یک بار کش مرورگر را پاک کنید (Ctrl+F5) و مجدداً تلاش کنید. اگر حل نشد، دکمه زیر را بزنید:
-          </div>
-        </div>
-        <button type="button" class="btn btn-danger" onclick="localStorage.clear();location.reload();">پاک‌سازی کامل و شروع دوباره</button>
-      </div></section>
-    `;
+    if(c) c.innerHTML=`<section><div class="card" style="border-color:var(--red)"><div class="card-head"><h2 style="color:var(--red)">خطای داخلی</h2></div><div class="alert-danger" style="display:block">${IC.warn}<div><b>پیام:</b> $
+{esc(err.message||String(err))}</div></div><button type="button" class="btn btn-danger" onclick="localStorage.clear();location.reload();">پاک‌سازی و شروع دوباره</button></div></section>`;
   }
 }
 function hallName(id){return db.halls.find(h=>h.id===Number(id))?.name||'—'}
 function slotName(id){return db.slots.find(s=>s.id===Number(id))?.name||'—'}
-function isHallBlocked(hallId,dateStr){let h=db.halls.find(x=>x.id===hallId);if(!h||!Array.isArray(h.blocks))return false;return h.blocks.some(b=>dateStr>=b.from&&dateStr<=b.to)}
+function isHallBlocked(hallId,dateStr){let h=db.halls.find(x=>x.id===hallId);if(!h||!Array.isArray(h.blocks))return false;return h.blocks.some(b=>date
+Str>=b.from&&dateStr<=b.to)}
 </script>
 
 <script>
@@ -847,35 +829,34 @@ function reservationRow(r,ops=true){
   </tr>`;
 }
 function table(rows,ops=true){
-  if(!rows.length)return `<div class="empty">${IC.empty}<h4>موردی ثبت نشده است</h4><p>هنوز داده‌ای برای نمایش در این بخش وجود ندارد.</
-p></div>`;
+  if(!rows.length)return `<div class="empty">${IC.empty}<h4>موردی ثبت نشده است</h4><p>هنوز داده‌ای برای نمایش در این بخش وجود ندارد.</p></div>`;
   return `<div class="table-wrap"><table><thead><tr><th>شماره</th><th>تاریخ</th><th>سانس</th><th>سالن</th><th>موضوع برنامه</th><th>واحد / متقاضی</th><th>مهمان شاخص</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${rows.map(r=>reservationRow(r,ops)).join('')}</tbody></table></div>`;
 }
 
 /* ============ DASHBOARD ============ */
 function dashboard(c){
-  // جلوگیری از کرش اگر داده‌ها ناقص بودند (سینک ابری ناقص)
-  let rs = 
-Array.isArray(db.reservations) ? db.reservations : [];
-  let todays = rs.filter(r => r && r.date === today() && r.status !== 'cancelled');
+  let rs=db.reservations;
+  let todays=rs.filter(r=>r.date===today()&&r.status!=='cancelled');
   let stat=(cls,label,val,icon)=>`<div class="stat stat--${cls}"><div class="stat-inner"><div class="stat-head"><span class="stat-label">${label}</span><span class="stat-icon">${icon}</span></div><span class="stat-value">${val}</span></div></div>`;
   c.innerHTML=`<section>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.dash}</div><h2>نمای کلی عملیات</h2></div>
+      <div class="card-head"><div 
+class="card-title-icon">${IC.dash}</div><h2>نمای کلی عملیات</h2></div>
       <div class="grid-stats">
         ${stat('brand','رزروهای امروز',todays.length,IC.cal)}
-        ${stat('blue','رزروهای اولیه',rs.filter(r=>r&&r.status==='approved').length,IC.clock)}
-        ${stat('green','رزروهای قطعی',rs.filter(r=>r&&r.status==='confirmed').length,IC.check)}
-        ${stat('amber','برگزار شده',rs.filter(r=>r&&r.status==='done').length,IC.chart)}
+        ${stat('blue','رزروهای اولیه',rs.filter(r=>r.status==='approved').length,IC.clock)}
+        ${stat('green','رزروهای قطعی',rs.filter(r=>r.status==='confirmed').length,IC.check)}
+        ${stat('amber','برگزار شده',rs.filter(r=>r.status==='done').length,IC.chart)}
       </div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.cal}</div><h3>برنامه‌های امروز</h3></div>
+      <div class="card-head"><div class="card-title-icon">${IC.cal}</
+div><h3>برنامه‌های امروز</h3></div>
       ${table(todays,true)}
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.clock}</div><h3>رزروهای اولیه (منتظر دریافت امضا)</h3></div>
-      ${table(rs.filter(r=>r&&r.status==='approved'),true)}
+      ${table(rs.filter(r=>r.status==='approved'),true)}
     </div>
   </section>`;
 }
@@ -891,11 +872,12 @@ function calendar(c){
   c.innerHTML=`<section><div class="card">
     <div class="card-head"><div class="card-title-icon">${IC.cal}</div><h2>تقویم رزرو شمسی</h2></div>
     <div class="row" style="align-items:flex-end; margin-bottom: 20px;">
-      <div class="field"><label>سال</label><select id="calYear" onchange="renderCalendarMonth()">${years.map(y=>`<option value="${y}" $
-{y===todayParts.jy?'selected':''}>${y}</option>`).join('')}</select></div>
+      <div class="field"><label>سال</label><select id="calYear" onchange="renderCalendarMon
+th()">${years.map(y=>`<option value="${y}" ${y===todayParts.jy?'selected':''}>${y}</option>`).join('')}</select></div>
       <div class="field"><label>ماه</label><select id="calMonth" onchange="renderCalendarMonth()">${persianMonths.map((n,i)=>`<option value="${i+1}" ${i+1===todayParts.jm?'selected':''}>${n}</option>`).join('')}</select></div>
       <button class="btn btn-secondary" onclick="shiftJalaliMonth(-1)">ماه قبل</button>
-      <button class="btn btn-secondary" onclick="resetCalendarToToday()">امروز</button>
+      <button class="btn btn-secondary" onclick="res
+etCalendarToToday()">امروز</button>
       <button class="btn btn-secondary" onclick="shiftJalaliMonth(1)">ماه بعد</button>
     </div>
     <div id="calBody"></div>
@@ -933,7 +915,8 @@ function renderCalendarMonth(){
   const firstDayOfWeek = (firstDayObj.getDay() + 1) % 7;
   
   const todayIso = today();
-  const weekDays = ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+  const weekDays = ['شنبه','یکشنبه','دوش
+نبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
 
   let html = '<div class="cal-table-wrap"><table class="cal-table"><thead><tr>';
   html += weekDays.map(n=>`<th>${n}</th>`).join('');
@@ -944,9 +927,9 @@ function renderCalendarMonth(){
   }
 
   for(let d=1; d<=daysInMonth; d++){
-    const iso = `${jy}-${String(jm).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const currentDow = 
-(firstDayOfWeek + d - 1) % 7;
+    const iso = `${jy}-${String(jm).padStart(2,'0')}-$
+{String(d).padStart(2,'0')}`;
+    const currentDow = (firstDayOfWeek + d - 1) % 7;
     const isFriday = currentDow === 6; 
     const isToday = iso === todayIso;
     const rs = db.reservations.filter(r => r.date === iso && ['approved','confirmed','done'].includes(r.status));
@@ -958,8 +941,8 @@ function renderCalendarMonth(){
     html += `<td class="${cls}">
       <div class="cal-day-num">${d}</div>
       <div class="cal-events">
-        ${rs.map(r => `<div class="cal-event" title="${esc(r.title)}">${esc(r.title)}</
-div>`).join('')}
+        ${rs.map(r => `<div 
+class="cal-event" title="${esc(r.title)}">${esc(r.title)}</div>`).join('')}
       </div>
     </td>`;
 
@@ -973,8 +956,7 @@ div>`).join('')}
     html += '<td class="cal-empty"></td>';
   }
 
-  html += '</tr></tbody></table></
-div>';
+  html += '</tr></tbody></table></div>';
   el.innerHTML = html;
 }
 
@@ -985,10 +967,10 @@ function reservations(c){
   c.innerHTML=`<section><div class="card">
     <div class="card-head"><div class="card-title-icon">${IC.list}</div><h2>فهرست رزروها</h2></div>
     <div class="row">
-      <div 
-class="field"><label>جست‌وجو</label><input id="q" placeholder="عنوان، متقاضی یا واحد..." oninput="onSearchInput()"></div>
+      <div class="field"><label>جست‌وجو</label><input id="q" placeholder="عنوان، متقاضی یا واحد..." oninput="onSearchInput()"></div>
       <div class="field"><label>وضعیت</label><select id="sf" onchange="filterReservations()"><option value="">همه وضعیت‌ها</option>${Object.entries(statusText).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
-      <div class="field"><label>از تاریخ</label><input type="text" id="from" class="pdate-input" onclick="pDate.open(this)" onchange="filterReservations()" readonly placeholder="انتخاب..."></div>
+      <div class="field"><label>از تاریخ</label><input type="text" id="from" class="pdate-input" onclick="pDate.open(this)" onchange="filterReservations()" 
+readonly placeholder="انتخاب..."></div>
       <div class="field"><label>تا تاریخ</label><input type="text" id="to" class="pdate-input" onclick="pDate.open(this)" onchange="filterReservations()" readonly placeholder="انتخاب..."></div>
     </div>
     <div id="resTable"></div>
@@ -1004,8 +986,8 @@ function filterReservations(){
   from = from ? toEnglishDigits(from).replace(/\//g,'-') : '';
   to = to ? toEnglishDigits(to).replace(/\//g,'-') : '';
 
-  let rows=db.reservations.filter(r=>(!q||[r.title,r.requester,r.unit,r.phone,r.supervisor,r.guest].join(' ').toLowerCase().includes(q))&&(!s||r.status===s)&&(!from||r.date>=from)&&(!to||r.date<=to)).sort((a,b)=>b.date.localeCompare(a.date)||
-b.id-a.id);
+  let rows=db.reservations.filter(r=>(!q||[r.title,r.requester,r.unit,r.phone,r.supervisor,r.guest].join(' ').toLowerCase().includes(q))&&(!s||r.status===s)&&(!from||r.date>=from)&&(!to||
+r.date<=to)).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
   document.getElementById('resTable').innerHTML=table(rows,true);
 }
 
@@ -1013,8 +995,8 @@ b.id-a.id);
 function newForm(c){
   let halls=db.halls.filter(h=>h.active),slots=db.slots.filter(s=>s.active),applicants=db.applicants.filter(a=>a.active);
   if(!slots.length||!halls.length||!applicants.length){
-    c.innerHTML=`<section><div class="card"><div class="alert-danger">${IC.warn}<div>برای ثبت رزرو ابتدا باید حداقل یک <b>سالن فعال</b>، یک <b>سانس فعال</
-b> و یک <b>متقاضی فعال</b> در سامانه تعریف شده باشد.</div></div></div></section>`;
+    c.innerHTML=`<section><div class="card"><div class="alert-danger">${IC.warn}
+<div>برای ثبت رزرو ابتدا باید حداقل یک <b>سالن فعال</b>، یک <b>سانس فعال</b> و یک <b>متقاضی فعال</b> در سامانه تعریف شده باشد.</div></div></div></section>`;
     return;
   }
   let eq=db.equipment;
@@ -1027,20 +1009,20 @@ b> و یک <b>متقاضی فعال</b> در سامانه تعریف شده با
         <div class="field"><label>مهمان شاخص</label><input name="guest" placeholder="نام مهمان ویژه (در صورت وجود)"></div>
       </div>
       <div class="row">
-        <div class="field"><label>تاریخ <span class="req">*</span></label><input name="date" type="text" class="pdate-input" id="date" value="${today()}" onclick="pDate.open(this)" readonly required></div>
+        <div class="field"><label>تاریخ <span class="req">*</span></label><input name="date" type="text" class="pdate-input" id="date" value="${today()}" 
+onclick="pDate.open(this)" readonly required></div>
         <div class="field"><label>سانس زمانی <span class="req">*</span></label><select name="slotId" required>${slots.map(s=>`<option value="${s.id}">${esc(s.name)} (${s.start}–${s.end})</option>`).join('')}</select></div>
       </div>
       <div class="row">
         <div class="field"><label>سالن <span class="req">*</span></label><select name="hallId" required>${halls.map(h=>`<option value="${h.id}">${esc(h.name)} · ظرفیت ${h.min}–${h.max}</option>`).join('')}</select></div>
-        <div class="field"><label>تعداد نفرات <span class="req">*</span></label><input name="people" 
-type="number" min="1" step="1" value="5" required></div>
+        <div class="field"><label>تعداد 
+نفرات <span class="req">*</span></label><input name="people" type="number" min="1" step="1" value="5" required></div>
       </div>
       <div class="row">
         <div class="field"><label>متقاضی <span class="req">*</span></label><select name="applicantId" required>${applicants.map(a=>`<option value="${a.id}">${esc(a.name)} · ${esc(a.unit)}</option>`).join('')}</select></div>
         <div class="field"><label>مسئول مستقیم <span class="req">*</span></label><input name="supervisor" required placeholder="نام مدیر / مسئول امضاکننده"></div>
       </div>
-      <div class="field" style="mar
-gin-bottom:16px"><label>تجهیزات موردنیاز</label><div class="row" style="margin-bottom:0">${eq.map(e=>`<label class="checkline"><input type="checkbox" name="equipment" value="${e.id}"> ${esc(e.name)} <span style="color:var(--muted);font-size:11px">(موجودی ${e.qty})</span></label>`).join('')}</div></div>
+      <div class="field" style="margin-bottom:16px"><label>تجهیزات موردنیاز</label><div class="row" style="margin-bottom:0">${eq.map(e=>`<label class="checkline"><input type="checkbox" name="equipment" value="${e.id}"> ${esc(e.name)} <span style="color:var(--muted);font-size:11px">(موجودی ${e.qty})</span></label>`).join('')}</div></div>
       <div class="field" style="margin-bottom:16px"><label>توضیحات</label><textarea name="notes" placeholder="توضیحات تکمیلی در مورد برنامه، مهمان یا تجهیزات..."></textarea></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button type="button" class="btn btn-primary" onclick="createReservation()">${IC.check} ثبت درخواست</button>
@@ -1065,7 +1047,8 @@ function createReservation(){
   let form=document.getElementById('bookingForm');
   if(!form.checkValidity()){form.reportValidity();return}
   let f=new FormData(form),slotId=Number(f.get('slotId')),slot=db.slots.find(s=>s.id===slotId);
-  if(!slot||!slot.active)return toast('سانس نامعتبر یا غیرفعال است.','error');
+  if(!slot||!slot.active)return 
+toast('سانس نامعتبر یا غیرفعال است.','error');
   let applicantId=Number(f.get('applicantId')),applicant=db.applicants.find(a=>a.id===applicantId);
   if(!applicant||!applicant.active)return toast('متقاضی معتبر یا فعال نیست.','error');
   const title=String(f.get('title')||'').trim();
@@ -1073,13 +1056,14 @@ function createReservation(){
   if(!title) return toast('موضوع برنامه الزامی است.','error');
   if(!supervisor) return toast('نام مسئول مستقیم الزامی است.','error');
   const people=Number(f.get('people'));
-  if(!Number.isInteger(people)||people<1) return toast('تعداد نفرات باید عدد صحیح مثبت باشد.','error');
+  if(!Number.isInteger(people)||
+people<1) return toast('تعداد نفرات باید عدد صحیح مثبت باشد.','error');
   let r={id:uid(db.reservations),title:title,guest:String(f.get('guest')||'').trim(),date:String(f.get('date')||'').trim(),slotId,start:slot.start,end:slot.end,hallId:Number(f.get('hallId')),people:people,applicantId,requester:applicant.name,unit:applicant.unit,phone:applicant.phone,supervisor:supervisor,equipment:f.getAll('equipment').map(Number),notes:String(f.get('notes')||'').trim(),status:'approved',createdAt:new Date().toISOString()};
   
   let h=db.halls.find(x=>x.id===r.hallId);
-  if(!h||!h.active)return toast('سالن نامعتبر یا غیرفعال است.','error');
-  if(r.people<h.min||
-r.people>h.max)return toast(`ظرفیت سالن باید بین ${h.min} تا ${h.max} نفر باشد.`,'error');
+  if(!h||!h.active)return toast('سالن 
+نامعتبر یا غیرفعال است.','error');
+  if(r.people<h.min||r.people>h.max)return toast(`ظرفیت سالن باید بین ${h.min} تا ${h.max} نفر باشد.`,'error');
   
   r.date = toEnglishDigits(r.date).replace(/\//g, '-').trim();
   if(!isValidIsoJalali(r.date)){
@@ -1089,19 +1073,20 @@ r.people>h.max)return toast(`ظرفیت سالن باید بین ${h.min} تا $
   if(r.date<today())return toast('امکان ثبت رزرو برای تاریخ گذشته وجود ندارد.','error');
   
   if(r.date===today()){
-    const nowMin=new Date().getHours()*60+new 
-Date().getMinutes();
+    const nowMin=new Date().getHours()*60+new Date().getMinutes();
     const endMin=timeToMinutes(slot.end);
     if(isNaN(endMin)||nowMin>=endMin){
       return toast('سانس انتخابی برای امروز به پایان رسیده است. سانس دیگری انتخاب کنید.','error');
     }
   }
   if(isHallBlocked(r.hallId,r.date)){let b=h.blocks.find(b=>r.date>=b.from&&r.date<=b.to);return toast(`این سالن در تاریخ انتخابی مسدود است. دلیل: ${b.reason||'—'}`,'error')}
-  let clash=db.reservations.find(x=>x.hallId===r.hallId&&x.date===r.date&&['approved','confirmed'].includes(x.status)&&overlap(r,x));
+  let clash=db.reservations.find(x=>x.hallId===r.hallId&&x.date===r.da
+te&&['approved','confirmed'].includes(x.status)&&overlap(r,x));
   if(clash)return toast(`تداخل با رزرو شماره ${clash.id} در این سالن و سانس وجود دارد.`,'error');
   for(let id of r.equipment){let e=db.equipment.find(x=>x.id===id);if(!e)continue;let used=db.reservations.filter(x=>x.date===r.date&&['approved','confirmed'].includes(x.status)&&overlap(r,x)&&(x.equipment||[]).includes(id)).length;if(used>=e.qty)return toast(`ظرفیت تجهیز «${e.name}» در این سانس تکمیل است.`,'error')}
   db.reservations.push(r);log('ثبت رزرو اولیه',`شماره ${r.id}؛ ${r.title}`);
-  if(save()){toast(`درخواست شماره ${r.id} با موفقیت ثبت شد.`,'success');go('reservations')}
+  if(save()){toast(`درخواست شماره ${r.id} با موفقیت ثبت 
+شد.`,'success');go('reservations')}
 }
 function status(id,s){
   let r=db.reservations.find(x=>x.id===id);if(!r)return;
@@ -1110,33 +1095,31 @@ function status(id,s){
     let clash=db.reservations.find(x=>x.id!==id&&x.hallId===r.hallId&&x.date===r.date&&['approved','confirmed'].includes(x.status)&&overlap(r,x));
     if(clash)return toast(`تداخل با رزرو شماره ${clash.id} وجود دارد.`,'error');
   }
-  let old=r.status;r.stat
-us=s;r.updatedAt=new Date().toISOString();
+  let old=r.status;r.status=s;r.updatedAt=new Date().toISOString();
   log('تغییر وضعیت',`رزرو ${id}: ${statusText[old]} ← ${statusText[s]}`);save();toast(`وضعیت رزرو #${id} تغییر کرد.`,'success');shell();
 }
 function delRes(id){if(!confirm(`رزرو شماره ${id} حذف شود؟`))return;db.reservations=db.reservations.filter(r=>r.id!==id);log('حذف رزرو',String(id));save();toast('رزرو حذف شد.','success');shell()}
 
 /* ============ PRINT ============ */
 function printForm(id){
-  let r=db.reservations.find(x=>x.id===id);if(!
-r)return;
+  let r=db.reservations.find(x=>x.id===id);if(!r)return;
   let eqNames=(r.equipment||[]).map(i=>db.equipment.find(e=>e.id===i)?.name).filter(Boolean).join('، ')||'—';
   let html=`<div class="print-form"><h2>فرم رزرو و تحویل سالن</h2>
     <p style="text-align:center;font-size:12px;margin-bottom:12px">شماره رزرو: ${r.id} | تاریخ برنامه: ${faDate(r.date)}</p>
     <table class="print-info-table">
       <tr><td><b>موضوع برنامه:</b> ${esc(r.title)}</td><td><b>مهمان شاخص:</b> ${esc(r.guest||'—')}</td></tr>
-      <tr><td><b>سالن:</b> ${esc(hallName(r.hallId))}
-</td><td><b>سانس:</b> ${esc(slotName(r.slotId))} (${esc(r.start)} تا ${esc(r.end)})</td></tr>
+      <tr><td><b>سالن:</b> ${esc(hallName(r.hallId))}</td><td><b>سانس:</b> ${esc(slotName(r.slotId))} (${esc(r.start)} تا ${esc(r.end)})</td></tr>
       <tr><td><b>تعداد نفرات:</b> ${r.people}</td><td><b>واحد درخواست‌کننده:</b> ${esc(r.unit||'—')}</td></tr>
       <tr><td><b>درخواست‌کننده:</b> ${esc(r.requester||'—')}</td><td><b>شماره تماس:</b> ${esc(r.phone||'—')}</td></tr>
       <tr><td><b>مسئول مستقیم:</b> ${esc(r.supervisor||'—')}</td><td><b>وضعیت:</b> ${statusText[r.status]}</td></tr>
-      <tr><td colspan="2"><b>تجهیزات موردنیاز:</b> ${esc(eqNames)}</td></tr>
+      <tr><td colspan="2"><b>تجهیزات 
+موردنیاز:</b> ${esc(eqNames)}</td></tr>
       <tr><td colspan="2"><b>توضیحات:</b> ${esc(r.notes||'—')}</td></tr>
     </table>
     <h4>چک‌لیست تحویل و آماده‌سازی</h4>
     <p style="font-size:12px;line-height:2">□ نظافت سالن &nbsp;&nbsp;&nbsp; □ چیدمان صندلی‌ها &nbsp;&nbsp;&nbsp; □ تست صدا و میکروفن &nbsp;&nbsp;&nbsp; □ تست تصویر / پروژکتور &nbsp;&nbsp;&nbsp; □ تحویل تجهیزات</p>
-    <div class="signatures"><div class="sign-box">امضای درخواست‌کننده</div><div class="sign-box">امضای مسئول مستقیم</div><div class="sign-box">امضای مسئول سالن</
-div></div>
+    <div class="signatures"><div class="sign-box">امضای درخواست‌کننده</div><div class="sign-box">امضای 
+مسئول مستقیم</div><div class="sign-box">امضای مسئول سالن</div></div>
   </div>`;
   document.getElementById('printArea').innerHTML=html;
   setTimeout(()=>window.print(),60);
@@ -1148,34 +1131,36 @@ div></div>
 function halls(c){
   c.innerHTML=`<section>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.hall}</div><h2>مدیریت سالن‌ها</h2></div>
-      ${db.halls.length?`<div 
-class="table-wrap"><table><thead><tr><th>کد</th><th>نام سالن</th><th>ظرفیت</th><th>موقعیت</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${db.halls.map(h=>`<tr>
+      <div class="card-head"><div class="card-title-icon">${IC.hall}</
+div><h2>مدیریت سالن‌ها</h2></div>
+      ${db.halls.length?`<div class="table-wrap"><table><thead><tr><th>کد</th><th>نام سالن</th><th>ظرفیت</th><th>موقعیت</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${db.halls.map(h=>`<tr>
         <td data-label="کد">${esc(h.code)}</td>
         <td data-label="نام">${esc(h.name)}</td>
         <td data-label="ظرفیت">${h.min} تا ${h.max} نفر</td>
         <td data-label="موقعیت">${esc(h.location||'—')}</td>
-        <td data-label="وضعیت">${h.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</span>'}</td>
+        <td data-label="وضعیت">${h.active?'<span class="badge b-confirmed">فعال</span>':'<span 
+class="badge b-cancelled">غیرفعال</span>'}</td>
         <td data-label="عملیات"><div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="btn btn-sm btn-secondary" onclick="toggleHall(${h.id})">${h.active?'غیرفعال':'فعال'}</button>
           <button class="btn btn-sm btn-secondary" onclick="editHall(${h.id})">${IC.edit}</button>
           <button class="btn btn-sm btn-secondary" onclick="deleteHall(${h.id})" style="color:var(--red)">${IC.trash}</button>
         </div></td>
-      </tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}
-<h4>سالنی ثبت نشده</h4></div>`}
+      </tr>`).join('')}</tbody></
+table></div>`:`<div class="empty">${IC.empty}<h4>سالنی ثبت نشده</h4></div>`}
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن سالن جدید</h3></div>
       <form onsubmit="event.preventDefault();addHall()">
         <div class="row">
           <div class="field"><label>کد سالن <span class="req">*</span></label><input name="code" required placeholder="H04"></div>
-          <div class="field"><label>نام سالن <span class="req">*</span></label><input name="name" required placeholder="مثال: سالن همایش"></div>
-          <div 
-class="field"><label>حداقل ظرفیت <span class="req">*</span></label><input name="min" type="number" min="1" step="1" value="1" required></div>
+          <div class="field"><label>نام سالن <span class="req">*</span></label><input name="name" required placeholder="مثال: سالن 
+همایش"></div>
+          <div class="field"><label>حداقل ظرفیت <span class="req">*</span></label><input name="min" type="number" min="1" step="1" value="1" required></div>
           <div class="field"><label>حداکثر ظرفیت <span class="req">*</span></label><input name="max" type="number" min="1" step="1" value="10" required></div>
           <div class="field"><label>موقعیت</label><input name="location" placeholder="طبقه دوم"></div>
         </div>
-        <button class="btn btn-primary" type="submit">${IC.plus} افزودن سالن</button>
+        <button class="btn 
+btn-primary" type="submit">${IC.plus} افزودن سالن</button>
       </form>
     </div>
     <div class="card">
@@ -1183,32 +1168,33 @@ class="field"><label>حداقل ظرفیت <span class="req">*</span></label><in
       <div class="alert-danger">${IC.warn}<div>با این ابزار می‌توانید یک سالن را برای بازه زمانی مشخصی (تعمیرات، مراسم خاص و ...) غیرقابل رزرو کنید.</div></div>
       <form onsubmit="event.preventDefault();addBlock()">
         <div class="row">
-          <div class="field"><label>سالن <span class="req">*</
-span></label><select name="hallId" required>${db.halls.map(h=>`<option value="${h.id}">${esc(h.name)}</option>`).join('')}</select></div>
+          <div class="field"><label>سالن <span class="req">*</span></label><select name="hallId" required>${db.halls.map(h=>`<option value="${h.id}">${esc(h.name)}</option>`).join('')}</select></div>
           <div class="field"><label>از تاریخ <span class="req">*</span></label><input name="from" type="text" class="pdate-input" onclick="pDate.open(this)" readonly required placeholder="انتخاب..."></div>
-          <div class="field"><label>تا تاریخ <span class="req">*</span></label><input name="to" type="text" class="pdate-input" onclick="pDate.open(this)" readonly required placeholder="انتخاب..."></div>
+          <div class="field"><label>تا تاریخ <span class="req">*</span></label><input name="to" type="text" class="pdate-input" onclick="pDate.open(this)" 
+readonly required placeholder="انتخاب..."></div>
           <div class="field"><label>دلیل مسدودی</label><input name="reason" placeholder="مثال: تعمیرات سیستم سرمایش"></div>
         </div>
         <button class="btn btn-danger" type="submit">${IC.block} اعمال مسدودسازی</button>
       </form>
-      ${db.halls.some(h=>h.blocks?.length)?`<div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>سالن</th><th>بازه مسدودی</th><th>دلیل</th><th>عملیات</th></tr></thead><tbody>${db.halls.flatMap(h=>(h.blocks||[]).map((b,i)=>`<tr><td data-label="سالن">${esc(h.name)}</td><td data-label="بازه">$
-{faDate(b.from)} تا ${faDate(b.to)}</td><td data-label="دلیل">${esc(b.reason||'—')}</td><td data-label="عملیات"><button class="btn btn-sm btn-danger" onclick="delBlock(${h.id},${i})">حذف</button></td></tr>`)).join('')}</tbody></table></div>`:''}
+      ${db.halls.some(h=>h.blocks?.length)?`<div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>سالن</th><th>بازه مسدودی</th><th>دلیل</th><th>عملیات</th></tr></thead><tbody>${db.halls.flatMap(h=>(h.blocks||[]).map((b,i)=>`<tr><td 
+data-label="سالن">${esc(h.name)}</td><td data-label="بازه">${faDate(b.from)} تا ${faDate(b.to)}</td><td data-label="دلیل">${esc(b.reason||'—')}</td><td data-label="عملیات"><button class="btn btn-sm btn-danger" onclick="delBlock(${h.id},${i})">حذف</button></td></tr>`)).join('')}</tbody></table></div>`:''}
     </div>
   </section>`;
 }
-function addHall(){let form=event.target;if(!form.checkValidity()){form.reportValidity();return}let f=new FormData(form);let min=Number(f.get('min')),max=Number(f.get('max'));let 
-h={id:uid(db.halls),code:String(f.get('code')).trim(),name:String(f.get('name')).trim(),min:min,max:max,location:String(f.get('location')||'').trim(),active:true,blocks:[]};if(!h.code)return toast('کد سالن الزامی است.','error');if(!h.name)return toast('نام سالن الزامی است.','error');if(!Number.isInteger(min)||!Number.isInteger(max)||min<1||max<min)return toast('ظرفیت نامعتبر است. حداقل و حداکثر باید اعداد صحیح مثبت باشند.','error');if(db.halls.some(x=>x.code.toLowerCase()===h.code.toLowerCase()))return toast('کد سالن تکراری است.','error');db.halls.push(h);log('افزودن سالن',h.name);save();toast('سالن افزوده شد.','success');shell()}
-function toggleHall(id){let h=db.h
-alls.find(x=>x.id===id);h.active=!h.active;save();shell()}
-function editHall(id){let h=db.halls.find(x=>x.id===id);let name=prompt('نام سالن',h.name);if(name===null)return;let min=prompt('حداقل ظرفیت',h.min);if(min===null)return;let max=prompt('حداکثر ظرفیت',h.max);if(max===null)return;min=Number(min);max=Number(max);if(!name||!name.trim()||!Number.isInteger(min)||!Number.isInteger(max)||min<1||max<min)return toast('اطلاعات نامعتبر است. حداقل و حداکثر باید اعداد صحیح مثبت باشند.','error');h.name=name.trim();h.min=min;h.max=max;save();toast('سالن ویرایش 
-شد.','success');shell()}
+function addHall(){let form=event.target;if(!form.checkValidity()){form.reportValidity();return}let f=new FormData(form);let 
+min=Number(f.get('min')),max=Number(f.get('max'));let h={id:uid(db.halls),code:String(f.get('code')).trim(),name:String(f.get('name')).trim(),min:min,max:max,location:String(f.get('location')||'').trim(),active:true,blocks:[]};if(!h.code)return toast('کد سالن الزامی است.','error');if(!h.name)return toast('نام سالن الزامی است.','error');if(!Number.isInteger(min)||!Number.isInteger(max)||min<1||max<min)return toast('ظرفیت نامعتبر است. حداقل و حداکثر باید اعداد صحیح مثبت باشند.','error');if(db.halls.some(x=>x.code.toLowerCase()===h.code.toLowerCase()))return toast('کد سالن تکراری است.','error');db.halls.push(h);log('افزودن سالن',h.name);save();toast('سالن 
+افزوده شد.','success');shell()}
+function toggleHall(id){let h=db.halls.find(x=>x.id===id);h.active=!h.active;save();shell()}
+function editHall(id){let h=db.halls.find(x=>x.id===id);let name=prompt('نام سالن',h.name);if(name===null)return;let min=prompt('حداقل ظرفیت',h.min);if(min===null)return;let max=prompt('حداکثر ظرفیت',h.max);if(max===null)return;min=Number(min);max=Number(max);if(!name||!name.trim()||!Number.isInteger(min)||!Number.isInteger(max)||min<1||max<min)return toast('اطلاعات نامعتبر است. حداقل و حداکثر باید اعداد صحیح مثبت باشند.','error');h.name
+=name.trim();h.min=min;h.max=max;save();toast('سالن ویرایش شد.','success');shell()}
 function deleteHall(id){
   const activeRes=db.reservations.filter(r=>r.hallId===id&&['approved','confirmed'].includes(r.status));
   if(activeRes.length) return toast(`این سالن ${activeRes.length} رزرو فعال دارد و قابل حذف نیست.`,'error');
   const pastRes=db.reservations.filter(r=>r.hallId===id);
   if(pastRes.length && !confirm(`این سالن ${pastRes.length} رزرو در تاریخچه دارد (شامل برگزار شده/لغو شده). پس از حذف، گزارش‌های قبلی نام سالن را «—» نشان می‌دهند. ادامه؟`)) return;
   if(!confirm('سالن حذف شود؟')) return;
-  db.halls=db.halls.filter(h=>h.id!==id);save();toast('سالن حذف شد.','success');shell();
+  db.halls=db.halls.filter(h=>h.id!
+==id);save();toast('سالن حذف شد.','success');shell();
 }
 function addBlock(){
   let form=event.target;
@@ -1223,7 +1209,8 @@ function addBlock(){
   if(h.blocks.some(b=>from<=b.to&&to>=b.from))return toast('این بازه با مسدودی قبلی تداخل دارد.','error');
   h.blocks.push({from,to,reason});log('مسدودسازی سالن',`${h.name}: ${from} تا ${to}`);save();toast('مسدودسازی اعمال شد.','success');shell();
 }
-function delBlock(hid,idx){let h=db.halls.find(x=>x.id===hid);if(h&&h.blocks){h.blocks.splice(idx,1);save();toast('مسدودی حذف شد.','success');shell()}}
+function delBlock(hid,idx){let h=db.halls.find(x=>x.id===hid);if(h&&h.blocks){h.blocks.splice
+(idx,1);save();toast('مسدودی حذف شد.','success');shell()}}
 
 /* ============ SLOTS ============ */
 function slotsPage(c){
@@ -1231,22 +1218,21 @@ function slotsPage(c){
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.clock}</div><h2>مدیریت سانس‌های زمانی</h2></div>
       ${db.slots.length?`<div class="table-wrap"><table><thead><tr><th>نام سانس</th><th>شروع</th><th>پایان</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${db.slots.map(s=>`<tr>
-        <td data-label="نام">${esc(s.name)}</td><td 
-data-label="شروع">${esc(s.start)}</td><td data-label="پایان">${esc(s.end)}</td>
+        <td data-label="نام">${esc(s.name)}</td><td data-label="شروع">${esc(s.start)}</td><td data-label="پایان">${esc(s.end)}</td>
         <td data-label="وضعیت">${s.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</span>'}</td>
         <td data-label="عملیات"><div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="btn btn-sm btn-secondary" onclick="toggleSlot(${s.id})">${s.active?'غیرفعال':'فعال'}</button>
-          <button class="btn btn-sm btn-secondary" onclick="editSlot(${s.id})">${IC.edit}</button>
-          <button class="btn 
-btn-sm btn-secondary" onclick="deleteSlot(${s.id})" style="color:var(--red)">${IC.trash}</button>
+          <button class="btn btn-sm btn-secondary" onclick="editSlot($
+{s.id})">${IC.edit}</button>
+          <button class="btn btn-sm btn-secondary" onclick="deleteSlot(${s.id})" style="color:var(--red)">${IC.trash}</button>
         </div></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>سانسی ثبت نشده</h4></div>`}
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن سانس جدید</h3></div>
       <form onsubmit="event.preventDefault();addSlot()">
         <div class="row">
-          <div class="field"><label>نام سانس <span class="req">*</span></label><input name="name" 
-required placeholder="مثال: صبح"></div>
+          <div class="field"><label>نام 
+سانس <span class="req">*</span></label><input name="name" required placeholder="مثال: صبح"></div>
           <div class="field"><label>ساعت شروع <span class="req">*</span></label><input name="start" type="time" value="08:00" required></div>
           <div class="field"><label>ساعت پایان <span class="req">*</span></label><input name="end" type="time" value="12:00" required></div>
         </div>
@@ -1264,7 +1250,8 @@ function addSlot(){
   let end=String(f.get('end')||'').trim();
   if(!name) return toast('نام سانس الزامی است.','error');
   const s=timeToMinutes(start),e=timeToMinutes(end);
-  if(isNaN(s)||isNaN(e)) return toast('ساعت شروع و پایان باید به فرمت HH:MM باشند.','error');
+  if(isNaN(s)||isNaN(e)) return 
+toast('ساعت شروع و پایان باید به فرمت HH:MM باشند.','error');
   if(s>=e) return toast('ساعت پایان باید بعد از شروع باشد.','error');
   let slot={id:uid(db.slots),name,start:minutesToTime(s),end:minutesToTime(e),active:true};
   db.slots.push(slot);save();toast('سانس افزوده شد.','success');shell();
@@ -1296,21 +1283,22 @@ function deleteSlot(id){if(db.reservations.some(r=>r.slotId===id))return toast('
 function equipment(c){
   c.innerHTML=`<section>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.gear}</div><h2>مدیریت تجهیزات</h2></div>
+      <div class="card-head"><div 
+class="card-title-icon">${IC.gear}</div><h2>مدیریت تجهیزات</h2></div>
       ${db.equipment.length?`<div class="table-wrap"><table><thead><tr><th>نام تجهیز</th><th>تعداد</th><th>توضیحات</th><th>عملیات</th></tr></thead><tbody>${db.equipment.map(e=>`<tr>
         <td data-label="نام">${esc(e.name)}</td><td data-label="تعداد">${e.qty}</td><td data-label="توضیحات">${esc(e.notes||'—')}</td>
         <td data-label="عملیات"><div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
-          <button class="btn btn-sm btn-secondary" onclick="editEquipment(${e.id})">${IC.edit}</button>
-          <button class="btn 
-btn-sm btn-secondary" onclick="deleteEquipment(${e.id})" style="color:var(--red)">${IC.trash}</button>
+          <button class="btn btn-sm btn-secondary" onclick="editEquipment(${e.id})">$
+{IC.edit}</button>
+          <button class="btn btn-sm btn-secondary" onclick="deleteEquipment(${e.id})" style="color:var(--red)">${IC.trash}</button>
         </div></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>تجهیزی ثبت نشده</h4></div>`}
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن تجهیز</h3></div>
       <form onsubmit="event.preventDefault();addEquipment()">
         <div class="row">
-          <div class="field"><label>نام تجهیز <span class="req">*</span></label><input name="name" 
-required placeholder="مثال: میکروفن"></div>
+          <div class="field"><label>نام 
+تجهیز <span class="req">*</span></label><input name="name" required placeholder="مثال: میکروفن"></div>
           <div class="field"><label>تعداد <span class="req">*</span></label><input name="qty" type="number" min="1" step="1" value="1" required></div>
           <div class="field"><label>توضیحات</label><input name="notes"></div>
         </div>
@@ -1329,8 +1317,8 @@ function addEquipment(){
   if(!name) return toast('نام تجهیز الزامی است.','error');
   if(!Number.isInteger(qty)||qty<1) return toast('تعداد باید عدد صحیح مثبت باشد.','error');
   let x={id:uid(db.equipment),name:name,qty:qty,notes:notes};
-  if(db.equipment.some(y=>y.name.toLowerCase()===x.name.toLowerCase()))return toast('این تجهیز قبلاً ثبت 
-شده است.','error');
+  if(db.equipment.some(y=>y.name
+.toLowerCase()===x.name.toLowerCase()))return toast('این تجهیز قبلاً ثبت شده است.','error');
   db.equipment.push(x);save();toast('تجهیز افزوده شد.','success');shell();
 }
 function editEquipment(id){
@@ -1342,8 +1330,7 @@ function editEquipment(id){
   let qty=Number(qtyStr);
   name=String(name).trim();
   if(!name) return toast('نام تجهیز الزامی است.','error');
-  if(!Number.isInteger(qty)||qty<1) return toast('تعداد باید عدد صحیح مثبت 
-باشد.','error');
+  if(!Number.isInteger(qty)||qty<1) return toast('تعداد باید عدد صحیح مثبت باشد.','error');
   e.name=name;
   e.qty=qty;
   save();shell();
@@ -1354,7 +1341,8 @@ function deleteEquipment(id){
   );
   if(inUse) return toast('این تجهیز در رزروهای فعال استفاده شده و قابل حذف نیست.','error');
   if(!confirm('تجهیز حذف شود؟'))return;
-  db.equipment=db.equipment.filter(e=>e.id!==id);
+  db.equipment=db.eq
+uipment.filter(e=>e.id!==id);
   db.reservations.forEach(r=>{
     if(r.equipment&&Array.isArray(r.equipment)){
       r.equipment=r.equipment.filter(eid=>eid!==id);
@@ -1367,26 +1355,25 @@ function deleteEquipment(id){
 function applicantsPage(c){
   c.innerHTML=`<section>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.users}</
-div><h2>مدیریت متقاضیان</h2></div>
+      <div class="card-head"><div class="card-title-icon">${IC.users}</div><h2>مدیریت متقاضیان</h2></div>
       ${db.applicants.length?`<div class="table-wrap"><table><thead><tr><th>نام و نام خانوادگی</th><th>واحد</th><th>تماس</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${db.applicants.map(a=>`<tr>
         <td data-label="نام">${esc(a.name)}</td><td data-label="واحد">${esc(a.unit)}</td><td data-label="تماس">${esc(a.phone)}</td>
-        <td data-label="وضعیت">${a.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</span>'}</td>
-        <td data-label="عملیات"><div 
-class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
+        <td data-label="وضعیت">${a.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</
+span>'}</td>
+        <td data-label="عملیات"><div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="btn btn-sm btn-secondary" onclick="editApplicant(${a.id})">${IC.edit}</button>
           <button class="btn btn-sm btn-secondary" onclick="toggleApplicant(${a.id})">${a.active?'غیرفعال':'فعال'}</button>
           <button class="btn btn-sm btn-secondary" onclick="deleteApplicant(${a.id})" style="color:var(--red)">${IC.trash}</button>
-        </div></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}
-<h4>متقاضی ثبت نشده</h4></div>`}
+        </div></td></tr>`).join('')}
+</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>متقاضی ثبت نشده</h4></div>`}
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن متقاضی جدید</h3></div>
       <form onsubmit="event.preventDefault();addApplicant()">
         <div class="row">
           <div class="field"><label>نام و نام خانوادگی <span class="req">*</span></label><input name="name" required></div>
-          <div class="field"><label>واحد سازمانی <span class="req">*</span></label><input name="unit" list="units" required><datalist id="units">$
-{db.units.map(u=>`<option value="${esc(u)}">`).join('')}</datalist></div>
+          <div class="field"><label>واحد سازمانی <span class="req">*</span></label><input 
+name="unit" list="units" required><datalist id="units">${db.units.map(u=>`<option value="${esc(u)}">`).join('')}</datalist></div>
           <div class="field"><label>شماره تماس <span class="req">*</span></label><input name="phone" inputmode="tel" required placeholder="09123456789"></div>
         </div>
         <button class="btn btn-primary" type="submit">${IC.plus} افزودن متقاضی</button>
@@ -1396,8 +1383,7 @@ class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
 }
 function addApplicant(){
   let form=event.target;
-  if(!form.checkValidity())
-{form.reportValidity();return}
+  if(!form.checkValidity()){form.reportValidity();return}
   let f=new FormData(form);
   let name=String(f.get('name')||'').trim();
   let unit=String(f.get('unit')||'').trim();
@@ -1407,8 +1393,7 @@ function addApplicant(){
   if(!phone) return toast('شماره تماس الزامی است.','error');
   let a={id:uid(db.applicants),name:name,unit:unit,phone:phone,active:true};
   db.applicants.push(a);
-  if(!db.units.includes(a.unit))db.uni
-ts.push(a.unit);
+  if(!db.units.includes(a.unit))db.units.push(a.unit);
   save();toast('متقاضی افزوده شد.','success');shell();
 }
 function editApplicant(id){
@@ -1422,8 +1407,7 @@ function editApplicant(id){
   name=String(name).trim();
   unit=String(unit).trim();
   phone=String(phone).trim();
-  if(!name||!unit||!phone) return 
-toast('اطلاعات نامعتبر است. هیچ فیلدی نمی‌تواند خالی باشد.','error');
+  if(!name||!unit||!phone) return toast('اطلاعات نامعتبر است. هیچ فیلدی نمی‌تواند خالی باشد.','error');
   a.name=name;a.unit=unit;a.phone=phone;
   save();shell();
 }
@@ -1432,15 +1416,14 @@ function deleteApplicant(id){if(!confirm('این متقاضی حذف شود؟'))
 </script>
 
 <script>
-/* ============ REPORTS 
-============ */
+/* ============ REPORTS ============ */
 function reports(c){
   c.innerHTML=`<section><div class="card">
     <div class="card-head"><div class="card-title-icon">${IC.chart}</div><h2>گزارش و چاپ</h2></div>
     <div class="row">
       <div class="field"><label>از تاریخ <span class="req">*</span></label><input type="text" id="rf" class="pdate-input" value="${today().slice(0,7)}-01" onclick="pDate.open(this)" readonly required></div>
-      <div class="field"><label>تا تاریخ <span class="req">*</span></label><input type="text" id="rt" class="pdate-input" 
-value="${today()}" onclick="pDate.open(this)" readonly required></div>
+      <div class="field"><label>تا تاریخ <span class="req">*</
+span></label><input type="text" id="rt" class="pdate-input" value="${today()}" onclick="pDate.open(this)" readonly required></div>
       <div class="field"><label>سالن</label><select id="rh"><option value="">همه سالن‌ها</option>${db.halls.map(h=>`<option value="${h.id}">${esc(h.name)}</option>`).join('')}</select></div>
       <div class="field"><label>وضعیت</label><select id="rs"><option value="">همه</option>${Object.entries(statusText).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
     </div>
@@ -1464,50 +1447,51 @@ function reportRows(){
 }
 function runReport(){
   let rows=reportRows();
-  let items=[['brand','تعداد 
-کل',rows.length],['green','قطعی',rows.filter(r=>r.status==='confirmed').length],['amber','برگزار شده',rows.filter(r=>r.status==='done').length],['red','لغو شده',rows.filter(r=>r.status==='cancelled').length]];
+  let items=[['brand','تعداد کل',rows.length],['green','قطعی',rows.filter(r=>r.status==='confirmed').length],['amber','برگزار شده',rows.filter(r=>r.status==='done').length],['red','لغو شده',rows.filter(r=>r.status==='cancelled').length]];
   document.getElementById('reportSummary').innerHTML=items.map(([cls,l,v])=>`<div class="stat stat--${cls}"><div class="stat-inner"><span class="stat-label">${l}</span><span class="stat-value">${v}</span></div></div>`).join('');
-  document.getElementById('reportTable').innerHTML=table(rows,false);
+  document.getElementById('reportTable').innerHTML=table(rows,fals
+e);
 }
 function exportCSV(){let rows=reportRows();let h=['شماره','تاریخ','سانس','سالن','موضوع','واحد','مسئول','تلفن','مسئول مستقیم','مهمان شاخص','وضعیت'];let l=[h,...rows.map(r=>[r.id,faDate(r.date),slotName(r.slotId),hallName(r.hallId),r.title,r.unit,r.requester,r.phone,r.supervisor,r.guest,statusText[r.status]])];let csv='\ufeff'+l.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');downloadBlob(csv,`گزارش-رزرو-${today()}.csv`,'text/csv;charset=utf-8')}
 
-/* ============ DATA ============ */
+/* ============ DATA 
+============ */
 function dataPage(c){
   c.innerHTML=`<section>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.db}</div><h2>مدیریت اطلاعات و پشتیبان‌گیری</h2></div>
       <div class="grid-stats">
         <div class="stat stat--brand"><div class="stat-inner"><span class="stat-label">رزروها</span><span class="stat-value">${db.reservations.length}</span></div></div>
-        <div class="stat stat--blue"><div class="stat-inner"><span class="stat-label">سالن‌ها</span><span class="stat-value">$
-{db.halls.length}</span></div></div>
+        <div class="stat stat--blue"><div class="stat-inner"><span 
+class="stat-label">سالن‌ها</span><span class="stat-value">${db.halls.length}</span></div></div>
         <div class="stat stat--green"><div class="stat-inner"><span class="stat-label">تجهیزات</span><span class="stat-value">${db.equipment.length}</span></div></div>
         <div class="stat stat--amber"><div class="stat-inner"><span class="stat-label">گزارش فعالیت</span><span class="stat-value">${db.logs.length}</span></div></div>
       </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+      <div 
+style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
         <button class="btn btn-primary" onclick="backup()">${IC.db} دانلود پشتیبان JSON</button>
-        <button type="button" class="btn btn-secondary" onclick="document.getElementById('restoreFile').click()">بازیابی از فایل</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('restoreFile').click()">بازیابی از فایل</button>
         <input id="restoreFile" class="hidden" type="file" accept=".json,application/json" onchange="restore(event)">
         <button class="btn btn-secondary" onclick="downloadCSVAll()">خروجی همه رزروها CSV</button>
       </div>
-      <div class="notice" style="margin-top:16px">${IC.info}
-<div>پشتیبان شامل سالن‌ها، تجهیزات، رزروها و گزارش فعالیت است. فایل را در محل امن نگه دارید.</div></div>
+      <div class="notice" style="margin-top:16px">${IC.info}<div>پشتیبان شامل سالن‌ها، تجهیزات، رزروها و گزارش فعالیت است. فایل را در محل امن نگه دارید.</div></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.list}</div><h3>آخرین فعالیت‌ها</h3></div>
-      ${db.logs.length?`<div class="table-wrap"><table><thead><tr><th>زمان</th><th>رویداد</th><th>جزئیات</th></tr></thead><tbody>${db.logs.slice(0,100).map(l=>`<tr><td data-label="زمان">${esc(new Date(l.at).toLocaleString('fa-IR'))}</td><td data-label="رویداد">${esc(l.action)}</td><td data-label="جزئیات">$
-{esc(l.details)}</td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>هنوز فعالیتی ثبت نشده است</h4></div>`}
+      ${db.logs.length?`<div class="table-wrap"><table><thead><tr><th>زمان</th><th>رویداد</th><th>جزئیات</th></tr></thead><tbody>${db.logs.slice(0,100).map(l=>`<tr><td data-label="زمان">${esc(new Date(l.at).toLocaleString('fa-IR'))}</td><td data-label="رویداد">$
+{esc(l.action)}</td><td data-label="جزئیات">${esc(l.details)}</td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>هنوز فعالیتی ثبت نشده است</h4></div>`}
     </div>
     <div class="card" style="border-color:var(--red)">
       <div class="card-head"><div class="card-title-icon" style="background:var(--red-soft);color:var(--red)">${IC.warn}</div><h3 style="color:var(--red)">ناحیه حساس</h3></div>
-      <p style="margin-bottom:14px;color:var(--muted)">پاک‌سازی همه اطلاعات قابل بازگشت نیست. قبل از ادامه فایل پشتیبان تهیه کنید.</p>
-      <button class="btn btn-danger" 
-onclick="resetData()">${IC.trash} پاک‌کردن همه اطلاعات</button>
+      <p style="margin-bottom:14px;color:var(--muted)">پاک‌سازی همه اطلاعات قابل بازگشت نیست. قبل از ادامه فایل 
+پشتیبان تهیه کنید.</p>
+      <button class="btn btn-danger" onclick="resetData()">${IC.trash} پاک‌کردن همه اطلاعات</button>
     </div>
   </section>`;
 }
 function downloadBlob(content,name,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function backup(){downloadBlob(JSON.stringify({format:'hall-manager-backup',version:17,exportedAt:new Date().toISOString(),data:db},null,2),`پشتیبان-رزرو-$
-{today()}.json`,'application/json')}
+function backup(){downloadBlob(JSON.stringify({format:'hall-manager-backup',version
+:17,exportedAt:new Date().toISOString(),data:db},null,2),`پشتیبان-رزرو-${today()}.json`,'application/json')}
 function restore(ev){
   let f=ev.target.files[0];if(!f)return;
   let rd=new FileReader();
@@ -1516,29 +1500,25 @@ function restore(ev){
       let o=JSON.parse(rd.result),x=o.data||o;
       if(!Array.isArray(x.halls)||!Array.isArray(x.reservations)||!Array.isArray(x.equipment)||!Array.isArray(x.slots)||!Array.isArray(x.applicants))throw new Error('ساختار فایل نامعتبر است.');
       if(!confirm('اطلاعات فعلی با محتوای فایل جایگزین شود؟'))return;
-      db={...seed(),...x};if(!save())throw new Error('ذخیره ناموفق 
-بود.');
-      migrateData();autoCompletePassedReservations();toast('بازیابی با موفقیت انجام شد.','success');shell();
+      db={...seed(),...x};if(!save())throw new Error('ذخیره ناموفق بود.');
+      sanitizeDB();migrateData();autoCompletePassedReservations();toast('بازیابی با موفقیت انجام شد.','success');shell();
     }catch(e){toast('بازیابی ناموفق: '+e.message,'error')}
     finally{ev.target.value=''}
   };
   rd.readAsText(f);
 }
-function downloadCSVAll(){let rows=db.reservations;let l=[['شماره','تاریخ','سانس','سالن','موضوع','واحد','مسئول','تلفن','مسئول مستقیم','مهمان شاخص','وضعیت'],...rows.map(r=>[r.id,faDate(r.date),slotName(r.slotId),hallName(r.hallId),r.title,r.unit,r.requester,r.phone,r.supervisor,r.guest,statusText[r.status]])];down
-loadBlob('\ufeff'+l.map(a=>a.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n'),`همه-رزروها-${today()}.csv`,'text/csv;charset=utf-8')}
+function downloadCSVAll(){let rows=db.reservations;let l=[['شماره','تاریخ','سانس','سالن','موضوع','واحد','مسئول','تلفن','مسئول مستقیم','مهمان شاخص','وضعیت'],...rows.map(r=>[r.id,faDate(r.date),slotName(r.slotId
+),hallName(r.hallId),r.title,r.unit,r.requester,r.phone,r.supervisor,r.guest,statusText[r.status]])];downloadBlob('\ufeff'+l.map(a=>a.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n'),`همه-رزروها-${today()}.csv`,'text/csv;charset=utf-8')}
 function resetData(){
   if(!confirm('تمام اطلاعات محلی حذف و سامانه از ابتدا ساخته شود؟'))return;
   if(!confirm('تأیید نهایی: این عملیات قابل بازگشت نیست.'))return;
-  // باگ ۱ اصلاح شد: استفاده از window.CloudSyncComplete (global) به جای supabaseClient (IIFE scope)
-  if(window.SupabaseConfigured && window.CloudSyncComplete){
-    if(!confirm('⚠️ توجه بحرانی: داده‌های ابری (Supabase) پس از reload دوباره بارگذاری خواهند شد.\nاگر می‌خواهی ابر 
-هم پاک شود، باید بعد از reload با توکن WRITE_TOKEN دستی سینک کنی.\n\nادامه می‌دهید؟'))return;
+  if(window.SupabaseConfigured&&typeof supabaseClient!=='undefined'&&supabaseClient){
+    if(!confirm('⚠️ توجه بحرانی: داده‌های ابری (Supabase) هم پاک خواهند شد و همه‌ی کاربران دیگر در دستگاه‌های دیگر داده‌شان را از 
+دست می‌دهند!\n\nادامه می‌دهید؟'))return;
   }
   try{localStorage.removeItem(SESSION_KEY);}catch(e){}
   try{localStorage.removeItem(LOGIN_ATTEMPTS_KEY);}catch(e){}
-  try{localStorage.removeItem('hall_write_token');}catch(e){}
-  // باگ ۴ اصلاح شد: window.session=null بی‌اثر بود (session در let scope است)
-  // چون بلافاصله location.reload() صدا زده می‌شود، نیازی به null کردن نیست
+  if(typeof session!=='undefined') window.session=null;
   localStorage.removeItem(KEY);
   db=seed();
   save();
@@ -1554,7 +1534,8 @@ load();
 window.SupabaseConfigured=(function(){
   try{
     const url=localStorage.getItem('hall_supabase_url')||'https://fbmzbanvvsshmoypqejh.supabase.co';
-    const key=localStorage.getItem('hall_supabase_key')||'sb_publishable_0BqGoQOkYbT2jHsm8-nxrQ_2q6CSWQl';
+    const key=localStorage.getItem('hall_supabase_key')||'sb_publishable_0BqGo
+QOkYbT2jHsm8-nxrQ_2q6CSWQl';
     return !!(url&&key&&!url.includes('YOUR_')&&!key.includes('YOUR_'));
   }catch(e){return false}
 })();
@@ -1567,38 +1548,38 @@ window._authDecisionPending=false;
 
 const SESSION_KEY='hall_session_v1';
 const PASSWORD_SALT='hall_manager_salt_v1';
-const SESSION_TTL_MS=8*60*60*1000;
+const 
+SESSION_TTL_MS=8*60*60*1000;
 const LOGIN_ATTEMPTS_KEY='hall_login_attempts_v1';
 const MAX_LOGIN_ATTEMPTS=5;
 const LOGIN_LOCKOUT_MS=15*60*1000;
 const MAX_PASSWORD_REQUESTS=100;
 
 const PERMISSIONS=[
-  {k:'dashboard',t:'داشبورد',i:IC.das
-h,adminOnly:false,desc:'نمای کلی و آمار'},
+  {k:'dashboard',t:'داشبورد',i:IC.dash,adminOnly:false,desc:'نمای کلی و آمار'},
   {k:'calendar',t:'تقویم رزرو',i:IC.cal,adminOnly:false,desc:'نمایش تقویم شمسی'},
   {k:'reservations',t:'فهرست رزروها',i:IC.list,adminOnly:false,desc:'مشاهده و مدیریت رزروها'},
   {k:'new',t:'ثبت رزرو جدید',i:IC.plus,adminOnly:false,desc:'ایجاد درخواست رزرو'},
   {k:'halls',t:'مدیریت سالن‌ها',i:IC.hall,adminOnly:true,desc:'فقط مدیر (خودکار)'},
   {k:'slots',t:'سانس‌های زمانی',i:IC.clock,adminOnly:true,desc:'فقط مدیر (خودکار)'},
-  {k:'equipment',t:'تجهیزات',i:IC.gear,adminOnly:true,desc:'فقط مدیر 
-(خودکار)'},
+  {k:'equipment',t:'تجهیزات',i:IC.gear,adminOnly:true,desc:'فقط مدیر (خودکار)'},
   {k:'applicants',t:'متقاضیان',i:IC.users,adminOnly:false,desc:'مدیریت متقاضیان'},
   {k:'reports',t:'گزارش و چاپ',i:IC.chart,adminOnly:false,desc:'تهیه گزارش و خروجی CSV'},
-  {k:'data',t:'مدیریت اطلاعات',i:IC.db,adminOnly:true,desc:'فقط مدیر (پشتیبان/بازیابی)'},
+  {k:'data',t:'مدیریت اطلاعات',i:IC.db,ad
+minOnly:true,desc:'فقط مدیر (پشتیبان/بازیابی)'},
 ];
 
 let session=null;
 
 let _cryptoWarned=false;
 function isCryptoAvailable(){
-  return typeof window!=='undefined'&&window.crypto&&window.crypto.subtle&&typeof 
-window.crypto.subtle.digest==='function';
+  return typeof window!=='undefined'&&window.crypto&&window.crypto.subtle&&typeof window.crypto.subtle.digest==='function';
 }
 async function hashPassword(password){
   if(isCryptoAvailable()){
     try{
-      const encoder=new TextEncoder();
+      const encoder=new 
+TextEncoder();
       const data=encoder.encode(password+PASSWORD_SALT);
       const hash=await crypto.subtle.digest('SHA-256',data);
       return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
@@ -1616,8 +1597,7 @@ async function hashPassword(password){
   for(let i=0;i<str.length;i++){
     const ch=str.charCodeAt(i);
     h1=Math.imul(h1^ch,2654435761);
-    
-h2=Math.imul(h2^ch,1597334677);
+    h2=Math.imul(h2^ch,1597334677);
   }
   h1=h1^(h1>>>16);h2=h2^(h2>>>16);
   return 'fallback_'+(h1>>>0).toString(16).padStart(8,'0')+(h2>>>0).toString(16).padStart(8,'0');
@@ -1645,14 +1625,14 @@ function recordFailedLoginAttempt(username){
 }
 function clearLoginAttempts(username){
   try{
-    const all=JSON.parse(localStorage.getItem(LOGIN_ATTEMPTS_KEY)||'{}');
+    const 
+all=JSON.parse(localStorage.getItem(LOGIN_ATTEMPTS_KEY)||'{}');
     delete all[username.toLowerCase()];
     localStorage.setItem(LOGIN_ATTEMPTS_KEY,JSON.stringify(all));
   }catch(e){}
 }
 function getLockoutRemaining(username){
-  const attempts=getLoginAttempts(
-username);
+  const attempts=getLoginAttempts(username);
   if(attempts.length<MAX_LOGIN_ATTEMPTS) return 0;
   const oldest=attempts[0];
   const elapsed=Date.now()-oldest;
@@ -1664,8 +1644,7 @@ function generateRecoveryCode(){
   const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const len=12;
   let code='';
-  if(window.crypto&&window.crypto.getRandomValues&&typeof 
-Uint8Array!=='undefined'){
+  if(window.crypto&&window.crypto.getRandomValues&&typeof Uint8Array!=='undefined'){
     const arr=new Uint8Array(len);
     window.crypto.getRandomValues(arr);
     for(let i=0;i<len;i++) code+=chars.charAt(arr[i]%chars.length);
@@ -1683,25 +1662,20 @@ function normalizeRecoveryCode(input){
 }
 
 function currentUser(){
+  // موقتاً یک کاربر ادمین مجازی برمی‌گرداند
   if(!session) return null;
-  return db.users.find(u=>u.id===session.userId)||null;
+  return {id:0,name:'مدیر',role:'admin',active:true,permissions:[]};
 }
 function isAdmin(){
-  const u=currentUser();
-  return !!(u&&u.role==='admin');
+  return true; // موقتاً همه ادمین هستند
 }
 function hasPermission(module){
-  if(!session) return false;
-  const u=currentUser();
-  if(!u||!u.active) return false;
-  if(u.role==='admin') return true;
-  const permDef=PERMISSIONS.find(p=>p.k===module);
-  if(permDef&&permDef.adminOnly) return false;
-  return (u.permissions||[]).includes(module);
+  return true; // موقتاً همه دسترسی کامل دارند
 }
 
 function updateUserChip(){
-  const wrap=document.getElementById('userChipWrap');
+  const wrap=document.getElement
+ById('userChipWrap');
   if(!wrap) return;
   const u=currentUser();
   if(!u){ wrap.classList.add('hidden'); return; }
@@ -1725,15 +1699,15 @@ function showAuthError(msg){
 function showAuthLoading(){
   const screen=document.getElementById('authScreen');
   screen.classList.remove('hidden');
-  document.getElementById('authTitle').textContent='در حال بارگذاری...';
-  document.getElementById('auth
-Subtitle').textContent='در حال بررسی وضعیت حساب‌ها و اتصال به دیتابیس';
+  document.getElementById('authTitle').textContent='در حال 
+بارگذاری...';
+  document.getElementById('authSubtitle').textContent='در حال بررسی وضعیت حساب‌ها و اتصال به دیتابیس';
   document.getElementById('authBody').innerHTML=`
     <div style="text-align:center;padding:40px 0">
       <div style="width:44px;height:44px;border:4px solid var(--brand-soft);border-top-color:var(--brand);border-radius:50%;animation:hallSpin .8s linear infinite;margin:0 auto 16px"></div>
       <p style="color:var(--muted);font-size:13px">در حال اتصال به دیتابیس ابری...</p>
-      <p style="color:var(--muted-2);font-size:11.5px;margin-top:6px">اگر بیش از ۱۵ ثانیه طول کشید، از داده‌های محلی 
-استفاده می‌شود</p>
+      <p style="color:var(--muted-2);f
+ont-size:11.5px;margin-top:6px">اگر بیش از ۱۵ ثانیه طول کشید، از داده‌های محلی استفاده می‌شود</p>
     </div>
     <style>@keyframes hallSpin{to{transform:rotate(360deg)}}</style>
   `;
@@ -1749,65 +1723,27 @@ function decideAuthScreen(){
       if(parsed.loginAt && Date.now()-new Date(parsed.loginAt).getTime()<=SESSION_TTL_MS){
         const u=db.users.find(x=>x.id===parsed.userId);
         if(u&&u.active){ session=parsed; showApp(); return; }
-        // باگ ۶ اصلاح شد: نشست کهنه/نامعتبر را پاک کن
-        localStorage.removeItem(SESSION_KEY);
-      }else{
-        // TTL منقضی شده یا loginAt نامعتبر
-        localStorage.removeItem(SESSION_KEY);
       }
     }
-  }catch(e){
-    localStorage.removeItem(SESSION_KEY);
-  }
+  }catch(e){}
   if(!Array.isArray(db.users)) db.users=[];
   if(db.users.length===0) showSetupScreen();
   else showLoginScreen();
 }
 
 /* ============ راه‌اندازی احراز هویت ============ */
+// ====== احراز هویت موقتاً غیرفعال است ======
+// برای فعال‌سازی مجدد، این تابع را به حالت قبل برگردان
 function initAuth(){
-  if(!Array.isArray(db.users)) db.users=[];
-  if(!Array.isArray(db.passwordRequests)) db.passwordRequests=[];
-
-  try{
-    const stored=localStorage.getItem(SESSION_KEY);
-    if(stored){
-      const parsed=JSON.parse(stored);
-      if(parsed.loginAt){
-        const sessionAge=Date.now()-new Date(parsed.loginAt).getTime();
-        if(sessionAge>SESSION_TTL_MS){
-          localStorage.removeItem(SESSION_KEY);
-          session=null;
-        }else{
-          const u=db.users.find(x=>x.id===parsed.userId);
-          if(u&&u.active){ session=parsed; showApp(); return; }
-          localStorage.removeItem(SESSION_KEY);
-        }
-      }else{
-        localStorage.removeItem(SESSION_KEY);
-      }
-    }
-  }catch(e){ localStorage.removeItem(SESSION_KEY); }
-
-  if(window.SupabaseConfigured && !window.CloudSyncComplete){
-    window._authDecisionPending=true;
-    showAuthLoading();
-    setTimeout(()=>{
-      if(window._authDecisionPending){
-        console.warn('[Auth] Cloud sync timeout - using local data');
-        window._authDecisionPending=false;
-        decideAuthScreen();
-      }
-    },15000);
-    return;
-  }
-
-  decideAuthScreen();
+  // مستقیم وارد اپ می‌شویم (بدون لاگین)
+  session={userId:0,loginAt:new Date().toISOString()};
+  showApp();
 }
 
 /* ============ نمایش صفحه ورود ============ */
 function showLoginScreen(){
-  const screen=document.getElementById('authScreen');
+  const screen=document.getElemen
+tById('authScreen');
   screen.classList.remove('hidden');
   document.getElementById('authTitle').textContent='ورود به سامانه';
   document.getElementById('authSubtitle').textContent='مدیریت سالن‌ها · تولید محتوا، رسانه و مستندسازی';
@@ -1816,8 +1752,8 @@ function showLoginScreen(){
     <form class="auth-form" onsubmit="event.preventDefault();doLogin()">
       <div class="field">
         <label>نام کاربری</label>
-        <input name="username" 
-required placeholder="نام کاربری خود را وارد کنید" autocomplete="username" autofocus>
+        <input name="username" required placeholder="نام 
+کاربری خود را وارد کنید" autocomplete="username" autofocus>
       </div>
       <div class="field">
         <label>رمز عبور</label>
@@ -1827,7 +1763,8 @@ required placeholder="نام کاربری خود را وارد کنید" autocom
     </form>
     <div class="auth-actions">
       <span></span>
-      <span class="auth-link" onclick="showForgotScreen()">فراموشی رمز عبور؟</span>
+      <span class="auth-link" onclick
+="showForgotScreen()">فراموشی رمز عبور؟</span>
     </div>
     ${canEmergencyReset()?`
       <div style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--border-2);text-align:center">
@@ -1845,8 +1782,7 @@ function canEmergencyReset(){
 }
 
 function emergencyAdminReset(){
-  const admin=db.users.find(u=>u.role==='admin'&&u.active&&u.recov
-eryHash);
+  const admin=db.users.find(u=>u.role==='admin'&&u.active&&u.recoveryHash);
   if(!admin){
     const anyAdmin=db.users.find(u=>u.role==='admin'&&u.active);
     if(!anyAdmin){
@@ -1854,8 +1790,8 @@ eryHash);
       return;
     }
     document.getElementById('authBody').innerHTML=`
-      <div class="auth-error show">${IC.warn}<div>این مدیر کد بازیابی ندارد (احتمالاً قبل از فعال‌سازی این قابلیت ساخته شده).<br><br>برای بازیابی، باید از کنسول مرورگر (F12) استفاده کنید:<br><code style="display:block;background:var(--surface-3);padding:8px;margin-top:8px;border-radius:6px;font-siz
-e:11px">db.users=[];save();setTimeout(()=>location.reload(),2500)</code></div></div>
+      <div class="auth-error show">${IC.warn}<div>این مدیر کد بازیابی ندارد (احتمالاً قبل از فعال‌سازی این قابلیت ساخته شده).<br><br>برای بازیابی، باید از کنسول مرورگر (F12) استفاده کنید:<br><code style="display:block;background:var(--surface-3);padding:8px;margin-top:8px;border-radius:6px;font-size:11px">db.users=[];save();setTim
+eout(()=>location.reload(),2500)</code></div></div>
     `;
     return;
   }
@@ -1863,7 +1799,8 @@ e:11px">db.users=[];save();setTimeout(()=>location.reload(),2500)</code></div></
   document.getElementById('authSubtitle').textContent='کد بازیابی اضطراری را وارد کنید';
   document.getElementById('authBody').innerHTML=`
     <div class="alert-danger" style="display:block">${IC.warn}<div>این عملیات فقط با <b>کد بازیابی</b> که هنگام راه‌اندازی به مدیر داده شده قابل اجراست.</div></div>
-    <div class="auth-error" id="authError"></div>
+    <div class="auth-error" 
+id="authError"></div>
     <form class="auth-form" onsubmit="event.preventDefault();verifyRecoveryCode()">
       <div class="field">
         <label>کد بازیابی</label>
@@ -1882,7 +1819,8 @@ e:11px">db.users=[];save();setTimeout(()=>location.reload(),2500)</code></div></
 async function verifyRecoveryCode(){
   const form=document.querySelector('#authBody .auth-form');
   const f=new FormData(form);
-  const inputCode=normalizeRecoveryCode(f.get('recoveryCode'));
+  const inputCode=normalizeRecove
+ryCode(f.get('recoveryCode'));
   showAuthError('');
   if(inputCode.length!==12){
     showAuthError('کد بازیابی باید ۱۲ کاراکتر باشد.');
@@ -1905,7 +1843,8 @@ async function verifyRecoveryCode(){
   const confirmPassword=prompt('رمز جدید را دوباره وارد کنید (تأیید):','');
   if(confirmPassword===null) return;
   if(confirmPassword!==newPassword){
-    showAuthError('تأیید رمز با رمز جدید مطابقت ندارد.');
+    showAuthError('تأیید رمز با رمز جدید 
+مطابقت ندارد.');
     return;
   }
   admin.passwordHash=await hashPassword(newPassword);
@@ -1915,7 +1854,8 @@ async function verifyRecoveryCode(){
   document.getElementById('authTitle').textContent='✓ رمز بازنشانی شد';
   document.getElementById('authSubtitle').textContent='اکنون می‌توانید با رمز جدید وارد شوید';
   document.getElementById('authBody').innerHTML=`
-    <div class="auth-success-notice">${IC.check}<div><b>رمز مدیر «${esc(admin.name)}» با موفقیت بازنشانی شد!</b><br>اکنون می‌توانید با نام کاربری و رمز جدید وارد شوید.</div></div>
+    <div 
+class="auth-success-notice">${IC.check}<div><b>رمز مدیر «${esc(admin.name)}» با موفقیت بازنشانی شد!</b><br>اکنون می‌توانید با نام کاربری و رمز جدید وارد شوید.</div></div>
     <button class="btn btn-primary" style="width:100%;padding:12px" onclick="showLoginScreen()">${IC.check} ادامه و ورود</button>
   `;
 }
@@ -1924,14 +1864,16 @@ async function verifyRecoveryCode(){
 function showSetupScreen(){
   const screen=document.getElementById('authScreen');
   screen.classList.remove('hidden');
-  document.getElementById('authTitle').textContent='راه‌اندازی اولیه';
+  document.getElementById('a
+uthTitle').textContent='راه‌اندازی اولیه';
   document.getElementById('authSubtitle').textContent='برای شروع، حساب کاربری مدیر را ایجاد کنید';
   document.getElementById('authBody').innerHTML=`
     <div class="notice">${IC.info}<div>این اولین اجرای سامانه است. یک حساب <b>مدیر</b> بسازید تا بتوانید کاربران دیگر و دسترسی‌های آن‌ها را تعریف کنید.</div></div>
     <div class="auth-error" id="authError"></div>
     <form class="auth-form" onsubmit="event.preventDefault();doSetup()">
       <div class="field">
-        <label>نام و نام خانوادگی <span class="req">*</span></label>
+        <label>نام و نام خانوادگی <span 
+class="req">*</span></label>
         <input name="name" required placeholder="مثال: علی رضایی" autofocus>
       </div>
       <div class="field">
@@ -1958,8 +1900,7 @@ function showForgotScreen(){
   document.getElementById('authBody').innerHTML=`
     <div class="notice">${IC.info}<div>برای بازنشانی رمز، نام کاربری یا ایمیل خود را وارد کنید. درخواست شما به مدیر سامانه ارسال می‌شود.</div></div>
     <div class="auth-error" id="authError"></div>
-    <form class="auth-form" onsubmit="event.preventDefault();
-doForgotRequest()">
+    <form class="auth-form" onsubmit="event.preventDefault();doForgotRequest()">
       <div class="field">
         <label>نام کاربری یا ایمیل</label>
         <input name="identifier" required placeholder="نام کاربری یا ایمیل خود را وارد کنید" autofocus>
@@ -1971,7 +1912,8 @@ doForgotRequest()">
       <span></span>
     </div>
   `;
-  setTimeout(()=>{const el=document.querySelector('#authBody [name=identifier]');if(el)el.focus()},50);
+  setTimeout(()=>{const el=docume
+nt.querySelector('#authBody [name=identifier]');if(el)el.focus()},50);
 }
 
 async function doLogin(){
@@ -1984,7 +1926,8 @@ async function doLogin(){
     showAuthError('نام کاربری و رمز عبور را وارد کنید.');
     return;
   }
-  const lockoutRemaining=getLockoutRemaining(username);
+  const lockoutRemaining=getLocko
+utRemaining(username);
   if(lockoutRemaining>0){
     showAuthError(`تعداد تلاش‌های ناموفق بیش از حد مجاز. لطفاً ${lockoutRemaining} دقیقه دیگر صبر کنید.`);
     return;
@@ -1994,7 +1937,8 @@ async function doLogin(){
     recordFailedLoginAttempt(username);
     log('ورود ناموفق',`نام کاربری: ${username} (کاربر یافت نشد یا غیرفعال)`);
     save();
-    const remaining=MAX_LOGIN_ATTEMPTS-getLoginAttempts(username).length;
+    const remaining=MAX_LOGIN_A
+TTEMPTS-getLoginAttempts(username).length;
     showAuthError(remaining>0
       ?`نام کاربری یا رمز عبور نادرست است. تلاش‌های باقیمانده: ${remaining}`
       :`تعداد تلاش‌های ناموفق بیش از حد. حساب به مدت ۱۵ دقیقه قفل شد.`
@@ -2006,7 +1950,8 @@ async function doLogin(){
     recordFailedLoginAttempt(username);
     log('ورود ناموفق',`نام کاربری: ${username} (رمز نادرست)`);
     save();
-    const remaining=MAX_LOGIN_ATTEMPTS-getLoginAttempts(username).length;
+    const remaining=MAX_LOGIN_A
+TTEMPTS-getLoginAttempts(username).length;
     showAuthError(remaining>0
       ?`نام کاربری یا رمز عبور نادرست است. تلاش‌های باقیمانده: ${remaining}`
       :`تعداد تلاش‌های ناموفق بیش از حد. حساب به مدت ۱۵ دقیقه قفل شد.`
@@ -2060,7 +2005,8 @@ async function changeMyPassword(){
 
 async function doSetup(){
   const form=document.querySelector('#authBody .auth-form');
-  if(!form.checkValidity()){form.reportValidity();return}
+  if(!form.checkValidity())
+{form.reportValidity();return}
   const f=new FormData(form);
   const username=String(f.get('username')).trim().toLowerCase();
   showAuthError('');
@@ -2095,13 +2041,12 @@ function showRecoveryCodeScreen(code){
   document.getElementById('authTitle').textContent='✓ حساب مدیر ایجاد شد';
   document.getElementById('authSubtitle').textContent='کد بازیابی خود را ذخیره کنید';
   document.getElementById('authBody').innerHTML=`
-    <div class="auth-success-notice">$
-{IC.check}<div><b>حساب مدیر با موفقیت ایجاد شد!</b><br>اکنون یک <b>کد بازیابی اضطراری</b> منحصربه‌فرد برای شما تولید شده است.</div></div>
+    <div class="auth-success-notice">${IC.check}<div><b>حساب مدیر با 
+موفقیت ایجاد شد!</b><br>اکنون یک <b>کد بازیابی اضطراری</b> منحصربه‌فرد برای شما تولید شده است.</div></div>
     <div style="margin:18px 0;padding:18px;background:var(--amber-soft);border:1.5px dashed var(--amber);border-radius:14px">
       <label style="display:block;font-size:12px;color:var(--amber);margin-bottom:10px;font-weight:800;letter-spacing:.3px">⚠ کد بازیابی اضطراری - یک‌بار نمایش</label>
       <div class="password-display" style="font-size:22px;letter-spacing:3px;background:var(--surface)">${esc(formatted)}</div>
-      <p style="font-size:12px;color:var(--ink-2);margin-top:12px;line-heig
-ht:1.7">
+      <p style="font-size:12px;color:var(--ink-2);margin-top:12px;line-height:1.7">
         این کد در صورت فراموشی رمز عبور، تنها راه بازنشانی حساب مدیر است.<br>
         آن را در محل <b>امن</b> ذخیره کنید (مثلاً مدیر رمز عبور، گاوصندوق فیزیکی، یا چاپ روی کاغذ).<br>
         هر کسی که این کد را داشته باشد می‌تواند حساب مدیر را بازنشانی کند.
@@ -2109,8 +2054,8 @@ ht:1.7">
     </div>
     <div style="display:flex;gap:8px;margin-top:14px">
       <button type="button" class="btn btn-secondary" style="flex:1;padding:12px" data-copy>📋 کپی کد</button>
-      <button type="button" class="btn btn-primary" style="flex:2;padding:12px" 
-data-continue>${IC.check} ذخیره کردم، ادامه</button>
+      <button type="button" class="btn btn-primary" style="flex:2;padding:12px" data-continue>${IC.check} ذخیره 
+کردم، ادامه</button>
     </div>
   `;
   const body=document.getElementById('authBody');
@@ -2171,8 +2116,7 @@ function doForgotRequest(){
   if(db.passwordRequests.length>MAX_PASSWORD_REQUESTS){
     db.passwordRequests=db.passwordRequests.slice(0,MAX_PASSWORD_REQUESTS);
   }
-  log('درخواست بازنشانی رمز',`کاربر: $
-{user.name} (${identifier})`);
+  log('درخواست بازنشانی رمز',`کاربر: ${user.name} (${identifier})`);
   save();
   document.getElementById('authBody').innerHTML=`
     <div class="auth-success-notice">${IC.check}<div>درخواست شما با موفقیت به مدیر سامانه ارسال شد.<br>پس از تأیید مدیر، رمز جدید به شما اطلاع داده خواهد شد.</div></div>
@@ -2181,8 +2125,7 @@ function doForgotRequest(){
 }
 
 function logout(){
-  if(!confirm('از سامانه خارج می‌شوید؟')) 
-return;
+  if(!confirm('از سامانه خارج می‌شوید؟')) return;
   localStorage.removeItem(SESSION_KEY);
   session=null;
   view='dashboard';
@@ -2197,7 +2140,8 @@ function showApp(){
   shell();
 }
 
-/* ============ صفحه مدیریت کاربران ============ */
+/* ============ صفحه مدیریت کاربران 
+============ */
 function usersPage(c){
   if(!isAdmin()){
     c.innerHTML=`<section><div class="card"><div class="alert-danger">${IC.warn}<div>شما به این بخش دسترسی ندارید. فقط مدیر می‌تواند کاربران را مدیریت کند.</div></div></div></section>`;
@@ -2215,8 +2159,8 @@ function usersPage(c){
               <strong>${esc(r.userName)}</strong>
               <small>زمان: ${new Date(r.requestedAt).toLocaleString('fa-IR')} · شناسه: ${esc(r.userIdentifier)}</small>
             </div>
-            <button class="btn btn-sm btn-primary" onclick="resolvePass
-wordRequest(${r.id})">${IC.check} اختصاص رمز جدید</button>
+            <button class="btn btn-sm btn-primary" onclick="resolvePasswordRequest(${r.id})">${IC.check} 
+اختصاص رمز جدید</button>
           </div>
         `).join('')}
       </div>
@@ -2228,8 +2172,7 @@ wordRequest(${r.id})">${IC.check} اختصاص رمز جدید</button>
       </div>
       ${db.users.length?`
         <div class="table-wrap"><table>
-          <thead><tr><th>نام</th><th>نام کاربری</th><th>ایمیل</th><th>نقش</th><th>دسترسی‌ها</th><th>وضعیت</th><th>آخرین ورود</th><th>عملیات</
-th></tr></thead>
+          <thead><tr><th>نام</th><th>نام کاربری</th><th>ایمیل</th><th>نقش</th><th>دسترسی‌ها</th><th>وضعیت</th><th>آخرین ورود</th><th>عملیات</th></tr></thead>
           <tbody>${db.users.map(u=>{
             const isLastAdmin=db.users.filter(x=>x.role==='admin'&&x.active).length<=1&&u.role==='admin';
             const isSelf=currentUser()&&u.id===currentUser().id;
@@ -2237,23 +2180,23 @@ th></tr></thead>
               <td data-label="نام"><b>${esc(u.name)}</b>${isSelf?' <small style="color:var(--brand)">(شما)</small>':''}</td>
               <td data-label="نام کاربری" style="font-family:monospace;direction:ltr;text-align:right">${esc(u.username)}</td>
               <td data-label="ایمیل" style="font-size:12px">${esc(u.email)}</td>
-              <td data-label="نقش">${u.role==='admin'?'<span class="badge b-confirmed">مدیر</span>':'<span class="badge b-approved">کاربر</span>'}</td>
+              <td data-label="نقش">$
+{u.role==='admin'?'<span class="badge b-confirmed">مدیر</span>':'<span class="badge b-approved">کاربر</span>'}</td>
               <td data-label="دسترسی‌ها">${u.role==='admin'?'<span style="color:var(--muted)">همه (خودکار)</span>':`${(u.permissions||[]).length} ماژول`}</td>
               <td data-label="وضعیت">${u.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</span>'}</td>
-              <td data-label="آخرین ورود" style="font-size:12px">${u.lastLogin?new Date(u.lastLogin
-).toLocaleDateString('fa-IR'):'—'}</td>
+              <td data-label="آخرین ورود" style="font-size:12px">${u.lastLogin?new Date(u.lastLogin).toLocaleDateString('fa-IR'):'—'}</
+td>
               <td data-label="عملیات">
                 <div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
                   <button class="btn btn-sm btn-secondary" onclick="editUser(${u.id})" title="ویرایش">${IC.edit}</button>
                   ${u.role==='admin'?`
-                    <button class="btn btn-sm btn-secondary" onclick="demoteFromAdmin(${u.id})" ${isSelf||isLastAdmin?'disabled style="opacity:.5;cursor:not-allowed" title="نمی‌توانید خودتان یا آخرین مدیر را کاهش دهید"':''} title="کاهش به کاربر">↓ 
-کاربر</button>
+                    <button class="btn btn-sm btn-secondary" onclick="demoteFromAdmin(${u.id})" ${isSelf||isLastAdmin?'disabled style="opacity:.5;cursor:not-allowed" title="نمی‌توانید خودتان یا آخرین مدیر را کاهش دهید"':''} title="کاهش به کاربر">↓ کاربر</button>
                   `:`
                     <button class="btn btn-sm btn-secondary" onclick="editUserPermissions(${u.id})" title="دسترسی‌ها">دسترسی</button>
                     <button class="btn btn-sm btn-secondary" onclick="resetUserPassword(${u.id})" title="بازنشانی رمز">رمز</button>
                     <button class="btn btn-sm btn-primary" onclick="promoteToAdmin(${u.id})" title="ارتقا به مدیر">↑ مدیر</button>
-                    <button class="btn btn-sm ${u.active?'btn-se
-condary':'btn-primary'}" onclick="toggleUser(${u.id})">${u.active?'غیرفعال':'فعال'}</button>
+                    <button class="btn btn-sm ${u.active?'btn-secondary':'btn-primary'}" 
+onclick="toggleUser(${u.id})">${u.active?'غیرفعال':'فعال'}</button>
                   `}
                 </div>
               </td>
@@ -2264,14 +2207,14 @@ condary':'btn-primary'}" onclick="toggleUser(${u.id})">${u.active?'غیرفعا�
     </div>
     <div class="card" style="border-color:var(--amber)">
       <div class="card-head">
-        <div class="card-title-icon" style="background:var(--amber-soft);color:var(--amber)">${IC.warn}</
-div>
+        <div class="card-title-icon" style="background:var(--amber-soft);color:var(--amber)">${IC.warn}</div>
         <h3 style="color:var(--amber)">کد بازیابی اضطراری</h3>
       </div>
       <div class="notice" style="background:var(--amber-soft);color:var(--amber)">${IC.info}<div>این کد تنها راه بازنشانی حساب مدیر در صورت فراموشی رمز عبور است. هر کسی که این کد را داشته باشد می‌تواند حساب مدیر را بازنشانی کند.</div></div>
       ${currentUser()&&currentUser().recoveryHash?`
         <p style="margin:14px 0;color:var(--muted);font-size:13px"><b>وضعیت:</b> ✓ کد بازیابی تنظیم شده است.</p>
-        <button class="btn btn-secondary" onclick="regenerateRecoveryCode()">${IC.warn} تولید مجدد کد بازیابی</button>
+        <button class="btn 
+btn-secondary" onclick="regenerateRecoveryCode()">${IC.warn} تولید مجدد کد بازیابی</button>
       `:`
         <p style="margin:14px 0;color:var(--red);font-size:13px"><b>⚠ هشدار:</b> شما هنوز کد بازیابی ندارید!</p>
         <button class="btn btn-primary" onclick="regenerateRecoveryCode()">${IC.plus} تولید کد بازیابی</button>
@@ -2279,14 +2222,14 @@ div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن کاربر جدید</h3></div>
-      <div class="notice">${IC.info}
-<div>کاربر جدید به‌طور پیش‌فرض به ماژول‌های داشبورد، تقویم، رزروها، ثبت رزرو و گزارش دسترسی دارد.</div></div>
+      <div class="notice">${IC.info}<div>کاربر جدید به‌طور پیش‌فرض به 
+ماژول‌های داشبورد، تقویم، رزروها، ثبت رزرو و گزارش دسترسی دارد.</div></div>
       <form onsubmit="event.preventDefault();addUser()">
         <div class="row">
           <div class="field"><label>نام و نام خانوادگی <span class="req">*</span></label><input name="name" required placeholder="مثال: مریم حسینی"></div>
           <div class="field"><label>نام کاربری <span class="req">*</span></label><input name="username" required placeholder="m.hosseini"></div>
-          <div class="field"><label>ایمیل <span class="req">*</span></label><input name="email" 
-type="email" required placeholder="user@example.com"></div>
+          <div class="field"><label>ایمیل <span class="req">*</span></label><input name="email" type="email" required placeholder=
+"user@example.com"></div>
           <div class="field"><label>رمز اولیه <span class="req">*</span></label><input name="password" type="password" required minlength="6" placeholder="حداقل ۶ کاراکتر"></div>
         </div>
         <button class="btn btn-primary" type="submit">${IC.plus} افزودن کاربر</button>
@@ -2294,15 +2237,14 @@ type="email" required placeholder="user@example.com"></div>
     </div>
     ${allReqs.length?`
       <div class="card">
-        <div class="card-head"><div class="card-title-icon">${IC.clock}</div><h3>تاریخچه درخواست‌های بازنشانی 
-رمز</h3></div>
+        <div class="card-head"><div class="card-title-icon">${IC.clock}</div><h3>تاریخچه درخواست‌های بازنشانی رمز</h3></div>
         <div class="table-wrap"><table>
           <thead><tr><th>کاربر</th><th>زمان درخواست</th><th>وضعیت</th><th>زمان پاسخ</th></tr></thead>
           <tbody>${allReqs.map(r=>`<tr>
             <td data-label="کاربر"><b>${esc(r.userName)}</b><br><small style="color:var(--muted)">${esc(r.userIdentifier)}</small></td>
             <td data-label="زمان درخواست" style="font-size:12px">${new Date(r.requestedAt).toLocaleString('fa-IR')}</td>
-            <td data-label="وضعیت">$
-{r.status==='pending'?'<span class="badge b-approved">در انتظار</span>':'<span class="badge b-confirmed">پاسخ داده شد</span>'}</td>
+            <td data-label="وضعیت">${r.status==='pending'?'<span 
+class="badge b-approved">در انتظار</span>':'<span class="badge b-confirmed">پاسخ داده شد</span>'}</td>
             <td data-label="زمان پاسخ" style="font-size:12px">${r.resolvedAt?new Date(r.resolvedAt).toLocaleString('fa-IR'):'—'}</td>
           </tr>`).join('')}</tbody>
         </table></div>
@@ -2313,7 +2255,8 @@ type="email" required placeholder="user@example.com"></div>
 
 async function addUser(){
   const form=event.target;
-  if(!form.checkValidity()){form.reportValidity();return}
+  if(!form.checkValidity())
+{form.reportValidity();return}
   const f=new FormData(form);
   const username=String(f.get('username')||'').trim().toLowerCase();
   const email=String(f.get('email')||'').trim().toLowerCase();
@@ -2322,8 +2265,7 @@ async function addUser(){
   if(!username) return toast('نام کاربری الزامی است.','error');
   if(!email) return toast('ایمیل الزامی است.','error');
   if(db.users.some(u=>u.username.toLowerCase()===username)){
-    toast('این نام کاربری قبلاً ثبت شده 
-است.','error');
+    toast('این نام کاربری قبلاً ثبت شده است.','error');
     return;
   }
   if(db.users.some(u=>u.email.toLowerCase()===email)){
@@ -2338,7 +2280,8 @@ async function addUser(){
     email:email,
     passwordHash:passwordHash,
     role:'user',
-    permissions:['dashboard','calendar','reservations','new','reports'],
+    permissions:['dashboard','calend
+ar','reservations','new','reports'],
     active:true,
     createdAt:new Date().toISOString(),
     lastLogin:null
@@ -2390,7 +2333,8 @@ function demoteFromAdmin(id){
   u.permissions=['dashboard','calendar','reservations','new','reports'];
   log('سلب نقش مدیر',u.name);
   save();
-  toast(`${u.name} به کاربر عادی تقلیل یافت.`,'success');
+  toast(`${u.name} به کاربر عادی تقلیل 
+یافت.`,'success');
   shell();
 }
 
@@ -2401,8 +2345,7 @@ async function regenerateRecoveryCode(){
   const newCode=generateRecoveryCode();
   me.recoveryHash=await hashPassword(newCode);
   save();
-  log('تولید مجدد کد بازیابی',`توسط $
-{me.name}`);
+  log('تولید مجدد کد بازیابی',`توسط ${me.name}`);
   const formatted=formatRecoveryCode(newCode);
   const overlayId='recoveryCodeOverlay_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
   const overlay=document.createElement('div');
@@ -2414,14 +2357,14 @@ async function regenerateRecoveryCode(){
     <div class="pdate-overlay" style="display:flex;align-items:center" data-overlay-close>
       <div class="pdate-box" style="width:480px;max-width:100%">
         <div class="pdate-header">
-          <h3 style="font-size:15px;font-weight:800">کد بازیابی جدید</h3>
+          <h3 style="font-size:15px;f
+ont-weight:800">کد بازیابی جدید</h3>
           <button type="button" class="pdate-nav-btn" data-close>×</button>
         </div>
         <div class="alert-danger" style="display:block;margin-bottom:14px">${IC.warn}<div>این کد را در محل <b>امن</b> ذخیره کنید.</div></div>
         <div class="password-display" style="font-size:22px;letter-spacing:3px">${esc(formatted)}</div>
         <div class="pdate-actions">
-          <span style="font-size:11px;color:var(--red)">⚠ این کد دیگر نمایش داده 
-نخواهد شد</span>
+          <span style="font-size:11px;color:var(--red)">⚠ این کد دیگر نمایش داده نخواهد شد</span>
           <button type="button" class="btn btn-primary btn-sm" data-copy>📋 کپی کد</button>
         </div>
       </div>
@@ -2430,8 +2373,7 @@ async function regenerateRecoveryCode(){
   document.body.appendChild(overlay);
   overlay.querySelector('[data-copy]').addEventListener('click',()=>{
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(formatted).then(()=>toast('کد کپی شد.','success')).catch(()=>toast('کپی 
-ناموفق بود.','warning'));
+      navigator.clipboard.writeText(formatted).then(()=>toast('کد کپی شد.','success')).catch(()=>toast('کپی ناموفق بود.','warning'));
     }else{
       toast('مرورگر از کپی خودکار پشتیبانی نمی‌کند.','warning');
     }
@@ -2456,7 +2398,8 @@ function editUser(id){
     toast('اطلاعات نامعتبر است.','error');
     return;
   }
-  if(db.users.some(x=>x.id!==id&&x.username.toLowerCase()===username.trim().toLowerCase())){
+  if(db.users.some(x=>x.id!
+==id&&x.username.toLowerCase()===username.trim().toLowerCase())){
     toast('این نام کاربری قبلاً ثبت شده است.','error');
     return;
   }
@@ -2466,7 +2409,8 @@ function editUser(id){
   }
   u.name=name.trim();
   u.email=email.trim().toLowerCase();
-  u.username=username.trim().toLowerCase();
+  u.username=username.trim().toLo
+werCase();
   save();
   toast('اطلاعات کاربر به‌روزرسانی شد.','success');
   shell();
@@ -2487,7 +2431,8 @@ function editUserPermissions(id){
           ${PERMISSIONS.map(p=>`
             <label class="perm-card">
               <div style="display:flex;align-items:center;gap:8px;flex:1">
-                <div class="perm-icon">${p.i}</div>
+                <div class="perm-icon">$
+{p.i}</div>
                 <div class="perm-info">
                   <strong>${p.t}</strong>
                   <small>${p.desc}</small>
@@ -2498,8 +2443,8 @@ function editUserPermissions(id){
           `).join('')}
         </div>
         <div class="pdate-actions">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="closePer
-missionsModal()">انصراف</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closePermissionsModal()">انصراف</
+button>
           <button type="button" class="btn btn-primary btn-sm" onclick="savePermissions(${id})">${IC.check} ذخیره دسترسی‌ها</button>
         </div>
       </div>
@@ -2551,8 +2496,7 @@ async function resetUserPassword(id){
   overlay.style.inset='0';
   overlay.style.zIndex='9999';
   overlay.innerHTML=`
-    <div class="pdate-overlay" style="display:flex;align-items:center" 
-data-overlay-close>
+    <div class="pdate-overlay" style="display:flex;align-items:center" data-overlay-close>
       <div class="pdate-box" style="width:440px;max-width:100%">
         <div class="pdate-header">
           <h3 style="font-size:15px;font-weight:800">رمز جدید ${esc(u.name)}</h3>
@@ -2570,8 +2514,8 @@ data-overlay-close>
   document.body.appendChild(overlay);
   overlay.querySelector('[data-copy]').addEventListener('click',()=>{
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(newPassword).then(()=>toast('رمز کپی 
-شد.','success')).catch(()=>toast('کپی ناموفق بود. رمز را دستی انتخاب کنید.','warning'));
+      navigator.clipboard.writeText(newPassword).then(()=>toast('رمز کپی شد.','success')).catch(()=>toast('کپی 
+ناموفق بود. رمز را دستی انتخاب کنید.','warning'));
     }else{
       toast('مرورگر از کپی خودکار پشتیبانی نمی‌کند. رمز را دستی کپی کنید.','warning');
     }
@@ -2581,7 +2525,8 @@ data-overlay-close>
     if(e.target.hasAttribute('data-overlay-close')) overlay.remove();
   });
   log('بازنشانی رمز کاربر',u.name);
-  toast('رمز عبور کاربر تغییر یافت. رمز جدید در پنجره نمایش داده شد.','success');
+  toast('رمز عبور کاربر تغییر یافت. رمز جدید 
+در پنجره نمایش داده شد.','success');
 }
 
 async function resolvePasswordRequest(reqId){
@@ -2594,8 +2539,7 @@ async function resolvePasswordRequest(reqId){
   const u=db.users.find(x=>x.id===req.userId);
   if(!u){
     req.status='resolved';
-    req.resolvedAt=new 
-Date().toISOString();
+    req.resolvedAt=new Date().toISOString();
     req.adminNotes='کاربر یافت نشد';
     save();
     toast('درخواست به‌عنوان حل‌شده علامت خورد (کاربر یافت نشد).','warning');
@@ -2629,8 +2573,8 @@ Date().toISOString();
           <h3 style="font-size:15px;font-weight:800">رمز جدید ${esc(u.name)}</h3>
           <button type="button" class="pdate-nav-btn" data-close>×</button>
         </div>
-        <p 
-style="font-size:13px;color:var(--muted);margin-bottom:8px">این رمز را به صورت امن به کاربر اطلاع دهید.</p>
+        <p style="font-size:13px;color:var(--mu
+ted);margin-bottom:8px">این رمز را به صورت امن به کاربر اطلاع دهید.</p>
         <div class="password-display">${esc(newPassword)}</div>
         <div class="pdate-actions">
           <span></span>
@@ -2640,8 +2584,7 @@ style="font-size:13px;color:var(--muted);margin-bottom:8px">این رمز را �
     </div>
   `;
   document.body.appendChild(overlay);
-  overlay.querySelector('[data-copy]').addEventListener('click',
-()=>{
+  overlay.querySelector('[data-copy]').addEventListener('click',()=>{
     if(navigator.clipboard&&navigator.clipboard.writeText){
       navigator.clipboard.writeText(newPassword).then(()=>toast('رمز کپی شد.','success')).catch(()=>toast('کپی ناموفق بود. رمز را دستی کپی کنید.','warning'));
     }else{
@@ -2649,8 +2592,7 @@ style="font-size:13px;color:var(--muted);margin-bottom:8px">این رمز را �
     }
   });
   overlay.querySelector('[data-close]').addEventListener('click',()=>overlay.remove());
-  overlay.querySelector('[data-overlay-close]').addEventListener('click',
-e=>{
+  overlay.querySelector('[data-overlay-close]').addEventListener('click',e=>{
     if(e.target.hasAttribute('data-overlay-close')) overlay.remove();
   });
   toast('درخواست بازنشانی رمز پردازش شد. رمز جدید در پنجره نمایش داده شد.','success');
@@ -2676,29 +2618,23 @@ function toggleUser(id){
 initAuth();
 
 /* ============ همگام‌سازی session بین تب‌ها ============ */
-// اگر در یک تب logout شود، تب‌های دیگر باید فوراً logout شوند
-window.addEventListener('storage',e=>{
-  if(e.key!==SESSION_KEY) return;
-  const authScreen=document.getElementById('authScreen');
-  if(!authScreen) return;
-
-  if(!e.newValue){
-    // session در تب دیگری پاک شده - این تب را هم logout کن
-    session=null;
-    view='dashboard';
-    // فقط اگر auth screen مخفی است (کاربر در اپ بود)، آن را نشان بده
-    if(authScreen.classList.contains('hidden')){
-      authScreen.classList.remove('hidden');
+window.addEventListener('storage',
+e=>{
+  if(e.key===SESSION_KEY){
+    if(!e.newValue){
+      session=null;
+      view='dashboard';
+      if(!document.getElementById('authScreen').classList.contains('hidden')) return;
+      document.getElementById('authScreen').classList.remove('hidden');
       if(typeof showLoginScreen==='function'){
         showLoginScreen();
         toast('نشست شما در تب دیگری بسته شد. دوباره وارد شوید.','warning');
       }
-    }
-  }else{
-    // session جدید در تب دیگری ساخته شده
-    // اگر ما در صفحه ورود بودیم و session نداشتیم، وارد شویم
-    if(!session && !authScreen.classList.contains('hidden')){
-      if(typeof initAuth==='function') initAuth();
+    }else{
+      if(!session&&document.get
+ElementById('authScreen')&&!document.getElementById('authScreen').classList.contains('hidden')){
+        if(typeof initAuth==='function') initAuth();
+      }
     }
   }
 });
@@ -2709,7 +2645,8 @@ window.addEventListener('storage',e=>{
 (function() {
   'use strict';
 
-  const SUPABASE_URL = (function(){
+  const SUPABASE_URL = (function()
+{
     try { return localStorage.getItem('hall_supabase_url') || 'https://fbmzbanvvsshmoypqejh.supabase.co'; }
     catch(e) { return 'https://fbmzbanvvsshmoypqejh.supabase.co'; }
   })();
@@ -2738,8 +2675,7 @@ window.addEventListener('storage',e=>{
 
   try {
     if (SUPABASE_URL && SUPABASE_KEY &&
-        !
-SUPABASE_URL.includes('YOUR_') && !SUPABASE_KEY.includes('YOUR_') &&
+        !SUPABASE_URL.includes('YOUR_') && !SUPABASE_KEY.includes('YOUR_') &&
         typeof window.supabase !== 'undefined') {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       window.SupabaseConfigured = true;
@@ -2753,80 +2689,43 @@ SUPABASE_URL.includes('YOUR_') && !SUPABASE_KEY.includes('YOUR_') &&
   } catch (e) {
     window.SupabaseConfigured = false;
     setSyncStatus('offline', 'خطای اتصال');
-    console.error('[Supabase] خطای راه‌اندازی:', e);
+    console.error('[Supabase] خطای 
+راه‌اندازی:', e);
   }
 
   if (!supabaseClient) return;
 
-  // ====== تابع امن syncToCloud با RPC (به‌جای نوشتن مستقیم) ======
-  // امنیت: حتی اگر کسی کلید anon را داشته 
-باشد (که عمومی است)، نمی‌تواند بنویسد
-  // چون توکن صحیح در localStorage مدیر ذخیره شده (نه در فایل HTML)
-  // برای تنظیم توکن، در کنسول مرورگر (F12) اجرا کنید:
-  //   localStorage.setItem('hall_write_token', 'YOUR_TOKEN_HERE')
   async function syncToCloud() {
     if (!cloudSyncReady) return;
     if (pendingSync) clearTimeout(pendingSync);
     pendingSync = setTimeout(async () => {
       setSyncStatus('syncing', 'در حال سینک...');
-
-      // توکن امنیتی - مطابق با مقدار در جدول app_secrets
       const writeToken = localStorage.getItem('hall_write_token') || 'salon_secret_1403';
       if (!writeToken) {
-        console.warn('[Sync] WRITE_TOKEN در localStorage تنظیم نشده - سینک ناممکن');
         setSyncStatus('offline', 'بدون توکن');
-        // باگ ۳ اصلاح شد: هشدار یک‌بار به مدیر (نه فقط console.warn)
-        if(!window._tokenMissingWarned){
-          window._tokenMissingWarned=true;
-          // فقط اگر مدیر است (یا کاربر وارد شده) هشدار بده
-          if(typeof isAdmin==='function' && isAdmin()){
-            toast('⚠ برای سینک با دیتابیس ابری، توکن نوشتن را تنظیم کنید. در کنسول (F12) اجرا کنید:\nlocalStorage.setItem(\'hall_write_token\', \'YOUR_TOKEN\')', 'warning', 10000);
-          }else if(typeof currentUser==='function' && currentUser()){
-            // کاربر عادی - توکن را مدیر باید تنظیم کند
-            toast('سینک با دیتابیس ابری غیرفعال است. با مدیر تماس بگیرید.', 'info', 5000);
-          }
-        }
         return;
       }
-
       try {
-        // استفاده از تابع RPC امن به جای نوشتن مستقیم
-        // تابع secure_upsert_salon توکن را اعتبارسنجی می‌کند
         const { error } = await supabaseClient.rpc('secure_upsert_salon', {
           secret_token: writeToken,
           data_payload: db
         });
-
         if (error) {
           console.error('[Supabase] خطای آپلود:', error.message);
-          // پیام دقیق‌تر بر اساس نوع خطا
           if (error.message.includes('Unauthorized')) {
             setSyncStatus('offline', 'توکن نامعتبر');
-            toast('توکن نوشتن نامعتبر است. با مدیر تماس بگیرید.', 'error', 5000);
-          } else if (error.message.includes('Data too large')) {
-            setSyncStatus('offline', 'داده بزرگ');
-            toast('حجم داده‌ها بیش از حد مجاز است.', 'error', 5000);
-          } else if (error.message.includes('Invalid data')) {
-            setSyncStatus('offline', 'داده نامعتبر');
-            toast('ساختار داده نامعتبر است.', 'error', 5000);
-          } else if 
-(error.message.includes('does not exist') || error.message.includes('function')) {
-            setSyncStatus('offline', 'تابع RPC یافت نشد');
-            if(!window._rpcMissingWarned){
-              window._rpcMissingWarned=true;
-              toast('⚠ تابع secure_upsert_salon در دیتابیس یافت نشد! فایل secure_rpc_setup.sql را در Supabase SQL Editor اجرا کنید.', 'error', 10000);
-            }
+          } else if (error.message.includes('does 
+not exist') || error.message.includes('function')) {
+            setSyncStatus('offline', 'RPC یافت نشد');
+            if(!window._rpcWarned){window._rpcWarned=true;toast('⚠ تابع secure_upsert_salon یافت نشد! SQL را اجرا کنید.','error',10000);}
           } else {
             setSyncStatus('offline', 'خطای سینک');
           }
-          return;
+        } else {
+          lastSyncAt = new Date();
+          setSyncStatus('online', 'آنلاین');
+          window._rpcWarned=false;
         }
-
-        lastSyncAt = new Date();
-        setSyncStatus('online', 'آنلاین');
-        // ریست هشدارها در صورت موفقیت
-        window._tokenMissingWarned=false;
-        window._rpcMissingWarned=false;
       } catch (e) {
         console.error('[Supabase] استثنای آپلود:', e);
         setSyncStatus('offline', 'خطای شبکه');
@@ -2843,16 +2742,17 @@ SUPABASE_URL.includes('YOUR_') && !SUPABASE_KEY.includes('YOUR_') &&
         .maybeSingle();
 
       if (error) {
-        console.log('[Supabase] خطا:', error.message);
+        console.log('[Supabase] خطا:', 
+error.message);
         return 'error';
       }
 
-      if (data && data.json_data && Array.isArray(data.json_data.reservations)) 
-{
+      if (data && data.json_data && Array.isArray(data.json_data.reservations)) {
         const cloudData = data.json_data;
         const cloudHasUsers = Array.isArray(cloudData.users) && cloudData.users.length > 0;
         const localHasUsers = Array.isArray(db.users) && db.users.length > 0;
-        const cloudUpdatedAt = cloudData._localUpdatedAt || data.updated_at || '1970-01-01T00:00:00Z';
+        const cloudUpdatedAt = cloudData._localUpdatedAt || data.updated_at || 
+'1970-01-01T00:00:00Z';
         const localUpdatedAt = db._localUpdatedAt || '1970-01-01T00:00:00Z';
         const cloudIsNewer = new Date(cloudUpdatedAt) > new Date(localUpdatedAt);
 
@@ -2865,22 +2765,20 @@ SUPABASE_URL.includes('YOUR_') && !SUPABASE_KEY.includes('YOUR_') &&
 
         if (cloudIsNewer) {
           db = cloudData;
-          // باگ ۲ اصلاح شد: اعتبارسنجی آرایه‌ها قبل از migrateData
+          sanitizeDB();
+          migrateData();
+          autoCompletePassedReservations();
           const REQ_ARRAYS=['halls','equipment','checks','issues','units','logs','slots','applicants','users','passwordRequests'];
           for(const k of REQ_ARRAYS){
             if(!Array.isArray(db[k])) db[k]=seed()[k]||[];
           }
-          // پاک‌سازی داده‌های ناقص از کلود (جلوگیری از کرش)
-          sanitizeDB();
-          migrateData();
-          autoCompletePassedReservations();
           try { localStorage.setItem(KEY, JSON.stringify(db)); } catch(e) {}
 
           if (typeof session !== 'undefined' && session) {
-            const u = db.users.find(x => x.id === session.userId);
+            const u = db.users.find(x => 
+x.id === session.userId);
             if (!u || !u.active) {
-              try { localStorage.remove
-Item('hall_session_v1'); } catch(e) {}
+              try { localStorage.removeItem('hall_session_v1'); } catch(e) {}
               session = null;
               view = 'dashboard';
               if(window.CloudSyncComplete){
@@ -2892,8 +2790,7 @@ Item('hall_session_v1'); } catch(e) {}
               }
               return 'loaded';
             }
-            
-if(window.CloudSyncComplete && typeof shell === 'function'){
+            if(window.CloudSyncComplete && typeof shell === 'function'){
               shell();
             }
           }
@@ -2958,10 +2855,10 @@ if(window.CloudSyncComplete && typeof shell === 'function'){
       if (loaded === 'none') {
         await syncToCloud();
       } else if (loaded === 'error') {
-        toast('اتصال به دیتابیس ابری برقرار نشد. داده‌ی محلی استفاده می‌شود.', 'warning', 4000);
+        toast('اتصال به دیتابیس ابری برقرار نشد. داده‌ی محلی استفاده می‌شود.', 
+'warning', 4000);
       } else {
-        toast('اتصال به دیتابیس ابری برقرار 
-شد.', 'success', 2000);
+        toast('اتصال به دیتابیس ابری برقرار شد.', 'success', 2000);
       }
     } catch (e) {
       console.error('[Supabase] استثنای سینک اولیه:', e);
