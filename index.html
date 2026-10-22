@@ -1487,10 +1487,14 @@ if (!ok) setSyncStatus('error', 'خطا');
 }, 1500);
 }
 
+var isInitialLoad = true;
+
 async function syncFromCloud() {
 if (!supabaseClient) return 'error';
-// FIX 9: Don't pull if we have pending changes (push first)
-if (cloudDirty && !isPushing) {
+// FIX 9: Don't pull if we have pending changes (push first) - but only if not initial load
+if (isInitialLoad) {
+console.log('[Supabase] Initial load - always check cloud first');
+} else if (cloudDirty && !isPushing) {
 console.log('[Supabase] Local changes pending, pushing first...');
 await syncToCloud();
 return 'pushed';
@@ -1507,6 +1511,7 @@ const { data, error } = await supabaseClient
 if (error) {
 console.error('[Supabase] Download error:', error.message);
 setSyncStatus('error', 'خطا');
+isInitialLoad = false;
 return 'error';
 }
 
@@ -1516,13 +1521,46 @@ const cloudData = data.json_data;
 if (!Array.isArray(cloudData.reservations) || !Array.isArray(cloudData.halls)) {
 console.error('[Supabase] Cloud data invalid structure');
 setSyncStatus('error', 'داده نامعتبر');
+isInitialLoad = false;
 return 'error';
 }
 
 const cloudTime = new Date(data.updated_at).getTime();
 const localTime = db._meta && db._meta.savedAt ? new Date(db._meta.savedAt).getTime() : 0;
 
-if (cloudTime > localTime) {
+// On initial load, if cloud has ANY data (even with users), always load it
+if (isInitialLoad) {
+console.log('[Supabase] Initial load - loading from cloud (cloudTime:', cloudTime, 'localTime:', localTime, ')');
+// Check if cloud has users (don't overwrite if cloud is empty of users but local has them)
+var cloudHasUsers = Array.isArray(cloudData.users) && cloudData.users.length > 0;
+var localHasUsers = Array.isArray(db.users) && db.users.length > 0;
+var localHasReservations = Array.isArray(db.reservations) && db.reservations.length > 0;
+
+if (cloudHasUsers || (!localHasUsers && !localHasReservations)) {
+// Cloud has users OR local is empty - load from cloud
+try {
+localStorage.setItem(KEY + '_backup', JSON.stringify(db));
+} catch (e) {}
+
+db = cloudData;
+migrateData();
+markPastForReview();
+try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) {}
+console.log('[Supabase] Data loaded from cloud on initial load');
+lastSyncAt = new Date(data.updated_at);
+cloudDirty = false;
+setSyncStatus('online', 'آنلاین');
+isInitialLoad = false;
+return 'loaded';
+} else {
+// Local has users but cloud doesn't - push local to cloud
+console.log('[Supabase] Local has users, cloud does not - pushing local');
+cloudSyncReady = true;
+isInitialLoad = false;
+await syncToCloud();
+return 'pushed';
+}
+} else if (cloudTime > localTime) {
 // Cloud is newer - backup local data first
 try {
 localStorage.setItem(KEY + '_backup', JSON.stringify(db));
@@ -1547,12 +1585,14 @@ return 'pushed';
 // No data in cloud yet - push local
 console.log('[Supabase] No data in cloud - pushing local');
 cloudSyncReady = true;
+isInitialLoad = false;
 await syncToCloud();
 return 'pushed';
 }
 } catch (e) {
 console.error('[Supabase] Download exception:', e);
 setSyncStatus('error', 'خطا');
+isInitialLoad = false;
 return 'error';
 }
 }
