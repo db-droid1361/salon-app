@@ -703,36 +703,22 @@ const seed=()=>({
 function migrateData(){if(!db)return;let needs=false;db.reservations.forEach(r=>{if(r.status==='pending'||
 r.status==='awaiting_sign'){r.status='approved';needs=true}if(r.guest===undefined){r.guest='';needs=true}});db.halls.forEach(h=>{if(!h.blocks){h.blocks=[];needs=true}});if(needs)save()}
 function autoCompletePassedReservations(){if(!db)return;let needs=false;const t=today();db.reservations.forEach(r=>{if(r.date<t&&(r.status==='approved'||r.status==='confirmed')){r.status='done';log('تغییر وضعیت خودکار',`رزرو ${r.id} به دلیل گذشت تاریخ به «برگزار شد» تغییر یافت`);needs=true}});if(needs)save()}
-
-// ============ پاک‌سازی و اعتبارسنجی داده‌ها (جلوگیری از کرش) ============
+// ============ پاک‌سازی و اعتبارسنجی داده‌ها ============
 function sanitizeDB(){
   if(!db) return;
   const arrays=['halls','equipment','slots','applicants','reservations','logs','users','passwordRequests'];
-  arrays.forEach(k=>{
-    if(!Array.isArray(db[k])) db[k]=seed()[k]||[];
-    else db[k]=db[k].filter(item=>item&&typeof item==='object');
-  });
-  if(Array.isArray(db.reservations)){
-    db.reservations.forEach(r=>{
-      if(!r.date) r.date='1970-01-01';
-      if(!r.status) r.status='approved';
-      if(r.guest===undefined) r.guest='';
-      if(!r.equipment) r.equipment=[];
-      if(!Array.isArray(r.equipment)) r.equipment=[];
-    });
-  }
+  arrays.forEach(k=>{ if(!Array.isArray(db[k])) db[k]=seed()[k]||[]; else db[k]=db[k].filter(item=>item&&typeof item==='object'); });
+  if(Array.isArray(db.reservations)){ db.reservations.forEach(r=>{ if(!r.date) r.date='1970-01-01'; if(!r.status) r.status='approved'; if(r.guest===undefined) r.guest=''; if(!r.equipment) r.equipment=[]; if(!Array.isArray(r.equipment)) r.equipment=[]; }); }
   if(!db.units) db.units=seed().units||[];
   if(!db._localUpdatedAt) db._localUpdatedAt=new Date().toISOString();
 }
-
-function load(){try{db=JSON.parse(localStorage.getItem(KEY));if(!db||!Array.isArray(db.reservations))throw 0;for(const k of ['halls','equipment','checks','issues','units','logs','slots','applicants','users','passwordRequests'])if(!Array.isArray(db[k]))db[k]=seed()
-[k]||[]}catch(e){db=seed();save()}sanitizeDB();migrateData();autoCompletePassedReservations()}
-function save(){try{db._localUpdatedAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(db));return true}catch(e){toast('ذخیره‌سازی ناموفق بود! فضای مرورگر پر است.','error');return false}}
+function load(){try{db=JSON.parse(localStorage.getItem(KEY));if(!db||!Array.isArray(db.reservations))throw 0;for(const k of ['halls','equipment','checks','issues','units','logs','slots','applicants','users','passwordRequests'])if(!Array.isArray(db[k]))db[k]=seed()[k]||[]}catch(e){db=seed();save()}sanitizeDB();migrateData();autoCompletePassedReservations()}
+function save(){try{db._localUpdatedAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(db));return 
+true}catch(e){toast('ذخیره‌سازی ناموفق بود! فضای مرورگر پر است.','error');return false}}
 function log(action,details=''){db.logs.unshift({at:new Date().toISOString(),action,details});db.logs=db.logs.slice(0,500)}
 
 /* ============ STATUS ============ */
-const statusText={approved:'رزرو اولیه',confirmed:'رزرو 
-قطعی',cancelled:'لغو / آزادشده',done:'برگزار شد'};
+const statusText={approved:'رزرو اولیه',confirmed:'رزرو قطعی',cancelled:'لغو / آزادشده',done:'برگزار شد'};
 const statusFlow={approved:[{s:'confirmed',t:'تأیید امضا (قطعی)'},{s:'cancelled',t:'لغو رزرو'}],confirmed:[{s:'cancelled',t:'لغو و آزادسازی'}],cancelled:[],done:[]};
 
 const navItems=[
@@ -748,13 +734,14 @@ const navItems=[
   {k:'data',t:'مدیریت اطلاعات',i:IC.db},
   {k:'users',t:'کاربران و دسترسی',i:IC.users,adminOnly:true}
 ];
-const viewTitles={dashboard:'داشبورد',calendar:'تقویم رزرو',reservations:'فهرست رزروها',new:'ثبت رزرو جدید',halls:'سالن‌ها',slots:'سانس‌های زمانی',equipment:'تجهیزات',applicants:'متقاضیان',reports:'گزارش و چاپ',data:'مدیریت اطلاعات',users:'کاربران و دسترسی'};
+const viewTitles={dashbo
+ard:'داشبورد',calendar:'تقویم رزرو',reservations:'فهرست رزروها',new:'ثبت رزرو جدید',halls:'سالن‌ها',slots:'سانس‌های زمانی',equipment:'تجهیزات',applicants:'متقاضیان',reports:'گزارش و چاپ',data:'مدیریت اطلاعات',users:'کاربران و دسترسی'};
 
 /* ============ NAV ============ */
-function toggleNav()
-{document.getElementById('sidebar').classList.toggle('active');document.getElementById('navOverlay').classList.toggle('active')}
+function toggleNav(){document.getElementById('sidebar').classList.toggle('active');document.getElementById('navOverlay').classList.toggle('active')}
 function go(v){
-  if(typeof hasPermission==='function'&&!hasPermission(v)){
+  if(typeof hasPermission==='function'&&!
+hasPermission(v)){
     toast('شما به این بخش دسترسی ندارید.','error');
     return;
   }
@@ -765,56 +752,49 @@ function go(v){
 }
 function shell(){
   try {
-    if(typeof hasPermission==='function' && !hasPermission(view)){
-      view='dashboard';
-    }
-    const allowedNav=navItems.filter(n=>{
-      if(n.adminOnly) return typeof isAdmin==='function'&&isAdmin();
-      return typeof hasPermission==='function'?hasPermission(n.k):true;
-    });
-    document.getElementById('nav').innerHTML=allowedNav.map(n=>`<button class="nav-item ${view===n.k?'active':''}" 
-onclick="go('${n.k}')">${n.i}<span>${n.t}</span></button>`).join('');
+    if(typeof hasPermission==='function' && !hasPermission(view)){ view='dashboard'; }
+    const allowedNav=navItem
+s.filter(n=>{ if(n.adminOnly) return typeof isAdmin==='function'&&isAdmin(); return typeof hasPermission==='function'?hasPermission(n.k):true; });
+    document.getElementById('nav').innerHTML=allowedNav.map(n=>`<button class="nav-item ${view===n.k?'active':''}" onclick="go('${n.k}')">${n.i}<span>${n.t}</span></button>`).join('');
     document.getElementById('crumb').textContent=viewTitles[view]||'داشبورد';
     if(typeof updateUserChip==='function') updateUserChip();
     const c=document.getElementById('content');c.style.animation='none';void c.offsetHeight;c.style.animation='fadeUp .35s var(--ease)';c.innerHTML='';
-    if(allowedNav.length===0 && typeof currentUser==='function' && currentUser()){
-      c.innerHTML=`<section><div 
-class="card"><div class="alert-danger">${IC.warn}<div>شما به هیچ بخشی دسترسی ندارید. با مدیر سامانه تماس بگیرید.</div></div></div></section>`;
-      return;
-    }
+    if(allowedNav.length===0 && typeof currentUser==='function' && currentUser()){ c.innerHTML='<section><div class="card"><div class="alert-danger">'+IC.warn+'<div>شما به هیچ بخشی دسترسی ندارید.</div></div></div></section>'; return; }
     if(view==='dashboard')dashboard(c);
     else if(view==='calendar')calendar(c);
-    else if(view==='reservations')reservations(c);
+    else if(view==='reservations')rese
+rvations(c);
     else if(view==='new')newForm(c);
     else if(view==='halls')halls(c);
     else if(view==='slots')slotsPage(c);
     else if(view==='equipment')equipment(c);
-    else if(view==='applicants')applic
-antsPage(c);
+    else if(view==='applicants')applicantsPage(c);
     else if(view==='reports')reports(c);
     else if(view==='data')dataPage(c);
     else if(view==='users'&&typeof usersPage==='function')usersPage(c);
   } catch(err) {
     console.error('[Shell Error]', err);
     const c=document.getElementById('content');
-    if(c) c.innerHTML=`<section><div class="card" style="border-color:var(--red)"><div class="card-head"><h2 style="color:var(--red)">خطای داخلی</h2></div><div class="alert-danger" style="display:block">${IC.warn}<div><b>پیام:</b> $
-{esc(err.message||String(err))}</div></div><button type="button" class="btn btn-danger" onclick="localStorage.clear();location.reload();">پاک‌سازی و شروع دوباره</button></div></section>`;
+    if(c) c.innerHTML='<section><div class="card" style="bord
+er-color:var(--red)"><div class="card-head"><h2 style="color:var(--red)">خطای داخلی</h2></div><div class="alert-danger" style="display:block">'+IC.warn+'<div><b>پیام:</b> '+esc(err.message||String(err))+'</div></div><button type="button" class="btn btn-danger" onclick="localStorage.clear();location.reload();">پاک‌سازی و شروع دوباره</button></div></section>';
   }
 }
 function hallName(id){return db.halls.find(h=>h.id===Number(id))?.name||'—'}
-function slotName(id){return db.slots.find(s=>s.id===Number(id))?.name||'—'}
-function isHallBlocked(hallId,dateStr){let h=db.halls.find(x=>x.id===hallId);if(!h||!Array.isArray(h.blocks))return false;return h.blocks.some(b=>date
-Str>=b.from&&dateStr<=b.to)}
+function slotName(id){return db.slots.find(s=>s.id===Number(id))
+?.name||'—'}
+function isHallBlocked(hallId,dateStr){let h=db.halls.find(x=>x.id===hallId);if(!h||!Array.isArray(h.blocks))return false;return h.blocks.some(b=>dateStr>=b.from&&dateStr<=b.to)}
 </script>
 
 <script>
 /* ============ TABLE ROW ============ */
 function reservationRow(r,ops=true){
-  let applicantInfo=`<div style="font-weight:700;color:var(--ink);font-size:12.5px">${esc(r.unit||'—')}</div><div style="font-size:11.5px;color:var(--muted)">${esc(r.requester||'')}</div>`;
+  let applicantInfo=`<div style="font-weight:700;color:var(--ink);font-size:12.5px">${esc(r.unit||'—')}</div><div style="font-size:11.5px;color:var(-
+-muted)">${esc(r.requester||'')}</div>`;
   let actions=ops?`<div class="actions-cell" style="display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px">
     ${(statusFlow[r.status]||[]).map(a=>`<button class="btn btn-sm ${a.s==='cancelled'?'btn-danger':'btn-secondary'}" onclick="status(${r.id},'${a.s}')">${a.t}</button>`).join('')}
     <button class="btn btn-sm btn-secondary" onclick="printForm(${r.id})" title="چاپ فرم">${IC.print}</button>
-    <button class="btn btn-sm btn-secondary" onclick="delRes(${r.id})" title="حذف" style="color:var(--red)">${IC.trash}</button>
+    <button class="btn btn-sm btn-secondary" onclick="delRes(${r.id})" title="حذف" 
+style="color:var(--red)">${IC.trash}</button>
   </div>`:'';
   return `<tr>
     <td data-label="شماره"><b>#${r.id}</b></td>
@@ -824,34 +804,36 @@ function reservationRow(r,ops=true){
     <td data-label="موضوع">${esc(r.title)}</td>
     <td data-label="واحد / متقاضی">${applicantInfo}</td>
     <td data-label="مهمان شاخص">${esc(r.guest||'—')}</td>
-    <td data-label="وضعیت"><span class="badge b-${r.status}">${statusText[r.status]||r.status}</span></td>
+    <td data-label="وضعیت"><span 
+class="badge b-${r.status}">${statusText[r.status]||r.status}</span></td>
     <td data-label="عملیات">${actions}</td>
   </tr>`;
 }
 function table(rows,ops=true){
   if(!rows.length)return `<div class="empty">${IC.empty}<h4>موردی ثبت نشده است</h4><p>هنوز داده‌ای برای نمایش در این بخش وجود ندارد.</p></div>`;
-  return `<div class="table-wrap"><table><thead><tr><th>شماره</th><th>تاریخ</th><th>سانس</th><th>سالن</th><th>موضوع برنامه</th><th>واحد / متقاضی</th><th>مهمان شاخص</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${rows.map(r=>reservationRow(r,ops)).join('')}</tbody></table></div>`;
+  return `<div class="table-wrap"><table><thead><tr><th>شماره</th><th>تاریخ</th><th>سانس</th><th>سالن</th><th>موضوع برنامه</th><th>واحد / متقاضی</th><th>مهمان شاخص</th><th>وضعیت</
+th><th>عملیات</th></tr></thead><tbody>${rows.map(r=>reservationRow(r,ops)).join('')}</tbody></table></div>`;
 }
 
 /* ============ DASHBOARD ============ */
 function dashboard(c){
   let rs=db.reservations;
   let todays=rs.filter(r=>r.date===today()&&r.status!=='cancelled');
-  let stat=(cls,label,val,icon)=>`<div class="stat stat--${cls}"><div class="stat-inner"><div class="stat-head"><span class="stat-label">${label}</span><span class="stat-icon">${icon}</span></div><span class="stat-value">${val}</span></div></div>`;
+  let stat=(cls,label,val,icon)=>`<div class="stat stat--${cls}"><div class="stat-inner"><div class="stat-head"><span class="stat-label">${label}</span><span class="stat-icon">$
+{icon}</span></div><span class="stat-value">${val}</span></div></div>`;
   c.innerHTML=`<section>
     <div class="card">
-      <div class="card-head"><div 
-class="card-title-icon">${IC.dash}</div><h2>نمای کلی عملیات</h2></div>
+      <div class="card-head"><div class="card-title-icon">${IC.dash}</div><h2>نمای کلی عملیات</h2></div>
       <div class="grid-stats">
         ${stat('brand','رزروهای امروز',todays.length,IC.cal)}
         ${stat('blue','رزروهای اولیه',rs.filter(r=>r.status==='approved').length,IC.clock)}
         ${stat('green','رزروهای قطعی',rs.filter(r=>r.status==='confirmed').length,IC.check)}
-        ${stat('amber','برگزار شده',rs.filter(r=>r.status==='done').length,IC.chart)}
+        ${stat('amber','برگزار شده',rs.filter(r=>r.status==='done').le
+ngth,IC.chart)}
       </div>
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.cal}</
-div><h3>برنامه‌های امروز</h3></div>
+      <div class="card-head"><div class="card-title-icon">${IC.cal}</div><h3>برنامه‌های امروز</h3></div>
       ${table(todays,true)}
     </div>
     <div class="card">
@@ -872,12 +854,10 @@ function calendar(c){
   c.innerHTML=`<section><div class="card">
     <div class="card-head"><div class="card-title-icon">${IC.cal}</div><h2>تقویم رزرو شمسی</h2></div>
     <div class="row" style="align-items:flex-end; margin-bottom: 20px;">
-      <div class="field"><label>سال</label><select id="calYear" onchange="renderCalendarMon
-th()">${years.map(y=>`<option value="${y}" ${y===todayParts.jy?'selected':''}>${y}</option>`).join('')}</select></div>
+      <div class="field"><label>سال</label><select id="calYear" onchange="renderCalendarMonth()">${years.map(y=>`<option value="${y}" ${y===todayParts.jy?'selected':''}>${y}</option>`).join('')}</select></div>
       <div class="field"><label>ماه</label><select id="calMonth" onchange="renderCalendarMonth()">${persianMonths.map((n,i)=>`<option value="${i+1}" ${i+1===todayParts.jm?'selected':''}>${n}</option>`).join('')}</select></div>
       <button class="btn btn-secondary" onclick="shiftJalaliMonth(-1)">ماه قبل</button>
-      <button class="btn btn-secondary" onclick="res
-etCalendarToToday()">امروز</button>
+      <button class="btn btn-secondary" onclick="resetCalendarToToday()">امروز</button>
       <button class="btn btn-secondary" onclick="shiftJalaliMonth(1)">ماه بعد</button>
     </div>
     <div id="calBody"></div>
@@ -899,7 +879,8 @@ function shiftJalaliMonth(d){
   if(m>12){ m=1; y++; }
   let {minY,maxY}=getYearRange();
   y=Math.max(minY,Math.min(maxY,y));
-  document.getElementById('calYear').value=y;
+  document.getElementById('calYea
+r').value=y;
   document.getElementById('calMonth').value=m;
   renderCalendarMonth();
 }
@@ -911,12 +892,12 @@ function renderCalendarMonth(){
   const daysInMonth=jalaali.jalaaliMonthLength(jy,jm);
   
   const g = jalaali.toGregorian(jy, jm, 1);
-  const firstDayObj = new Date(g.gy, g.gm - 1, g.gd);
+  const firstDayObj = new Date(g.gy, 
+g.gm - 1, g.gd);
   const firstDayOfWeek = (firstDayObj.getDay() + 1) % 7;
   
   const todayIso = today();
-  const weekDays = ['شنبه','یکشنبه','دوش
-نبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+  const weekDays = ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
 
   let html = '<div class="cal-table-wrap"><table class="cal-table"><thead><tr>';
   html += weekDays.map(n=>`<th>${n}</th>`).join('');
@@ -927,8 +908,7 @@ function renderCalendarMonth(){
   }
 
   for(let d=1; d<=daysInMonth; d++){
-    const iso = `${jy}-${String(jm).padStart(2,'0')}-$
-{String(d).padStart(2,'0')}`;
+    const iso = `${jy}-${String(jm).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const currentDow = (firstDayOfWeek + d - 1) % 7;
     const isFriday = currentDow === 6; 
     const isToday = iso === todayIso;
@@ -941,8 +921,7 @@ function renderCalendarMonth(){
     html += `<td class="${cls}">
       <div class="cal-day-num">${d}</div>
       <div class="cal-events">
-        ${rs.map(r => `<div 
-class="cal-event" title="${esc(r.title)}">${esc(r.title)}</div>`).join('')}
+        ${rs.map(r => `<div class="cal-event" title="${esc(r.title)}">${esc(r.title)}</div>`).join('')}
       </div>
     </td>`;
 
@@ -951,7 +930,8 @@ class="cal-event" title="${esc(r.title)}">${esc(r.title)}</div>`).join('')}
     }
   }
 
-  const remaining = (7 - ((firstDayOfWeek + daysInMonth) % 7)) % 7;
+  const remaining = (7 - 
+((firstDayOfWeek + daysInMonth) % 7)) % 7;
   for(let i=0; i<remaining; i++){
     html += '<td class="cal-empty"></td>';
   }
@@ -968,9 +948,9 @@ function reservations(c){
     <div class="card-head"><div class="card-title-icon">${IC.list}</div><h2>فهرست رزروها</h2></div>
     <div class="row">
       <div class="field"><label>جست‌وجو</label><input id="q" placeholder="عنوان، متقاضی یا واحد..." oninput="onSearchInput()"></div>
-      <div class="field"><label>وضعیت</label><select id="sf" onchange="filterReservations()"><option value="">همه وضعیت‌ها</option>${Object.entries(statusText).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
-      <div class="field"><label>از تاریخ</label><input type="text" id="from" class="pdate-input" onclick="pDate.open(this)" onchange="filterReservations()" 
-readonly placeholder="انتخاب..."></div>
+      <div class="field"><label>وضعیت</label><select id="sf" onchange="filterReservations()"><option value="">همه وضعیت‌ها</option>${Object.entries(statusText).map(([k,v])=>`<option value="${k}">${v}</
+option>`).join('')}</select></div>
+      <div class="field"><label>از تاریخ</label><input type="text" id="from" class="pdate-input" onclick="pDate.open(this)" onchange="filterReservations()" readonly placeholder="انتخاب..."></div>
       <div class="field"><label>تا تاریخ</label><input type="text" id="to" class="pdate-input" onclick="pDate.open(this)" onchange="filterReservations()" readonly placeholder="انتخاب..."></div>
     </div>
     <div id="resTable"></div>
@@ -986,17 +966,17 @@ function filterReservations(){
   from = from ? toEnglishDigits(from).replace(/\//g,'-') : '';
   to = to ? toEnglishDigits(to).replace(/\//g,'-') : '';
 
-  let rows=db.reservations.filter(r=>(!q||[r.title,r.requester,r.unit,r.phone,r.supervisor,r.guest].join(' ').toLowerCase().includes(q))&&(!s||r.status===s)&&(!from||r.date>=from)&&(!to||
-r.date<=to)).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+  let 
+rows=db.reservations.filter(r=>(!q||[r.title,r.requester,r.unit,r.phone,r.supervisor,r.guest].join(' ').toLowerCase().includes(q))&&(!s||r.status===s)&&(!from||r.date>=from)&&(!to||r.date<=to)).sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
   document.getElementById('resTable').innerHTML=table(rows,true);
 }
 
 /* ============ NEW RESERVATION ============ */
 function newForm(c){
-  let halls=db.halls.filter(h=>h.active),slots=db.slots.filter(s=>s.active),applicants=db.applicants.filter(a=>a.active);
+  let halls=db.halls.filter(h=>h.active),slots=db.slots.filter(s=>s.active),applicants=db.applicants.filter(a=>a.a
+ctive);
   if(!slots.length||!halls.length||!applicants.length){
-    c.innerHTML=`<section><div class="card"><div class="alert-danger">${IC.warn}
-<div>برای ثبت رزرو ابتدا باید حداقل یک <b>سالن فعال</b>، یک <b>سانس فعال</b> و یک <b>متقاضی فعال</b> در سامانه تعریف شده باشد.</div></div></div></section>`;
+    c.innerHTML=`<section><div class="card"><div class="alert-danger">${IC.warn}<div>برای ثبت رزرو ابتدا باید حداقل یک <b>سالن فعال</b>، یک <b>سانس فعال</b> و یک <b>متقاضی فعال</b> در سامانه تعریف شده باشد.</div></div></div></section>`;
     return;
   }
   let eq=db.equipment;
@@ -1009,17 +989,17 @@ function newForm(c){
         <div class="field"><label>مهمان شاخص</label><input name="guest" placeholder="نام مهمان ویژه (در صورت وجود)"></div>
       </div>
       <div class="row">
-        <div class="field"><label>تاریخ <span class="req">*</span></label><input name="date" type="text" class="pdate-input" id="date" value="${today()}" 
-onclick="pDate.open(this)" readonly required></div>
+        <div class="field"><label>تاریخ <span class="req">*</span></label><input name="date" type="text" class="pdate-input" id="date" value="${today()}" onclick="pDate.open(this)" readonly required></div>
         <div class="field"><label>سانس زمانی <span class="req">*</span></label><select name="slotId" required>${slots.map(s=>`<option value="${s.id}">${esc(s.name)} (${s.start}–${s.end})</option>`).join('')}</select></div>
       </div>
       <div class="row">
-        <div class="field"><label>سالن <span class="req">*</span></label><select name="hallId" required>${halls.map(h=>`<option value="${h.id}">${esc(h.name)} · ظرفیت ${h.min}–${h.max}</option>`).join('')}</select></div>
-        <div class="field"><label>تعداد 
-نفرات <span class="req">*</span></label><input name="people" type="number" min="1" step="1" value="5" required></div>
+        <div class="field"><label>سالن <span class="req">*</span></
+label><select name="hallId" required>${halls.map(h=>`<option value="${h.id}">${esc(h.name)} · ظرفیت ${h.min}–${h.max}</option>`).join('')}</select></div>
+        <div class="field"><label>تعداد نفرات <span class="req">*</span></label><input name="people" type="number" min="1" step="1" value="5" required></div>
       </div>
       <div class="row">
-        <div class="field"><label>متقاضی <span class="req">*</span></label><select name="applicantId" required>${applicants.map(a=>`<option value="${a.id}">${esc(a.name)} · ${esc(a.unit)}</option>`).join('')}</select></div>
+        <div class="field"><label>متقاضی <span class="req">*</span></label><select name="applicantId" required>${applicants.map(a=>`<option value="${a.id}">${esc(a.name)} · ${esc(a.unit)}</option>`).join('')}</
+select></div>
         <div class="field"><label>مسئول مستقیم <span class="req">*</span></label><input name="supervisor" required placeholder="نام مدیر / مسئول امضاکننده"></div>
       </div>
       <div class="field" style="margin-bottom:16px"><label>تجهیزات موردنیاز</label><div class="row" style="margin-bottom:0">${eq.map(e=>`<label class="checkline"><input type="checkbox" name="equipment" value="${e.id}"> ${esc(e.name)} <span style="color:var(--muted);font-size:11px">(موجودی ${e.qty})</span></label>`).join('')}</div></div>
@@ -1031,7 +1011,8 @@ onclick="pDate.open(this)" readonly required></div>
     </form>
   </div></section>`;
 }
-function overlap(a,b){return a.start<b.end&&b.start<a.end}
+function overlap(a,b){return 
+a.start<b.end&&b.start<a.end}
 function timeToMinutes(t){
   const m=/^(\d{1,2}):(\d{2})$/.exec(String(t||'').trim());
   if(!m) return NaN;
@@ -1047,22 +1028,21 @@ function createReservation(){
   let form=document.getElementById('bookingForm');
   if(!form.checkValidity()){form.reportValidity();return}
   let f=new FormData(form),slotId=Number(f.get('slotId')),slot=db.slots.find(s=>s.id===slotId);
-  if(!slot||!slot.active)return 
-toast('سانس نامعتبر یا غیرفعال است.','error');
+  if(!slot||!slot.active)return toast('سانس نامعتبر یا غیرفعال است.','error');
   let applicantId=Number(f.get('applicantId')),applicant=db.applicants.find(a=>a.id===applicantId);
   if(!applicant||!applicant.active)return toast('متقاضی معتبر یا فعال نیست.','error');
   const title=String(f.get('title')||'').trim();
   const supervisor=String(f.get('supervisor')||'').trim();
-  if(!title) return toast('موضوع برنامه الزامی است.','error');
+  if(!title) return toast('موضوع برنامه 
+الزامی است.','error');
   if(!supervisor) return toast('نام مسئول مستقیم الزامی است.','error');
   const people=Number(f.get('people'));
-  if(!Number.isInteger(people)||
-people<1) return toast('تعداد نفرات باید عدد صحیح مثبت باشد.','error');
-  let r={id:uid(db.reservations),title:title,guest:String(f.get('guest')||'').trim(),date:String(f.get('date')||'').trim(),slotId,start:slot.start,end:slot.end,hallId:Number(f.get('hallId')),people:people,applicantId,requester:applicant.name,unit:applicant.unit,phone:applicant.phone,supervisor:supervisor,equipment:f.getAll('equipment').map(Number),notes:String(f.get('notes')||'').trim(),status:'approved',createdAt:new Date().toISOString()};
+  if(!Number.isInteger(people)||people<1) return toast('تعداد نفرات باید عدد صحیح مثبت باشد.','error');
+  let r={id:uid(db.reservations),title:title,guest:String(f.get('guest')||'').trim(),date:String(f.get('date')||'').trim(),slotId,start:slot.start,end:slot.end,hallId:Number(f.get('hallId')),people:people,applicantId,requester:applicant.name,unit:applicant.unit,phone:applicant.phone,supervisor:supervisor,equipment:f.getAll('equipment').map(Number),notes:String(f.get('notes')||'').trim()
+,status:'approved',createdAt:new Date().toISOString()};
   
   let h=db.halls.find(x=>x.id===r.hallId);
-  if(!h||!h.active)return toast('سالن 
-نامعتبر یا غیرفعال است.','error');
+  if(!h||!h.active)return toast('سالن نامعتبر یا غیرفعال است.','error');
   if(r.people<h.min||r.people>h.max)return toast(`ظرفیت سالن باید بین ${h.min} تا ${h.max} نفر باشد.`,'error');
   
   r.date = toEnglishDigits(r.date).replace(/\//g, '-').trim();
@@ -1079,47 +1059,50 @@ people<1) return toast('تعداد نفرات باید عدد صحیح مثبت 
       return toast('سانس انتخابی برای امروز به پایان رسیده است. سانس دیگری انتخاب کنید.','error');
     }
   }
-  if(isHallBlocked(r.hallId,r.date)){let b=h.blocks.find(b=>r.date>=b.from&&r.date<=b.to);return toast(`این سالن در تاریخ انتخابی مسدود است. دلیل: ${b.reason||'—'}`,'error')}
-  let clash=db.reservations.find(x=>x.hallId===r.hallId&&x.date===r.da
-te&&['approved','confirmed'].includes(x.status)&&overlap(r,x));
+  if(isHallBlocked(r.hallId,r.date))
+{let b=h.blocks.find(b=>r.date>=b.from&&r.date<=b.to);return toast(`این سالن در تاریخ انتخابی مسدود است. دلیل: ${b.reason||'—'}`,'error')}
+  let clash=db.reservations.find(x=>x.hallId===r.hallId&&x.date===r.date&&['approved','confirmed'].includes(x.status)&&overlap(r,x));
   if(clash)return toast(`تداخل با رزرو شماره ${clash.id} در این سالن و سانس وجود دارد.`,'error');
-  for(let id of r.equipment){let e=db.equipment.find(x=>x.id===id);if(!e)continue;let used=db.reservations.filter(x=>x.date===r.date&&['approved','confirmed'].includes(x.status)&&overlap(r,x)&&(x.equipment||[]).includes(id)).length;if(used>=e.qty)return toast(`ظرفیت تجهیز «${e.name}» در این سانس تکمیل است.`,'error')}
+  for(let id of r.equipment){let e=db.equipment.find(x=>x.id===id);if(!e)continue;let used=db.reservations.filter(x=>x.date===r.date&&['approved','confirmed'].includes(x.status)&&overlap(r,x)&&(x.equipment||[]).includes(id)).length;if(used>=e.qty)return toast(`ظرفیت تجهیز 
+«${e.name}» در این سانس تکمیل است.`,'error')}
   db.reservations.push(r);log('ثبت رزرو اولیه',`شماره ${r.id}؛ ${r.title}`);
-  if(save()){toast(`درخواست شماره ${r.id} با موفقیت ثبت 
-شد.`,'success');go('reservations')}
+  if(save()){toast(`درخواست شماره ${r.id} با موفقیت ثبت شد.`,'success');go('reservations')}
 }
 function status(id,s){
   let r=db.reservations.find(x=>x.id===id);if(!r)return;
   if(s==='cancelled'&&!confirm(`لغو رزرو #${id}؟\n\nاین سانس آزاد خواهد شد و امکان بازگردانی وجود ندارد.`)) return;
   if(['approved','confirmed'].includes(s)){
-    let clash=db.reservations.find(x=>x.id!==id&&x.hallId===r.hallId&&x.date===r.date&&['approved','confirmed'].includes(x.status)&&overlap(r,x));
+    let 
+clash=db.reservations.find(x=>x.id!==id&&x.hallId===r.hallId&&x.date===r.date&&['approved','confirmed'].includes(x.status)&&overlap(r,x));
     if(clash)return toast(`تداخل با رزرو شماره ${clash.id} وجود دارد.`,'error');
   }
   let old=r.status;r.status=s;r.updatedAt=new Date().toISOString();
   log('تغییر وضعیت',`رزرو ${id}: ${statusText[old]} ← ${statusText[s]}`);save();toast(`وضعیت رزرو #${id} تغییر کرد.`,'success');shell();
 }
-function delRes(id){if(!confirm(`رزرو شماره ${id} حذف شود؟`))return;db.reservations=db.reservations.filter(r=>r.id!==id);log('حذف رزرو',String(id));save();toast('رزرو حذف شد.','success');shell()}
+function delRes(id){if(!confirm(`رزرو شماره ${id} حذف شود؟`))return;db.reservations=db.reservations.filter(r=>r.id!==id);log('حذف 
+رزرو',String(id));save();toast('رزرو حذف شد.','success');shell()}
 
 /* ============ PRINT ============ */
 function printForm(id){
   let r=db.reservations.find(x=>x.id===id);if(!r)return;
   let eqNames=(r.equipment||[]).map(i=>db.equipment.find(e=>e.id===i)?.name).filter(Boolean).join('، ')||'—';
   let html=`<div class="print-form"><h2>فرم رزرو و تحویل سالن</h2>
-    <p style="text-align:center;font-size:12px;margin-bottom:12px">شماره رزرو: ${r.id} | تاریخ برنامه: ${faDate(r.date)}</p>
+    <p style="text-align:center;font-size:12px;margin-bottom:12px">شماره رزرو: ${r.id} | تاریخ برنامه: $
+{faDate(r.date)}</p>
     <table class="print-info-table">
       <tr><td><b>موضوع برنامه:</b> ${esc(r.title)}</td><td><b>مهمان شاخص:</b> ${esc(r.guest||'—')}</td></tr>
       <tr><td><b>سالن:</b> ${esc(hallName(r.hallId))}</td><td><b>سانس:</b> ${esc(slotName(r.slotId))} (${esc(r.start)} تا ${esc(r.end)})</td></tr>
       <tr><td><b>تعداد نفرات:</b> ${r.people}</td><td><b>واحد درخواست‌کننده:</b> ${esc(r.unit||'—')}</td></tr>
-      <tr><td><b>درخواست‌کننده:</b> ${esc(r.requester||'—')}</td><td><b>شماره تماس:</b> ${esc(r.phone||'—')}</td></tr>
+      <tr><td><b>درخواست‌کننده:</b> ${esc(r.requester||'—')}</td><td><b>شماره تماس:</b> $
+{esc(r.phone||'—')}</td></tr>
       <tr><td><b>مسئول مستقیم:</b> ${esc(r.supervisor||'—')}</td><td><b>وضعیت:</b> ${statusText[r.status]}</td></tr>
-      <tr><td colspan="2"><b>تجهیزات 
-موردنیاز:</b> ${esc(eqNames)}</td></tr>
+      <tr><td colspan="2"><b>تجهیزات موردنیاز:</b> ${esc(eqNames)}</td></tr>
       <tr><td colspan="2"><b>توضیحات:</b> ${esc(r.notes||'—')}</td></tr>
     </table>
     <h4>چک‌لیست تحویل و آماده‌سازی</h4>
-    <p style="font-size:12px;line-height:2">□ نظافت سالن &nbsp;&nbsp;&nbsp; □ چیدمان صندلی‌ها &nbsp;&nbsp;&nbsp; □ تست صدا و میکروفن &nbsp;&nbsp;&nbsp; □ تست تصویر / پروژکتور &nbsp;&nbsp;&nbsp; □ تحویل تجهیزات</p>
-    <div class="signatures"><div class="sign-box">امضای درخواست‌کننده</div><div class="sign-box">امضای 
-مسئول مستقیم</div><div class="sign-box">امضای مسئول سالن</div></div>
+    <p style="font-size:12px;line-height:2">□ نظافت سالن &nbsp;&nbsp;&nbsp; □ چیدمان صندلی‌ها &nbsp;&nbsp;&nbsp; □ تست صدا و میکروفن &nbsp;&nbsp;&nbsp; □ تست تصویر / پروژکتور 
+&nbsp;&nbsp;&nbsp; □ تحویل تجهیزات</p>
+    <div class="signatures"><div class="sign-box">امضای درخواست‌کننده</div><div class="sign-box">امضای مسئول مستقیم</div><div class="sign-box">امضای مسئول سالن</div></div>
   </div>`;
   document.getElementById('printArea').innerHTML=html;
   setTimeout(()=>window.print(),60);
@@ -1127,114 +1110,115 @@ function printForm(id){
 </script>
 
 <script>
-/* ============ HALLS ============ */
+/* ============ HALLS 
+============ */
 function halls(c){
   c.innerHTML=`<section>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.hall}</
-div><h2>مدیریت سالن‌ها</h2></div>
+      <div class="card-head"><div class="card-title-icon">${IC.hall}</div><h2>مدیریت سالن‌ها</h2></div>
       ${db.halls.length?`<div class="table-wrap"><table><thead><tr><th>کد</th><th>نام سالن</th><th>ظرفیت</th><th>موقعیت</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${db.halls.map(h=>`<tr>
         <td data-label="کد">${esc(h.code)}</td>
         <td data-label="نام">${esc(h.name)}</td>
-        <td data-label="ظرفیت">${h.min} تا ${h.max} نفر</td>
+        <td data-label="ظرفیت">$
+{h.min} تا ${h.max} نفر</td>
         <td data-label="موقعیت">${esc(h.location||'—')}</td>
-        <td data-label="وضعیت">${h.active?'<span class="badge b-confirmed">فعال</span>':'<span 
-class="badge b-cancelled">غیرفعال</span>'}</td>
+        <td data-label="وضعیت">${h.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</span>'}</td>
         <td data-label="عملیات"><div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="btn btn-sm btn-secondary" onclick="toggleHall(${h.id})">${h.active?'غیرفعال':'فعال'}</button>
           <button class="btn btn-sm btn-secondary" onclick="editHall(${h.id})">${IC.edit}</button>
-          <button class="btn btn-sm btn-secondary" onclick="deleteHall(${h.id})" style="color:var(--red)">${IC.trash}</button>
+          <button class="btn 
+btn-sm btn-secondary" onclick="deleteHall(${h.id})" style="color:var(--red)">${IC.trash}</button>
         </div></td>
-      </tr>`).join('')}</tbody></
-table></div>`:`<div class="empty">${IC.empty}<h4>سالنی ثبت نشده</h4></div>`}
+      </tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>سالنی ثبت نشده</h4></div>`}
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن سالن جدید</h3></div>
       <form onsubmit="event.preventDefault();addHall()">
         <div class="row">
-          <div class="field"><label>کد سالن <span class="req">*</span></label><input name="code" required placeholder="H04"></div>
-          <div class="field"><label>نام سالن <span class="req">*</span></label><input name="name" required placeholder="مثال: سالن 
-همایش"></div>
+          <div class="field"><label>کد سالن <span class="req">*</span></
+label><input name="code" required placeholder="H04"></div>
+          <div class="field"><label>نام سالن <span class="req">*</span></label><input name="name" required placeholder="مثال: سالن همایش"></div>
           <div class="field"><label>حداقل ظرفیت <span class="req">*</span></label><input name="min" type="number" min="1" step="1" value="1" required></div>
           <div class="field"><label>حداکثر ظرفیت <span class="req">*</span></label><input name="max" type="number" min="1" step="1" value="10" required></div>
           <div class="field"><label>موقعیت</label><input name="location" placeholder="طبقه دوم"></div>
         </div>
-        <button class="btn 
-btn-primary" type="submit">${IC.plus} افزودن سالن</button>
+        <button class="btn btn-primary" type="submit">${IC.plus} افزودن سالن</button>
       </form>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon" style="background:var(--red-soft);color:var(--red)">${IC.block}</div><h3>مسدودسازی موقت سالن‌ها</h3></div>
-      <div class="alert-danger">${IC.warn}<div>با این ابزار می‌توانید یک سالن را برای بازه زمانی مشخصی (تعمیرات، مراسم خاص و ...) غیرقابل رزرو کنید.</div></div>
+      <div class="alert-danger">${IC.warn}<div>با این ابزار می‌توانید یک 
+سالن را برای بازه زمانی مشخصی (تعمیرات، مراسم خاص و ...) غیرقابل رزرو کنید.</div></div>
       <form onsubmit="event.preventDefault();addBlock()">
         <div class="row">
           <div class="field"><label>سالن <span class="req">*</span></label><select name="hallId" required>${db.halls.map(h=>`<option value="${h.id}">${esc(h.name)}</option>`).join('')}</select></div>
-          <div class="field"><label>از تاریخ <span class="req">*</span></label><input name="from" type="text" class="pdate-input" onclick="pDate.open(this)" readonly required placeholder="انتخاب..."></div>
-          <div class="field"><label>تا تاریخ <span class="req">*</span></label><input name="to" type="text" class="pdate-input" onclick="pDate.open(this)" 
-readonly required placeholder="انتخاب..."></div>
+          <div class="field"><label>از تاریخ <span class="req">*</span></label><input name="from" type="text" class="pdate-input" onclick="pDate.open(this)" readonly required 
+placeholder="انتخاب..."></div>
+          <div class="field"><label>تا تاریخ <span class="req">*</span></label><input name="to" type="text" class="pdate-input" onclick="pDate.open(this)" readonly required placeholder="انتخاب..."></div>
           <div class="field"><label>دلیل مسدودی</label><input name="reason" placeholder="مثال: تعمیرات سیستم سرمایش"></div>
         </div>
         <button class="btn btn-danger" type="submit">${IC.block} اعمال مسدودسازی</button>
       </form>
-      ${db.halls.some(h=>h.blocks?.length)?`<div class="table-wrap" style="margin-top:20px"><table><thead><tr><th>سالن</th><th>بازه مسدودی</th><th>دلیل</th><th>عملیات</th></tr></thead><tbody>${db.halls.flatMap(h=>(h.blocks||[]).map((b,i)=>`<tr><td 
-data-label="سالن">${esc(h.name)}</td><td data-label="بازه">${faDate(b.from)} تا ${faDate(b.to)}</td><td data-label="دلیل">${esc(b.reason||'—')}</td><td data-label="عملیات"><button class="btn btn-sm btn-danger" onclick="delBlock(${h.id},${i})">حذف</button></td></tr>`)).join('')}</tbody></table></div>`:''}
+      ${db.halls.some(h=>h.blocks?.length)?`<div class="table-wrap" 
+style="margin-top:20px"><table><thead><tr><th>سالن</th><th>بازه مسدودی</th><th>دلیل</th><th>عملیات</th></tr></thead><tbody>${db.halls.flatMap(h=>(h.blocks||[]).map((b,i)=>`<tr><td data-label="سالن">${esc(h.name)}</td><td data-label="بازه">${faDate(b.from)} تا ${faDate(b.to)}</td><td data-label="دلیل">${esc(b.reason||'—')}</td><td data-label="عملیات"><button class="btn btn-sm btn-danger" onclick="delBlock(${h.id},${i})">حذف</button></td></tr>`)).join('')}</tbody></table></div>`:''}
     </div>
   </section>`;
 }
-function addHall(){let form=event.target;if(!form.checkValidity()){form.reportValidity();return}let f=new FormData(form);let 
-min=Number(f.get('min')),max=Number(f.get('max'));let h={id:uid(db.halls),code:String(f.get('code')).trim(),name:String(f.get('name')).trim(),min:min,max:max,location:String(f.get('location')||'').trim(),active:true,blocks:[]};if(!h.code)return toast('کد سالن الزامی است.','error');if(!h.name)return toast('نام سالن الزامی است.','error');if(!Number.isInteger(min)||!Number.isInteger(max)||min<1||max<min)return toast('ظرفیت نامعتبر است. حداقل و حداکثر باید اعداد صحیح مثبت باشند.','error');if(db.halls.some(x=>x.code.toLowerCase()===h.code.toLowerCase()))return toast('کد سالن تکراری است.','error');db.halls.push(h);log('افزودن سالن',h.name);save();toast('سالن 
-افزوده شد.','success');shell()}
+function addHall(){let form=event.target;if(!form.checkValidity()){form.reportValidity();return}let f=new FormData(form);let min=Number(f.get('min')),max=Number(f.get('max'));let h={id:uid(db.halls),code:String(f.get('code')).trim(),name:String(f.get('name')).trim(),min:min,max:max,location:String(f.get('location')||'').trim(),active:true,blocks:[]};if(!h.code)return toast('کد سالن الزامی است.','error');if(!h.name)return toast('نام سالن الزامی است.','error');if(!Number.isInteger(min)||!Number.isInteger(max)||min<1||max<min)return toast('ظرفیت نامعتبر 
+است. حداقل و حداکثر باید اعداد صحیح مثبت باشند.','error');if(db.halls.some(x=>x.code.toLowerCase()===h.code.toLowerCase()))return toast('کد سالن تکراری است.','error');db.halls.push(h);log('افزودن سالن',h.name);save();toast('سالن افزوده شد.','success');shell()}
 function toggleHall(id){let h=db.halls.find(x=>x.id===id);h.active=!h.active;save();shell()}
-function editHall(id){let h=db.halls.find(x=>x.id===id);let name=prompt('نام سالن',h.name);if(name===null)return;let min=prompt('حداقل ظرفیت',h.min);if(min===null)return;let max=prompt('حداکثر ظرفیت',h.max);if(max===null)return;min=Number(min);max=Number(max);if(!name||!name.trim()||!Number.isInteger(min)||!Number.isInteger(max)||min<1||max<min)return toast('اطلاعات نامعتبر است. حداقل و حداکثر باید اعداد صحیح مثبت باشند.','error');h.name
-=name.trim();h.min=min;h.max=max;save();toast('سالن ویرایش شد.','success');shell()}
+function editHall(id){let h=db.halls.find(x=>x.id===id);let name=prompt('نام سالن',h.name);if(name===null)return;let min=prompt('حداقل ظرفیت',h.min);if(min===null)return;let max=prompt('حداکثر ظرفیت',h.max);if(max===null)return;min=Number(min);max=Number(max);if(!
+name||!name.trim()||!Number.isInteger(min)||!Number.isInteger(max)||min<1||max<min)return toast('اطلاعات نامعتبر است. حداقل و حداکثر باید اعداد صحیح مثبت باشند.','error');h.name=name.trim();h.min=min;h.max=max;save();toast('سالن ویرایش شد.','success');shell()}
 function deleteHall(id){
   const activeRes=db.reservations.filter(r=>r.hallId===id&&['approved','confirmed'].includes(r.status));
   if(activeRes.length) return toast(`این سالن ${activeRes.length} رزرو فعال دارد و قابل حذف نیست.`,'error');
   const pastRes=db.reservations.filter(r=>r.hallId===id);
-  if(pastRes.length && !confirm(`این سالن ${pastRes.length} رزرو در تاریخچه دارد (شامل برگزار شده/لغو شده). پس از حذف، گزارش‌های قبلی نام سالن را «—» نشان می‌دهند. ادامه؟`)) return;
+  if(pastRes.length && !confirm(`این 
+سالن ${pastRes.length} رزرو در تاریخچه دارد (شامل برگزار شده/لغو شده). پس از حذف، گزارش‌های قبلی نام سالن را «—» نشان می‌دهند. ادامه؟`)) return;
   if(!confirm('سالن حذف شود؟')) return;
-  db.halls=db.halls.filter(h=>h.id!
-==id);save();toast('سالن حذف شد.','success');shell();
+  db.halls=db.halls.filter(h=>h.id!==id);save();toast('سالن حذف شد.','success');shell();
 }
 function addBlock(){
   let form=event.target;
   if(!form.checkValidity()){form.reportValidity();return}
   let f=new FormData(form),hallId=+f.get('hallId'),from=String(f.get('from')||'').trim(),to=String(f.get('to')||'').trim(),reason=String(f.get('reason')||'').trim();
-  from = toEnglishDigits(from).replace(/\//g, '-');
+  from = 
+toEnglishDigits(from).replace(/\//g, '-');
   to = toEnglishDigits(to).replace(/\//g, '-');
   if(!from) return toast('لطفاً تاریخ شروع را انتخاب کنید.','error');
   if(!to) return toast('لطفاً تاریخ پایان را انتخاب کنید.','error');
   if(from>to) return toast('تاریخ شروع باید قبل از پایان باشد.','error');
   let h=db.halls.find(x=>x.id===hallId);if(!h.blocks)h.blocks=[];
   if(h.blocks.some(b=>from<=b.to&&to>=b.from))return toast('این بازه با مسدودی قبلی تداخل دارد.','error');
-  h.blocks.push({from,to,reason});log('مسدودسازی سالن',`${h.name}: ${from} تا ${to}`);save();toast('مسدودسازی اعمال شد.','success');shell();
+  h.blocks.push({from,to,reason});log('مسدودسازی سالن',`${h.name}: ${from} تا ${to}
+`);save();toast('مسدودسازی اعمال شد.','success');shell();
 }
-function delBlock(hid,idx){let h=db.halls.find(x=>x.id===hid);if(h&&h.blocks){h.blocks.splice
-(idx,1);save();toast('مسدودی حذف شد.','success');shell()}}
+function delBlock(hid,idx){let h=db.halls.find(x=>x.id===hid);if(h&&h.blocks){h.blocks.splice(idx,1);save();toast('مسدودی حذف شد.','success');shell()}}
 
 /* ============ SLOTS ============ */
 function slotsPage(c){
   c.innerHTML=`<section>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.clock}</div><h2>مدیریت سانس‌های زمانی</h2></div>
-      ${db.slots.length?`<div class="table-wrap"><table><thead><tr><th>نام سانس</th><th>شروع</th><th>پایان</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${db.slots.map(s=>`<tr>
+      ${db.slots.length?`<div 
+class="table-wrap"><table><thead><tr><th>نام سانس</th><th>شروع</th><th>پایان</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${db.slots.map(s=>`<tr>
         <td data-label="نام">${esc(s.name)}</td><td data-label="شروع">${esc(s.start)}</td><td data-label="پایان">${esc(s.end)}</td>
         <td data-label="وضعیت">${s.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</span>'}</td>
         <td data-label="عملیات"><div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="btn btn-sm btn-secondary" onclick="toggleSlot(${s.id})">${s.active?'غیرفعال':'فعال'}</button>
-          <button class="btn btn-sm btn-secondary" onclick="editSlot($
-{s.id})">${IC.edit}</button>
+          <button class="btn btn-sm btn-secondary" onclick="editSlot(${s.id})">${IC.edit}</button>
           <button class="btn btn-sm btn-secondary" onclick="deleteSlot(${s.id})" style="color:var(--red)">${IC.trash}</button>
         </div></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>سانسی ثبت نشده</h4></div>`}
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن سانس جدید</h3></div>
+      <div class="card-head"><div 
+class="card-title-icon">${IC.plus}</div><h3>افزودن سانس جدید</h3></div>
       <form onsubmit="event.preventDefault();addSlot()">
         <div class="row">
-          <div class="field"><label>نام 
-سانس <span class="req">*</span></label><input name="name" required placeholder="مثال: صبح"></div>
+          <div class="field"><label>نام سانس <span class="req">*</span></label><input name="name" required placeholder="مثال: صبح"></div>
           <div class="field"><label>ساعت شروع <span class="req">*</span></label><input name="start" type="time" value="08:00" required></div>
-          <div class="field"><label>ساعت پایان <span class="req">*</span></label><input name="end" type="time" value="12:00" required></div>
+          <div class="field"><label>ساعت پایان <span class="req">*</span></label><input name="end" type="time" value="12:00" 
+required></div>
         </div>
         <button class="btn btn-primary" type="submit">${IC.plus} افزودن سانس</button>
       </form>
@@ -1247,16 +1231,17 @@ function addSlot(){
   let f=new FormData(form);
   let name=String(f.get('name')||'').trim();
   let start=String(f.get('start')||'').trim();
-  let end=String(f.get('end')||'').trim();
+  let 
+end=String(f.get('end')||'').trim();
   if(!name) return toast('نام سانس الزامی است.','error');
   const s=timeToMinutes(start),e=timeToMinutes(end);
-  if(isNaN(s)||isNaN(e)) return 
-toast('ساعت شروع و پایان باید به فرمت HH:MM باشند.','error');
+  if(isNaN(s)||isNaN(e)) return toast('ساعت شروع و پایان باید به فرمت HH:MM باشند.','error');
   if(s>=e) return toast('ساعت پایان باید بعد از شروع باشد.','error');
   let slot={id:uid(db.slots),name,start:minutesToTime(s),end:minutesToTime(e),active:true};
   db.slots.push(slot);save();toast('سانس افزوده شد.','success');shell();
 }
-function toggleSlot(id){let s=db.slots.find(x=>x.id===id);s.active=!s.active;save();shell()}
+function toggleSlot(id){let s=db.slots.find(x=>x.id===id);s.active=!
+s.active;save();shell()}
 function editSlot(id){
   let s=db.slots.find(x=>x.id===id);
   let name=prompt('نام سانس',s.name);
@@ -1283,22 +1268,20 @@ function deleteSlot(id){if(db.reservations.some(r=>r.slotId===id))return toast('
 function equipment(c){
   c.innerHTML=`<section>
     <div class="card">
-      <div class="card-head"><div 
-class="card-title-icon">${IC.gear}</div><h2>مدیریت تجهیزات</h2></div>
+      <div class="card-head"><div class="card-title-icon">${IC.gear}</div><h2>مدیریت تجهیزات</h2></div>
       ${db.equipment.length?`<div class="table-wrap"><table><thead><tr><th>نام تجهیز</th><th>تعداد</th><th>توضیحات</th><th>عملیات</th></tr></thead><tbody>${db.equipment.map(e=>`<tr>
         <td data-label="نام">${esc(e.name)}</td><td data-label="تعداد">${e.qty}</td><td data-label="توضیحات">${esc(e.notes||'—')}</td>
         <td data-label="عملیات"><div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
-          <button class="btn btn-sm btn-secondary" onclick="editEquipment(${e.id})">$
-{IC.edit}</button>
+          <button class="btn btn-sm btn-secondary" onclick="editEquipment(${e.id})">${IC.edit}</button>
           <button class="btn btn-sm btn-secondary" onclick="deleteEquipment(${e.id})" style="color:var(--red)">${IC.trash}</button>
         </div></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>تجهیزی ثبت نشده</h4></div>`}
     </div>
     <div class="card">
-      <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن تجهیز</h3></div>
+      <div class="card-head"><div 
+class="card-title-icon">${IC.plus}</div><h3>افزودن تجهیز</h3></div>
       <form onsubmit="event.preventDefault();addEquipment()">
         <div class="row">
-          <div class="field"><label>نام 
-تجهیز <span class="req">*</span></label><input name="name" required placeholder="مثال: میکروفن"></div>
+          <div class="field"><label>نام تجهیز <span class="req">*</span></label><input name="name" required placeholder="مثال: میکروفن"></div>
           <div class="field"><label>تعداد <span class="req">*</span></label><input name="qty" type="number" min="1" step="1" value="1" required></div>
           <div class="field"><label>توضیحات</label><input name="notes"></div>
         </div>
@@ -1317,8 +1300,7 @@ function addEquipment(){
   if(!name) return toast('نام تجهیز الزامی است.','error');
   if(!Number.isInteger(qty)||qty<1) return toast('تعداد باید عدد صحیح مثبت باشد.','error');
   let x={id:uid(db.equipment),name:name,qty:qty,notes:notes};
-  if(db.equipment.some(y=>y.name
-.toLowerCase()===x.name.toLowerCase()))return toast('این تجهیز قبلاً ثبت شده است.','error');
+  if(db.equipment.some(y=>y.name.toLowerCase()===x.name.toLowerCase()))return toast('این تجهیز قبلاً ثبت شده است.','error');
   db.equipment.push(x);save();toast('تجهیز افزوده شد.','success');shell();
 }
 function editEquipment(id){
@@ -1341,8 +1323,7 @@ function deleteEquipment(id){
   );
   if(inUse) return toast('این تجهیز در رزروهای فعال استفاده شده و قابل حذف نیست.','error');
   if(!confirm('تجهیز حذف شود؟'))return;
-  db.equipment=db.eq
-uipment.filter(e=>e.id!==id);
+  db.equipment=db.equipment.filter(e=>e.id!==id);
   db.reservations.forEach(r=>{
     if(r.equipment&&Array.isArray(r.equipment)){
       r.equipment=r.equipment.filter(eid=>eid!==id);
@@ -1357,26 +1338,26 @@ function applicantsPage(c){
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.users}</div><h2>مدیریت متقاضیان</h2></div>
       ${db.applicants.length?`<div class="table-wrap"><table><thead><tr><th>نام و نام خانوادگی</th><th>واحد</th><th>تماس</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${db.applicants.map(a=>`<tr>
-        <td data-label="نام">${esc(a.name)}</td><td data-label="واحد">${esc(a.unit)}</td><td data-label="تماس">${esc(a.phone)}</td>
-        <td data-label="وضعیت">${a.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</
-span>'}</td>
+        <td data-label="نام">${esc(a.name)}</td><td data-label="واحد">${esc(a.unit)}
+</td><td data-label="تماس">${esc(a.phone)}</td>
+        <td data-label="وضعیت">${a.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</span>'}</td>
         <td data-label="عملیات"><div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="btn btn-sm btn-secondary" onclick="editApplicant(${a.id})">${IC.edit}</button>
           <button class="btn btn-sm btn-secondary" onclick="toggleApplicant(${a.id})">${a.active?'غیرفعال':'فعال'}</button>
           <button class="btn btn-sm btn-secondary" onclick="deleteApplicant(${a.id})" style="color:var(--red)">${IC.trash}</button>
-        </div></td></tr>`).join('')}
-</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>متقاضی ثبت نشده</h4></div>`}
+        </div></td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>متقاضی ثبت نشده</h4></div>`}
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن متقاضی جدید</h3></div>
       <form onsubmit="event.preventDefault();addApplicant()">
         <div class="row">
-          <div class="field"><label>نام و نام خانوادگی <span class="req">*</span></label><input name="name" required></div>
-          <div class="field"><label>واحد سازمانی <span class="req">*</span></label><input 
-name="unit" list="units" required><datalist id="units">${db.units.map(u=>`<option value="${esc(u)}">`).join('')}</datalist></div>
+          <div class="field"><label>نام 
+و نام خانوادگی <span class="req">*</span></label><input name="name" required></div>
+          <div class="field"><label>واحد سازمانی <span class="req">*</span></label><input name="unit" list="units" required><datalist id="units">${db.units.map(u=>`<option value="${esc(u)}">`).join('')}</datalist></div>
           <div class="field"><label>شماره تماس <span class="req">*</span></label><input name="phone" inputmode="tel" required placeholder="09123456789"></div>
         </div>
-        <button class="btn btn-primary" type="submit">${IC.plus} افزودن متقاضی</button>
+        <button class="btn btn-primary" type="submit">$
+{IC.plus} افزودن متقاضی</button>
       </form>
     </div>
   </section>`;
@@ -1389,7 +1370,8 @@ function addApplicant(){
   let unit=String(f.get('unit')||'').trim();
   let phone=String(f.get('phone')||'').trim();
   if(!name) return toast('نام و نام خانوادگی الزامی است.','error');
-  if(!unit) return toast('واحد سازمانی الزامی است.','error');
+  if(!unit) return toast('واحد سازمانی 
+الزامی است.','error');
   if(!phone) return toast('شماره تماس الزامی است.','error');
   let a={id:uid(db.applicants),name:name,unit:unit,phone:phone,active:true};
   db.applicants.push(a);
@@ -1412,7 +1394,8 @@ function editApplicant(id){
   save();shell();
 }
 function toggleApplicant(id){let a=db.applicants.find(x=>x.id===id);a.active=!a.active;save();shell()}
-function deleteApplicant(id){if(!confirm('این متقاضی حذف شود؟'))return;db.applicants=db.applicants.filter(a=>a.id!==id);save();shell()}
+function deleteApplicant(id)
+{if(!confirm('این متقاضی حذف شود؟'))return;db.applicants=db.applicants.filter(a=>a.id!==id);save();shell()}
 </script>
 
 <script>
@@ -1421,11 +1404,12 @@ function reports(c){
   c.innerHTML=`<section><div class="card">
     <div class="card-head"><div class="card-title-icon">${IC.chart}</div><h2>گزارش و چاپ</h2></div>
     <div class="row">
-      <div class="field"><label>از تاریخ <span class="req">*</span></label><input type="text" id="rf" class="pdate-input" value="${today().slice(0,7)}-01" onclick="pDate.open(this)" readonly required></div>
-      <div class="field"><label>تا تاریخ <span class="req">*</
-span></label><input type="text" id="rt" class="pdate-input" value="${today()}" onclick="pDate.open(this)" readonly required></div>
+      <div class="field"><label>از تاریخ <span class="req">*</span></label><input type="text" 
+id="rf" class="pdate-input" value="${today().slice(0,7)}-01" onclick="pDate.open(this)" readonly required></div>
+      <div class="field"><label>تا تاریخ <span class="req">*</span></label><input type="text" id="rt" class="pdate-input" value="${today()}" onclick="pDate.open(this)" readonly required></div>
       <div class="field"><label>سالن</label><select id="rh"><option value="">همه سالن‌ها</option>${db.halls.map(h=>`<option value="${h.id}">${esc(h.name)}</option>`).join('')}</select></div>
-      <div class="field"><label>وضعیت</label><select id="rs"><option value="">همه</option>${Object.entries(statusText).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
+      <div class="field"><label>وضعیت</
+label><select id="rs"><option value="">همه</option>${Object.entries(statusText).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <button class="btn btn-primary" onclick="runReport()">${IC.chart} تهیه گزارش</button>
@@ -1443,62 +1427,65 @@ function reportRows(){
   let s=document.getElementById('rs')?.value||'';
   f = f ? toEnglishDigits(f).replace(/\//g,'-') : '';
   t = t ? toEnglishDigits(t).replace(/\//g,'-') : '9999';
-  return db.reservations.filter(r=>r.date>=f&&r.date<=t&&(!h||r.hallId===+h)&&(!s||r.status===s)).sort((a,b)=>a.date.localeCompare(b.date))
+  return db.reservations.filter(
+r=>r.date>=f&&r.date<=t&&(!h||r.hallId===+h)&&(!s||r.status===s)).sort((a,b)=>a.date.localeCompare(b.date))
 }
 function runReport(){
   let rows=reportRows();
   let items=[['brand','تعداد کل',rows.length],['green','قطعی',rows.filter(r=>r.status==='confirmed').length],['amber','برگزار شده',rows.filter(r=>r.status==='done').length],['red','لغو شده',rows.filter(r=>r.status==='cancelled').length]];
-  document.getElementById('reportSummary').innerHTML=items.map(([cls,l,v])=>`<div class="stat stat--${cls}"><div class="stat-inner"><span class="stat-label">${l}</span><span class="stat-value">${v}</span></div></div>`).join('');
-  document.getElementById('reportTable').innerHTML=table(rows,fals
-e);
+  document.getElementById('reportSummary').innerHTML=items.map(([cls,l,v])=>`<div class="stat stat--${cls}"><div 
+class="stat-inner"><span class="stat-label">${l}</span><span class="stat-value">${v}</span></div></div>`).join('');
+  document.getElementById('reportTable').innerHTML=table(rows,false);
 }
-function exportCSV(){let rows=reportRows();let h=['شماره','تاریخ','سانس','سالن','موضوع','واحد','مسئول','تلفن','مسئول مستقیم','مهمان شاخص','وضعیت'];let l=[h,...rows.map(r=>[r.id,faDate(r.date),slotName(r.slotId),hallName(r.hallId),r.title,r.unit,r.requester,r.phone,r.supervisor,r.guest,statusText[r.status]])];let csv='\ufeff'+l.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');downloadBlob(csv,`گزارش-رزرو-${today()}.csv`,'text/csv;charset=utf-8')}
+function exportCSV(){let rows=reportRows();let h=['شماره','تاریخ','سانس','سالن','موضوع','واحد','مسئول','تلفن','مسئول مستقیم','مهمان شاخص','وضعیت'];let l=[h,...rows.map(r=>[r.id,faDate(r.date),slotName(r.slotId),hallName(r.hallId),r.title,r.unit,r.requester,r.phone,r.supervisor,r.guest,statusText[r.status]])];let csv='\ufeff'+l.map(row=>row.map(v=>'"'+String(v??'').replace(/"/
+g,'""')+'"').join(',')).join('\r\n');downloadBlob(csv,`گزارش-رزرو-${today()}.csv`,'text/csv;charset=utf-8')}
 
-/* ============ DATA 
-============ */
+/* ============ DATA ============ */
 function dataPage(c){
   c.innerHTML=`<section>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.db}</div><h2>مدیریت اطلاعات و پشتیبان‌گیری</h2></div>
       <div class="grid-stats">
-        <div class="stat stat--brand"><div class="stat-inner"><span class="stat-label">رزروها</span><span class="stat-value">${db.reservations.length}</span></div></div>
-        <div class="stat stat--blue"><div class="stat-inner"><span 
-class="stat-label">سالن‌ها</span><span class="stat-value">${db.halls.length}</span></div></div>
+        <div class="stat stat--brand"><div class="stat-inner"><span class="stat-label">رزروها</
+span><span class="stat-value">${db.reservations.length}</span></div></div>
+        <div class="stat stat--blue"><div class="stat-inner"><span class="stat-label">سالن‌ها</span><span class="stat-value">${db.halls.length}</span></div></div>
         <div class="stat stat--green"><div class="stat-inner"><span class="stat-label">تجهیزات</span><span class="stat-value">${db.equipment.length}</span></div></div>
-        <div class="stat stat--amber"><div class="stat-inner"><span class="stat-label">گزارش فعالیت</span><span class="stat-value">${db.logs.length}</span></div></div>
+        <div class="stat stat--amber"><div 
+class="stat-inner"><span class="stat-label">گزارش فعالیت</span><span class="stat-value">${db.logs.length}</span></div></div>
       </div>
-      <div 
-style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
         <button class="btn btn-primary" onclick="backup()">${IC.db} دانلود پشتیبان JSON</button>
         <button class="btn btn-secondary" onclick="document.getElementById('restoreFile').click()">بازیابی از فایل</button>
-        <input id="restoreFile" class="hidden" type="file" accept=".json,application/json" onchange="restore(event)">
+        <input id="restoreFile" class="hidden" type="file" accept=".json,application/json" 
+onchange="restore(event)">
         <button class="btn btn-secondary" onclick="downloadCSVAll()">خروجی همه رزروها CSV</button>
       </div>
       <div class="notice" style="margin-top:16px">${IC.info}<div>پشتیبان شامل سالن‌ها، تجهیزات، رزروها و گزارش فعالیت است. فایل را در محل امن نگه دارید.</div></div>
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.list}</div><h3>آخرین فعالیت‌ها</h3></div>
-      ${db.logs.length?`<div class="table-wrap"><table><thead><tr><th>زمان</th><th>رویداد</th><th>جزئیات</th></tr></thead><tbody>${db.logs.slice(0,100).map(l=>`<tr><td data-label="زمان">${esc(new Date(l.at).toLocaleString('fa-IR'))}</td><td data-label="رویداد">$
-{esc(l.action)}</td><td data-label="جزئیات">${esc(l.details)}</td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>هنوز فعالیتی ثبت نشده است</h4></div>`}
+      ${db.logs.length?`<div class="table-wrap"><table><thead><tr><th>زمان</th><th>رویداد</
+th><th>جزئیات</th></tr></thead><tbody>${db.logs.slice(0,100).map(l=>`<tr><td data-label="زمان">${esc(new Date(l.at).toLocaleString('fa-IR'))}</td><td data-label="رویداد">${esc(l.action)}</td><td data-label="جزئیات">${esc(l.details)}</td></tr>`).join('')}</tbody></table></div>`:`<div class="empty">${IC.empty}<h4>هنوز فعالیتی ثبت نشده است</h4></div>`}
     </div>
     <div class="card" style="border-color:var(--red)">
-      <div class="card-head"><div class="card-title-icon" style="background:var(--red-soft);color:var(--red)">${IC.warn}</div><h3 style="color:var(--red)">ناحیه حساس</h3></div>
-      <p style="margin-bottom:14px;color:var(--muted)">پاک‌سازی همه اطلاعات قابل بازگشت نیست. قبل از ادامه فایل 
-پشتیبان تهیه کنید.</p>
+      <div class="card-head"><div class="card-title-icon" style="background:var(--red-soft);color:var(--red)">$
+{IC.warn}</div><h3 style="color:var(--red)">ناحیه حساس</h3></div>
+      <p style="margin-bottom:14px;color:var(--muted)">پاک‌سازی همه اطلاعات قابل بازگشت نیست. قبل از ادامه فایل پشتیبان تهیه کنید.</p>
       <button class="btn btn-danger" onclick="resetData()">${IC.trash} پاک‌کردن همه اطلاعات</button>
     </div>
   </section>`;
 }
-function downloadBlob(content,name,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function backup(){downloadBlob(JSON.stringify({format:'hall-manager-backup',version
-:17,exportedAt:new Date().toISOString(),data:db},null,2),`پشتیبان-رزرو-${today()}.json`,'application/json')}
+function downloadBlob(content,name,type){let blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;docu
+ment.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function backup(){downloadBlob(JSON.stringify({format:'hall-manager-backup',version:17,exportedAt:new Date().toISOString(),data:db},null,2),`پشتیبان-رزرو-${today()}.json`,'application/json')}
 function restore(ev){
   let f=ev.target.files[0];if(!f)return;
   let rd=new FileReader();
   rd.onload=()=>{
     try{
       let o=JSON.parse(rd.result),x=o.data||o;
-      if(!Array.isArray(x.halls)||!Array.isArray(x.reservations)||!Array.isArray(x.equipment)||!Array.isArray(x.slots)||!Array.isArray(x.applicants))throw new Error('ساختار فایل نامعتبر است.');
+      if(!Array.isArray(x.halls)||!Array.isArray(x.reservations)||!
+Array.isArray(x.equipment)||!Array.isArray(x.slots)||!Array.isArray(x.applicants))throw new Error('ساختار فایل نامعتبر است.');
       if(!confirm('اطلاعات فعلی با محتوای فایل جایگزین شود؟'))return;
       db={...seed(),...x};if(!save())throw new Error('ذخیره ناموفق بود.');
       sanitizeDB();migrateData();autoCompletePassedReservations();toast('بازیابی با موفقیت انجام شد.','success');shell();
@@ -1507,14 +1494,12 @@ function restore(ev){
   };
   rd.readAsText(f);
 }
-function downloadCSVAll(){let rows=db.reservations;let l=[['شماره','تاریخ','سانس','سالن','موضوع','واحد','مسئول','تلفن','مسئول مستقیم','مهمان شاخص','وضعیت'],...rows.map(r=>[r.id,faDate(r.date),slotName(r.slotId
-),hallName(r.hallId),r.title,r.unit,r.requester,r.phone,r.supervisor,r.guest,statusText[r.status]])];downloadBlob('\ufeff'+l.map(a=>a.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n'),`همه-رزروها-${today()}.csv`,'text/csv;charset=utf-8')}
+function downloadCSVAll(){let rows=db.reservations;let l=[['شماره','تاریخ','سانس','سالن','موضوع','واحد','مسئول','تلفن','مسئول مستقیم','مهمان شاخص','وضعیت'],...rows.map(r=>[r.id,faDate(r.date),slotName(r.slotId),hallName(r.hallId),r.title,r.unit,r.requester,r.phone,r.supervisor,r.guest,statusText[r.status]])];downloadBlob('\ufeff'+l.map(a=>a.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n'),`همه-رزروها-${today()}.csv`,'text/csv;charset=utf-8')}
 function resetData(){
   if(!confirm('تمام اطلاعات محلی حذف و سامانه از ابتدا ساخته شود؟'))return;
   if(!confirm('تأیید نهایی: این عملیات قابل بازگشت نیست.'))return;
   if(window.SupabaseConfigured&&typeof supabaseClient!=='undefined'&&supabaseClient){
-    if(!confirm('⚠️ توجه بحرانی: داده‌های ابری (Supabase) هم پاک خواهند شد و همه‌ی کاربران دیگر در دستگاه‌های دیگر داده‌شان را از 
-دست می‌دهند!\n\nادامه می‌دهید؟'))return;
+    if(!confirm('⚠️ توجه بحرانی: داده‌های ابری (Supabase) هم پاک خواهند شد و همه‌ی کاربران دیگر در دستگاه‌های دیگر داده‌شان را از دست می‌دهند!\n\nادامه می‌دهید؟'))return;
   }
   try{localStorage.removeItem(SESSION_KEY);}catch(e){}
   try{localStorage.removeItem(LOGIN_ATTEMPTS_KEY);}catch(e){}
@@ -1533,9 +1518,9 @@ load();
 <script>
 window.SupabaseConfigured=(function(){
   try{
-    const url=localStorage.getItem('hall_supabase_url')||'https://fbmzbanvvsshmoypqejh.supabase.co';
-    const key=localStorage.getItem('hall_supabase_key')||'sb_publishable_0BqGo
-QOkYbT2jHsm8-nxrQ_2q6CSWQl';
+    const url=localStorage.getItem('hall_supabase
+_url')||'https://fbmzbanvvsshmoypqejh.supabase.co';
+    const key=localStorage.getItem('hall_supabase_key')||'sb_publishable_0BqGoQOkYbT2jHsm8-nxrQ_2q6CSWQl';
     return !!(url&&key&&!url.includes('YOUR_')&&!key.includes('YOUR_'));
   }catch(e){return false}
 })();
@@ -1548,8 +1533,7 @@ window._authDecisionPending=false;
 
 const SESSION_KEY='hall_session_v1';
 const PASSWORD_SALT='hall_manager_salt_v1';
-const 
-SESSION_TTL_MS=8*60*60*1000;
+const SESSION_TTL_MS=8*60*60*1000;
 const LOGIN_ATTEMPTS_KEY='hall_login_attempts_v1';
 const MAX_LOGIN_ATTEMPTS=5;
 const LOGIN_LOCKOUT_MS=15*60*1000;
@@ -1563,10 +1547,10 @@ const PERMISSIONS=[
   {k:'halls',t:'مدیریت سالن‌ها',i:IC.hall,adminOnly:true,desc:'فقط مدیر (خودکار)'},
   {k:'slots',t:'سانس‌های زمانی',i:IC.clock,adminOnly:true,desc:'فقط مدیر (خودکار)'},
   {k:'equipment',t:'تجهیزات',i:IC.gear,adminOnly:true,desc:'فقط مدیر (خودکار)'},
-  {k:'applicants',t:'متقاضیان',i:IC.users,adminOnly:false,desc:'مدیریت متقاضیان'},
+  {k:'applicants',t:'متقاضیان',i:IC.us
+ers,adminOnly:false,desc:'مدیریت متقاضیان'},
   {k:'reports',t:'گزارش و چاپ',i:IC.chart,adminOnly:false,desc:'تهیه گزارش و خروجی CSV'},
-  {k:'data',t:'مدیریت اطلاعات',i:IC.db,ad
-minOnly:true,desc:'فقط مدیر (پشتیبان/بازیابی)'},
+  {k:'data',t:'مدیریت اطلاعات',i:IC.db,adminOnly:true,desc:'فقط مدیر (پشتیبان/بازیابی)'},
 ];
 
 let session=null;
@@ -1578,8 +1562,7 @@ function isCryptoAvailable(){
 async function hashPassword(password){
   if(isCryptoAvailable()){
     try{
-      const encoder=new 
-TextEncoder();
+      const encoder=new TextEncoder();
       const data=encoder.encode(password+PASSWORD_SALT);
       const hash=await crypto.subtle.digest('SHA-256',data);
       return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
@@ -1587,7 +1570,8 @@ TextEncoder();
   }
   if(!_cryptoWarned){
     _cryptoWarned=true;
-    console.error('[Security] Web Crypto API در دسترس نیست! استفاده از fallback ضعیف.');
+    console.error('[Security] Web 
+Crypto API در دسترس نیست! استفاده از fallback ضعیف.');
     if(typeof toast==='function'){
       toast('⚠ هشدار امنیتی: مرورگر از Web Crypto پشتیبانی نمی‌کند.','warning',8000);
     }
@@ -1609,7 +1593,8 @@ function getLoginAttempts(username){
     const k=username.toLowerCase();
     const attempts=all[k]||[];
     const now=Date.now();
-    return attempts.filter(t=>now-t<LOGIN_LOCKOUT_MS);
+    return attempts.filter(t=>now-t<L
+OGIN_LOCKOUT_MS);
   }catch(e){return []}
 }
 function recordFailedLoginAttempt(username){
@@ -1625,15 +1610,15 @@ function recordFailedLoginAttempt(username){
 }
 function clearLoginAttempts(username){
   try{
-    const 
-all=JSON.parse(localStorage.getItem(LOGIN_ATTEMPTS_KEY)||'{}');
+    const all=JSON.parse(localStorage.getItem(LOGIN_ATTEMPTS_KEY)||'{}');
     delete all[username.toLowerCase()];
     localStorage.setItem(LOGIN_ATTEMPTS_KEY,JSON.stringify(all));
   }catch(e){}
 }
 function getLockoutRemaining(username){
   const attempts=getLoginAttempts(username);
-  if(attempts.length<MAX_LOGIN_ATTEMPTS) return 0;
+  if(attempts.length<MAX_
+LOGIN_ATTEMPTS) return 0;
   const oldest=attempts[0];
   const elapsed=Date.now()-oldest;
   const remaining=LOGIN_LOCKOUT_MS-elapsed;
@@ -1661,17 +1646,9 @@ function normalizeRecoveryCode(input){
   return String(input||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
 }
 
-function currentUser(){
-  // موقتاً یک کاربر ادمین مجازی برمی‌گرداند
-  if(!session) return null;
-  return {id:0,name:'مدیر',role:'admin',active:true,permissions:[]};
-}
-function isAdmin(){
-  return true; // موقتاً همه ادمین هستند
-}
-function hasPermission(module){
-  return true; // موقتاً همه دسترسی کامل دارند
-}
+function currentUser(){ if(!session) return null; return {id:0,name:'مدیر',role:'admin',active:true,permissions:[]}; }
+function isAdmin(){ return true; }
+function hasPermission(module){ return true; }
 
 function updateUserChip(){
   const wrap=document.getElement
@@ -1731,19 +1708,15 @@ function decideAuthScreen(){
   else showLoginScreen();
 }
 
-/* ============ راه‌اندازی احراز هویت ============ */
-// ====== احراز هویت موقتاً غیرفعال است ======
-// برای فعال‌سازی مجدد، این تابع را به حالت قبل برگردان
+/* ============ راه‌اندازی احراز هویت (لاگین غیرفعال) ============ */
 function initAuth(){
-  // مستقیم وارد اپ می‌شویم (بدون لاگین)
   session={userId:0,loginAt:new Date().toISOString()};
   showApp();
 }
 
 /* ============ نمایش صفحه ورود ============ */
 function showLoginScreen(){
-  const screen=document.getElemen
-tById('authScreen');
+  const screen=document.getElementById('authScreen');
   screen.classList.remove('hidden');
   document.getElementById('authTitle').textContent='ورود به سامانه';
   document.getElementById('authSubtitle').textContent='مدیریت سالن‌ها · تولید محتوا، رسانه و مستندسازی';
@@ -1752,8 +1725,7 @@ tById('authScreen');
     <form class="auth-form" onsubmit="event.preventDefault();doLogin()">
       <div class="field">
         <label>نام کاربری</label>
-        <input name="username" required placeholder="نام 
-کاربری خود را وارد کنید" autocomplete="username" autofocus>
+        <input name="username" required placeholder="نام کاربری خود را وارد کنید" autocomplete="username" autofocus>
       </div>
       <div class="field">
         <label>رمز عبور</label>
@@ -1763,11 +1735,11 @@ tById('authScreen');
     </form>
     <div class="auth-actions">
       <span></span>
-      <span class="auth-link" onclick
-="showForgotScreen()">فراموشی رمز عبور؟</span>
+      <span class="auth-link" onclick="showForgotScreen()">فراموشی رمز عبور؟</span>
     </div>
     ${canEmergencyReset()?`
-      <div style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--border-2);text-align:center">
+      <div 
+style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--border-2);text-align:center">
         <small style="color:var(--muted);display:block;margin-bottom:6px;font-size:11.5px">رمز مدیر را فراموش کرده‌اید؟ (هیچ مدیر دیگری برای کمک وجود ندارد)</small>
         <span class="auth-link" style="color:var(--red);font-size:12.5px;font-weight:700" onclick="emergencyAdminReset()">⚠ بازنشانی اضطراری مدیر</span>
       </div>
@@ -1786,12 +1758,12 @@ function emergencyAdminReset(){
   if(!admin){
     const anyAdmin=db.users.find(u=>u.role==='admin'&&u.active);
     if(!anyAdmin){
-      showAuthError('مدیری برای بازنشانی یافت نشد.');
+      showAuthError('مدیری برای بازنشانی 
+یافت نشد.');
       return;
     }
     document.getElementById('authBody').innerHTML=`
-      <div class="auth-error show">${IC.warn}<div>این مدیر کد بازیابی ندارد (احتمالاً قبل از فعال‌سازی این قابلیت ساخته شده).<br><br>برای بازیابی، باید از کنسول مرورگر (F12) استفاده کنید:<br><code style="display:block;background:var(--surface-3);padding:8px;margin-top:8px;border-radius:6px;font-size:11px">db.users=[];save();setTim
-eout(()=>location.reload(),2500)</code></div></div>
+      <div class="auth-error show">${IC.warn}<div>این مدیر کد بازیابی ندارد (احتمالاً قبل از فعال‌سازی این قابلیت ساخته شده).<br><br>برای بازیابی، باید از کنسول مرورگر (F12) استفاده کنید:<br><code style="display:block;background:var(--surface-3);padding:8px;margin-top:8px;border-radius:6px;font-size:11px">db.users=[];save();setTimeout(()=>location.reload(),2500)</code></div></div>
     `;
     return;
   }
@@ -1799,8 +1771,7 @@ eout(()=>location.reload(),2500)</code></div></div>
   document.getElementById('authSubtitle').textContent='کد بازیابی اضطراری را وارد کنید';
   document.getElementById('authBody').innerHTML=`
     <div class="alert-danger" style="display:block">${IC.warn}<div>این عملیات فقط با <b>کد بازیابی</b> که هنگام راه‌اندازی به مدیر داده شده قابل اجراست.</div></div>
-    <div class="auth-error" 
-id="authError"></div>
+    <div class="auth-error" id="authError"></div>
     <form class="auth-form" onsubmit="event.preventDefault();verifyRecoveryCode()">
       <div class="field">
         <label>کد بازیابی</label>
@@ -1819,8 +1790,7 @@ id="authError"></div>
 async function verifyRecoveryCode(){
   const form=document.querySelector('#authBody .auth-form');
   const f=new FormData(form);
-  const inputCode=normalizeRecove
-ryCode(f.get('recoveryCode'));
+  const inputCode=normalizeRecoveryCode(f.get('recoveryCode'));
   showAuthError('');
   if(inputCode.length!==12){
     showAuthError('کد بازیابی باید ۱۲ کاراکتر باشد.');
@@ -1843,8 +1813,7 @@ ryCode(f.get('recoveryCode'));
   const confirmPassword=prompt('رمز جدید را دوباره وارد کنید (تأیید):','');
   if(confirmPassword===null) return;
   if(confirmPassword!==newPassword){
-    showAuthError('تأیید رمز با رمز جدید 
-مطابقت ندارد.');
+    showAuthError('تأیید رمز با رمز جدید مطابقت ندارد.');
     return;
   }
   admin.passwordHash=await hashPassword(newPassword);
@@ -1854,8 +1823,7 @@ ryCode(f.get('recoveryCode'));
   document.getElementById('authTitle').textContent='✓ رمز بازنشانی شد';
   document.getElementById('authSubtitle').textContent='اکنون می‌توانید با رمز جدید وارد شوید';
   document.getElementById('authBody').innerHTML=`
-    <div 
-class="auth-success-notice">${IC.check}<div><b>رمز مدیر «${esc(admin.name)}» با موفقیت بازنشانی شد!</b><br>اکنون می‌توانید با نام کاربری و رمز جدید وارد شوید.</div></div>
+    <div class="auth-success-notice">${IC.check}<div><b>رمز مدیر «${esc(admin.name)}» با موفقیت بازنشانی شد!</b><br>اکنون می‌توانید با نام کاربری و رمز جدید وارد شوید.</div></div>
     <button class="btn btn-primary" style="width:100%;padding:12px" onclick="showLoginScreen()">${IC.check} ادامه و ورود</button>
   `;
 }
@@ -1864,16 +1832,14 @@ class="auth-success-notice">${IC.check}<div><b>رمز مدیر «${esc(admin.nam
 function showSetupScreen(){
   const screen=document.getElementById('authScreen');
   screen.classList.remove('hidden');
-  document.getElementById('a
-uthTitle').textContent='راه‌اندازی اولیه';
+  document.getElementById('authTitle').textContent='راه‌اندازی اولیه';
   document.getElementById('authSubtitle').textContent='برای شروع، حساب کاربری مدیر را ایجاد کنید';
   document.getElementById('authBody').innerHTML=`
     <div class="notice">${IC.info}<div>این اولین اجرای سامانه است. یک حساب <b>مدیر</b> بسازید تا بتوانید کاربران دیگر و دسترسی‌های آن‌ها را تعریف کنید.</div></div>
     <div class="auth-error" id="authError"></div>
     <form class="auth-form" onsubmit="event.preventDefault();doSetup()">
       <div class="field">
-        <label>نام و نام خانوادگی <span 
-class="req">*</span></label>
+        <label>نام و نام خانوادگی <span class="req">*</span></label>
         <input name="name" required placeholder="مثال: علی رضایی" autofocus>
       </div>
       <div class="field">
@@ -1886,7 +1852,8 @@ class="req">*</span></label>
       </div>
       <div class="field">
         <label>رمز عبور <span class="req">*</span></label>
-        <input name="password" type="password" required minlength="6" placeholder="حداقل ۶ کاراکتر" autocomplete="new-password">
+        <input name="password" type="password" 
+required minlength="6" placeholder="حداقل ۶ کاراکتر" autocomplete="new-password">
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;padding:12px">${IC.plus} ایجاد حساب مدیر</button>
     </form>
@@ -1912,8 +1879,7 @@ function showForgotScreen(){
       <span></span>
     </div>
   `;
-  setTimeout(()=>{const el=docume
-nt.querySelector('#authBody [name=identifier]');if(el)el.focus()},50);
+  setTimeout(()=>{const el=document.querySelector('#authBody [name=identifier]');if(el)el.focus()},50);
 }
 
 async function doLogin(){
@@ -1926,10 +1892,10 @@ async function doLogin(){
     showAuthError('نام کاربری و رمز عبور را وارد کنید.');
     return;
   }
-  const lockoutRemaining=getLocko
-utRemaining(username);
+  const lockoutRemaining=getLockoutRemaining(username);
   if(lockoutRemaining>0){
-    showAuthError(`تعداد تلاش‌های ناموفق بیش از حد مجاز. لطفاً ${lockoutRemaining} دقیقه دیگر صبر کنید.`);
+    showAuthError(`تعداد تلاش‌های ناموفق بیش از حد مجاز. لطفاً ${lockoutRemaining} دقیقه دیگر صبر 
+کنید.`);
     return;
   }
   const user=db.users.find(u=>u.username.toLowerCase()===username);
@@ -1937,8 +1903,7 @@ utRemaining(username);
     recordFailedLoginAttempt(username);
     log('ورود ناموفق',`نام کاربری: ${username} (کاربر یافت نشد یا غیرفعال)`);
     save();
-    const remaining=MAX_LOGIN_A
-TTEMPTS-getLoginAttempts(username).length;
+    const remaining=MAX_LOGIN_ATTEMPTS-getLoginAttempts(username).length;
     showAuthError(remaining>0
       ?`نام کاربری یا رمز عبور نادرست است. تلاش‌های باقیمانده: ${remaining}`
       :`تعداد تلاش‌های ناموفق بیش از حد. حساب به مدت ۱۵ دقیقه قفل شد.`
@@ -1950,8 +1915,7 @@ TTEMPTS-getLoginAttempts(username).length;
     recordFailedLoginAttempt(username);
     log('ورود ناموفق',`نام کاربری: ${username} (رمز نادرست)`);
     save();
-    const remaining=MAX_LOGIN_A
-TTEMPTS-getLoginAttempts(username).length;
+    const remaining=MAX_LOGIN_ATTEMPTS-getLoginAttempts(username).length;
     showAuthError(remaining>0
       ?`نام کاربری یا رمز عبور نادرست است. تلاش‌های باقیمانده: ${remaining}`
       :`تعداد تلاش‌های ناموفق بیش از حد. حساب به مدت ۱۵ دقیقه قفل شد.`
@@ -2005,8 +1969,7 @@ async function changeMyPassword(){
 
 async function doSetup(){
   const form=document.querySelector('#authBody .auth-form');
-  if(!form.checkValidity())
-{form.reportValidity();return}
+  if(!form.checkValidity()){form.reportValidity();return}
   const f=new FormData(form);
   const username=String(f.get('username')).trim().toLowerCase();
   showAuthError('');
@@ -2036,14 +1999,15 @@ async function doSetup(){
   showRecoveryCodeScreen(recoveryCode);
 }
 
-function showRecoveryCodeScreen(code){
+function 
+showRecoveryCodeScreen(code){
   const formatted=formatRecoveryCode(code);
   document.getElementById('authTitle').textContent='✓ حساب مدیر ایجاد شد';
   document.getElementById('authSubtitle').textContent='کد بازیابی خود را ذخیره کنید';
   document.getElementById('authBody').innerHTML=`
-    <div class="auth-success-notice">${IC.check}<div><b>حساب مدیر با 
-موفقیت ایجاد شد!</b><br>اکنون یک <b>کد بازیابی اضطراری</b> منحصربه‌فرد برای شما تولید شده است.</div></div>
-    <div style="margin:18px 0;padding:18px;background:var(--amber-soft);border:1.5px dashed var(--amber);border-radius:14px">
+    <div class="auth-success-notice">${IC.check}<div><b>حساب مدیر با موفقیت ایجاد شد!</b><br>اکنون یک <b>کد بازیابی اضطراری</b> منحصربه‌فرد برای شما تولید شده است.</div></div>
+    <div style="margin:18px 0;padding:18px;background:var(--
+amber-soft);border:1.5px dashed var(--amber);border-radius:14px">
       <label style="display:block;font-size:12px;color:var(--amber);margin-bottom:10px;font-weight:800;letter-spacing:.3px">⚠ کد بازیابی اضطراری - یک‌بار نمایش</label>
       <div class="password-display" style="font-size:22px;letter-spacing:3px;background:var(--surface)">${esc(formatted)}</div>
       <p style="font-size:12px;color:var(--ink-2);margin-top:12px;line-height:1.7">
@@ -2054,8 +2018,7 @@ function showRecoveryCodeScreen(code){
     </div>
     <div style="display:flex;gap:8px;margin-top:14px">
       <button type="button" class="btn btn-secondary" style="flex:1;padding:12px" data-copy>📋 کپی کد</button>
-      <button type="button" class="btn btn-primary" style="flex:2;padding:12px" data-continue>${IC.check} ذخیره 
-کردم، ادامه</button>
+      <button type="button" class="btn btn-primary" style="flex:2;padding:12px" data-continue>${IC.check} ذخیره کردم، ادامه</button>
     </div>
   `;
   const body=document.getElementById('authBody');
@@ -2119,7 +2082,8 @@ function doForgotRequest(){
   log('درخواست بازنشانی رمز',`کاربر: ${user.name} (${identifier})`);
   save();
   document.getElementById('authBody').innerHTML=`
-    <div class="auth-success-notice">${IC.check}<div>درخواست شما با موفقیت به مدیر سامانه ارسال شد.<br>پس از تأیید مدیر، رمز جدید به شما اطلاع داده خواهد شد.</div></div>
+    <div class="auth-success-notice">$
+{IC.check}<div>درخواست شما با موفقیت به مدیر سامانه ارسال شد.<br>پس از تأیید مدیر، رمز جدید به شما اطلاع داده خواهد شد.</div></div>
     <button class="btn btn-primary" style="width:100%;padding:12px" onclick="showLoginScreen()">بازگشت به صفحه ورود</button>
   `;
 }
@@ -2129,7 +2093,8 @@ function logout(){
   localStorage.removeItem(SESSION_KEY);
   session=null;
   view='dashboard';
-  document.getElementById('authScreen').classList.remove('hidden');
+  document.getElementById('authSc
+reen').classList.remove('hidden');
   showLoginScreen();
   toast('از سامانه خارج شدید.','info');
 }
@@ -2140,11 +2105,11 @@ function showApp(){
   shell();
 }
 
-/* ============ صفحه مدیریت کاربران 
-============ */
+/* ============ صفحه مدیریت کاربران ============ */
 function usersPage(c){
   if(!isAdmin()){
-    c.innerHTML=`<section><div class="card"><div class="alert-danger">${IC.warn}<div>شما به این بخش دسترسی ندارید. فقط مدیر می‌تواند کاربران را مدیریت کند.</div></div></div></section>`;
+    c.innerHTML=`<section><div class="card"><div 
+class="alert-danger">${IC.warn}<div>شما به این بخش دسترسی ندارید. فقط مدیر می‌تواند کاربران را مدیریت کند.</div></div></div></section>`;
     return;
   }
   const pendingReqs=(db.passwordRequests||[]).filter(r=>r.status==='pending');
@@ -2152,15 +2117,15 @@ function usersPage(c){
   c.innerHTML=`<section>
     ${pendingReqs.length?`
       <div class="pending-requests-banner">
-        <h4>${IC.warn} درخواست‌های بازنشانی رمز عبور (${pendingReqs.length} مورد در انتظار)</h4>
+        <h4>${IC.warn} درخواست‌های بازنشانی رمز عبور (${pendingReqs.length} مورد در انتظار)</
+h4>
         ${pendingReqs.map(r=>`
           <div class="req-item">
             <div>
               <strong>${esc(r.userName)}</strong>
               <small>زمان: ${new Date(r.requestedAt).toLocaleString('fa-IR')} · شناسه: ${esc(r.userIdentifier)}</small>
             </div>
-            <button class="btn btn-sm btn-primary" onclick="resolvePasswordRequest(${r.id})">${IC.check} 
-اختصاص رمز جدید</button>
+            <button class="btn btn-sm btn-primary" onclick="resolvePasswordRequest(${r.id})">${IC.check} اختصاص رمز جدید</button>
           </div>
         `).join('')}
       </div>
@@ -2175,28 +2140,28 @@ function usersPage(c){
           <thead><tr><th>نام</th><th>نام کاربری</th><th>ایمیل</th><th>نقش</th><th>دسترسی‌ها</th><th>وضعیت</th><th>آخرین ورود</th><th>عملیات</th></tr></thead>
           <tbody>${db.users.map(u=>{
             const isLastAdmin=db.users.filter(x=>x.role==='admin'&&x.active).length<=1&&u.role==='admin';
-            const isSelf=currentUser()&&u.id===currentUser().id;
+            const isSelf=currentUser()&&
+u.id===currentUser().id;
             return `<tr>
               <td data-label="نام"><b>${esc(u.name)}</b>${isSelf?' <small style="color:var(--brand)">(شما)</small>':''}</td>
               <td data-label="نام کاربری" style="font-family:monospace;direction:ltr;text-align:right">${esc(u.username)}</td>
               <td data-label="ایمیل" style="font-size:12px">${esc(u.email)}</td>
-              <td data-label="نقش">$
-{u.role==='admin'?'<span class="badge b-confirmed">مدیر</span>':'<span class="badge b-approved">کاربر</span>'}</td>
-              <td data-label="دسترسی‌ها">${u.role==='admin'?'<span style="color:var(--muted)">همه (خودکار)</span>':`${(u.permissions||[]).length} ماژول`}</td>
+              <td data-label="نقش">${u.role==='admin'?'<span class="badge b-confirmed">مدیر</span>':'<span class="badge b-approved">کاربر</span>'}</td>
+              <td data-label="دسترسی‌ها">$
+{u.role==='admin'?'<span style="color:var(--muted)">همه (خودکار)</span>':`${(u.permissions||[]).length} ماژول`}</td>
               <td data-label="وضعیت">${u.active?'<span class="badge b-confirmed">فعال</span>':'<span class="badge b-cancelled">غیرفعال</span>'}</td>
-              <td data-label="آخرین ورود" style="font-size:12px">${u.lastLogin?new Date(u.lastLogin).toLocaleDateString('fa-IR'):'—'}</
-td>
+              <td data-label="آخرین ورود" style="font-size:12px">${u.lastLogin?new Date(u.lastLogin).toLocaleDateString('fa-IR'):'—'}</td>
               <td data-label="عملیات">
                 <div class="actions-cell" style="display:flex;gap:4px;flex-wrap:wrap">
                   <button class="btn btn-sm btn-secondary" onclick="editUser(${u.id})" title="ویرایش">${IC.edit}</button>
                   ${u.role==='admin'?`
                     <button class="btn btn-sm btn-secondary" onclick="demoteFromAdmin(${u.id})" ${isSelf||isLastAdmin?'disabled style="opacity:.5;cursor:not-allowed" title="نمی‌توانید خودتان یا آخرین مدیر را کاهش دهید"':''} title="کاهش به کاربر">↓ کاربر</button>
                   `:`
-                    <button class="btn btn-sm btn-secondary" onclick="editUserPermissions(${u.id})" title="دسترسی‌ها">دسترسی</button>
+                    <button class="btn btn-sm btn-secondary" onclick="editUserPermissions(${u.id})" title="دسترسی‌ها">دسترسی</
+button>
                     <button class="btn btn-sm btn-secondary" onclick="resetUserPassword(${u.id})" title="بازنشانی رمز">رمز</button>
                     <button class="btn btn-sm btn-primary" onclick="promoteToAdmin(${u.id})" title="ارتقا به مدیر">↑ مدیر</button>
-                    <button class="btn btn-sm ${u.active?'btn-secondary':'btn-primary'}" 
-onclick="toggleUser(${u.id})">${u.active?'غیرفعال':'فعال'}</button>
+                    <button class="btn btn-sm ${u.active?'btn-secondary':'btn-primary'}" onclick="toggleUser(${u.id})">${u.active?'غیرفعال':'فعال'}</button>
                   `}
                 </div>
               </td>
@@ -2210,27 +2175,27 @@ onclick="toggleUser(${u.id})">${u.active?'غیرفعال':'فعال'}</button>
         <div class="card-title-icon" style="background:var(--amber-soft);color:var(--amber)">${IC.warn}</div>
         <h3 style="color:var(--amber)">کد بازیابی اضطراری</h3>
       </div>
-      <div class="notice" style="background:var(--amber-soft);color:var(--amber)">${IC.info}<div>این کد تنها راه بازنشانی حساب مدیر در صورت فراموشی رمز عبور است. هر کسی که این کد را داشته باشد می‌تواند حساب مدیر را بازنشانی کند.</div></div>
+      <div class="notice" 
+style="background:var(--amber-soft);color:var(--amber)">${IC.info}<div>این کد تنها راه بازنشانی حساب مدیر در صورت فراموشی رمز عبور است. هر کسی که این کد را داشته باشد می‌تواند حساب مدیر را بازنشانی کند.</div></div>
       ${currentUser()&&currentUser().recoveryHash?`
         <p style="margin:14px 0;color:var(--muted);font-size:13px"><b>وضعیت:</b> ✓ کد بازیابی تنظیم شده است.</p>
-        <button class="btn 
-btn-secondary" onclick="regenerateRecoveryCode()">${IC.warn} تولید مجدد کد بازیابی</button>
+        <button class="btn btn-secondary" onclick="regenerateRecoveryCode()">${IC.warn} تولید مجدد کد بازیابی</button>
       `:`
-        <p style="margin:14px 0;color:var(--red);font-size:13px"><b>⚠ هشدار:</b> شما هنوز کد بازیابی ندارید!</p>
+        <p style="margin:14px 0;colo
+r:var(--red);font-size:13px"><b>⚠ هشدار:</b> شما هنوز کد بازیابی ندارید!</p>
         <button class="btn btn-primary" onclick="regenerateRecoveryCode()">${IC.plus} تولید کد بازیابی</button>
       `}
     </div>
     <div class="card">
       <div class="card-head"><div class="card-title-icon">${IC.plus}</div><h3>افزودن کاربر جدید</h3></div>
-      <div class="notice">${IC.info}<div>کاربر جدید به‌طور پیش‌فرض به 
-ماژول‌های داشبورد، تقویم، رزروها، ثبت رزرو و گزارش دسترسی دارد.</div></div>
+      <div class="notice">${IC.info}<div>کاربر جدید به‌طور پیش‌فرض به ماژول‌های داشبورد، تقویم، رزروها، ثبت رزرو و گزارش دسترسی دارد.</div></div>
       <form onsubmit="event.preventDefault();addUser()">
         <div class="row">
           <div class="field"><label>نام و نام خانوادگی <span class="req">*</span></label><input name="name" required placeholder="مثال: مریم حسینی"></div>
           <div class="field"><label>نام کاربری <span class="req">*</span></label><input name="username" required placeholder="m.hosseini"></div>
-          <div class="field"><label>ایمیل <span class="req">*</span></label><input name="email" type="email" required placeholder=
-"user@example.com"></div>
-          <div class="field"><label>رمز اولیه <span class="req">*</span></label><input name="password" type="password" required minlength="6" placeholder="حداقل ۶ کاراکتر"></div>
+          <div class="field"><label>ایمیل <span class="req">*</span></label><input name="email" type="email" required placeholder="user@example.com"></div>
+          <div class="field"><label>رمز اولیه <span class="req">*</span></label><input name="password" type="password" required 
+minlength="6" placeholder="حداقل ۶ کاراکتر"></div>
         </div>
         <button class="btn btn-primary" type="submit">${IC.plus} افزودن کاربر</button>
       </form>
@@ -2239,13 +2204,14 @@ btn-secondary" onclick="regenerateRecoveryCode()">${IC.warn} تولید مجدد
       <div class="card">
         <div class="card-head"><div class="card-title-icon">${IC.clock}</div><h3>تاریخچه درخواست‌های بازنشانی رمز</h3></div>
         <div class="table-wrap"><table>
-          <thead><tr><th>کاربر</th><th>زمان درخواست</th><th>وضعیت</th><th>زمان پاسخ</th></tr></thead>
+          <thead><tr><th>کاربر</th><th>زمان درخواست</th><th>وضعیت</th><th>زمان پاسخ</
+th></tr></thead>
           <tbody>${allReqs.map(r=>`<tr>
             <td data-label="کاربر"><b>${esc(r.userName)}</b><br><small style="color:var(--muted)">${esc(r.userIdentifier)}</small></td>
             <td data-label="زمان درخواست" style="font-size:12px">${new Date(r.requestedAt).toLocaleString('fa-IR')}</td>
-            <td data-label="وضعیت">${r.status==='pending'?'<span 
-class="badge b-approved">در انتظار</span>':'<span class="badge b-confirmed">پاسخ داده شد</span>'}</td>
-            <td data-label="زمان پاسخ" style="font-size:12px">${r.resolvedAt?new Date(r.resolvedAt).toLocaleString('fa-IR'):'—'}</td>
+            <td data-label="وضعیت">${r.status==='pending'?'<span class="badge b-approved">در انتظار</span>':'<span class="badge b-confirmed">پاسخ داده شد</span>'}</td>
+            <td data-label="زمان 
+پاسخ" style="font-size:12px">${r.resolvedAt?new Date(r.resolvedAt).toLocaleString('fa-IR'):'—'}</td>
           </tr>`).join('')}</tbody>
         </table></div>
       </div>
@@ -2255,11 +2221,11 @@ class="badge b-approved">در انتظار</span>':'<span class="badge b-confirm
 
 async function addUser(){
   const form=event.target;
-  if(!form.checkValidity())
-{form.reportValidity();return}
+  if(!form.checkValidity()){form.reportValidity();return}
   const f=new FormData(form);
   const username=String(f.get('username')||'').trim().toLowerCase();
-  const email=String(f.get('email')||'').trim().toLowerCase();
+  const email=String(f.get('email')||'
+').trim().toLowerCase();
   const name=String(f.get('name')||'').trim();
   if(!name) return toast('نام و نام خانوادگی الزامی است.','error');
   if(!username) return toast('نام کاربری الزامی است.','error');
@@ -2280,8 +2246,7 @@ async function addUser(){
     email:email,
     passwordHash:passwordHash,
     role:'user',
-    permissions:['dashboard','calend
-ar','reservations','new','reports'],
+    permissions:['dashboard','calendar','reservations','new','reports'],
     active:true,
     createdAt:new Date().toISOString(),
     lastLogin:null
@@ -2325,7 +2290,8 @@ function demoteFromAdmin(id){
   }
   const activeAdmins=db.users.filter(x=>x.role==='admin'&&x.active);
   if(activeAdmins.length<=1){
-    toast('نمی‌توانید تنها مدیر فعال را کاهش دهید. حداقل یک مدیر باید باقی بماند.','error');
+    toast('نمی‌توانید تنها مدیر فعال را کاهش دهید. حداقل یک مدیر باید باقی 
+بماند.','error');
     return;
   }
   if(!confirm(`کاهش سطح مدیر «${u.name}» به کاربر عادی؟\n\nاین کاربر دسترسی به مدیریت کاربران و ماژول‌های مدیر-تنها را از دست خواهد داد.\n\nادامه می‌دهید؟`)) return;
@@ -2333,12 +2299,12 @@ function demoteFromAdmin(id){
   u.permissions=['dashboard','calendar','reservations','new','reports'];
   log('سلب نقش مدیر',u.name);
   save();
-  toast(`${u.name} به کاربر عادی تقلیل 
-یافت.`,'success');
+  toast(`${u.name} به کاربر عادی تقلیل یافت.`,'success');
   shell();
 }
 
-async function regenerateRecoveryCode(){
+async function 
+regenerateRecoveryCode(){
   if(!isAdmin()) return;
   if(!confirm('تولید کد بازیابی جدید؟\n\n⚠ کد قبلی دیگر قابل استفاده نخواهد بود و ابطال می‌شود.\n\nادامه می‌دهید؟')) return;
   const me=currentUser();
@@ -2357,8 +2323,7 @@ async function regenerateRecoveryCode(){
     <div class="pdate-overlay" style="display:flex;align-items:center" data-overlay-close>
       <div class="pdate-box" style="width:480px;max-width:100%">
         <div class="pdate-header">
-          <h3 style="font-size:15px;f
-ont-weight:800">کد بازیابی جدید</h3>
+          <h3 style="font-size:15px;font-weight:800">کد بازیابی جدید</h3>
           <button type="button" class="pdate-nav-btn" data-close>×</button>
         </div>
         <div class="alert-danger" style="display:block;margin-bottom:14px">${IC.warn}<div>این کد را در محل <b>امن</b> ذخیره کنید.</div></div>
@@ -2388,7 +2353,8 @@ ont-weight:800">کد بازیابی جدید</h3>
 function editUser(id){
   const u=db.users.find(x=>x.id===id);
   if(!u) return;
-  const name=prompt('نام و نام خانوادگی:',u.name);
+  const name=prompt('نام و نام 
+خانوادگی:',u.name);
   if(name===null) return;
   const email=prompt('ایمیل:',u.email);
   if(email===null) return;
@@ -2398,8 +2364,7 @@ function editUser(id){
     toast('اطلاعات نامعتبر است.','error');
     return;
   }
-  if(db.users.some(x=>x.id!
-==id&&x.username.toLowerCase()===username.trim().toLowerCase())){
+  if(db.users.some(x=>x.id!==id&&x.username.toLowerCase()===username.trim().toLowerCase())){
     toast('این نام کاربری قبلاً ثبت شده است.','error');
     return;
   }
@@ -2409,8 +2374,7 @@ function editUser(id){
   }
   u.name=name.trim();
   u.email=email.trim().toLowerCase();
-  u.username=username.trim().toLo
-werCase();
+  u.username=username.trim().toLowerCase();
   save();
   toast('اطلاعات کاربر به‌روزرسانی شد.','success');
   shell();
@@ -2424,15 +2388,15 @@ function editUserPermissions(id){
       <div class="pdate-box" style="width:560px;max-width:100%">
         <div class="pdate-header">
           <h3 style="font-size:15px;font-weight:800">دسترسی‌های ${esc(u.name)}</h3>
-          <button type="button" class="pdate-nav-btn" onclick="closePermissionsModal()">×</button>
+          <button type="button" class="pdate-nav-btn" onclick=
+"closePermissionsModal()">×</button>
         </div>
         <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">ماژول‌هایی که این کاربر می‌تواند ببیند را انتخاب کنید. ماژول‌های مدیر-تنها قابل انتخاب نیستند.</p>
         <div class="permission-grid">
           ${PERMISSIONS.map(p=>`
             <label class="perm-card">
               <div style="display:flex;align-items:center;gap:8px;flex:1">
-                <div class="perm-icon">$
-{p.i}</div>
+                <div class="perm-icon">${p.i}</div>
                 <div class="perm-info">
                   <strong>${p.t}</strong>
                   <small>${p.desc}</small>
@@ -2443,8 +2407,7 @@ function editUserPermissions(id){
           `).join('')}
         </div>
         <div class="pdate-actions">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="closePermissionsModal()">انصراف</
-button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closePermissionsModal()">انصراف</button>
           <button type="button" class="btn btn-primary btn-sm" onclick="savePermissions(${id})">${IC.check} ذخیره دسترسی‌ها</button>
         </div>
       </div>
@@ -2499,7 +2462,8 @@ async function resetUserPassword(id){
     <div class="pdate-overlay" style="display:flex;align-items:center" data-overlay-close>
       <div class="pdate-box" style="width:440px;max-width:100%">
         <div class="pdate-header">
-          <h3 style="font-size:15px;font-weight:800">رمز جدید ${esc(u.name)}</h3>
+          <h3 style="font-size:15px;font-weight:800">رمز جدید $
+{esc(u.name)}</h3>
           <button type="button" class="pdate-nav-btn" data-close>×</button>
         </div>
         <p style="font-size:13px;color:var(--muted);margin-bottom:8px">این رمز را به صورت امن (مثلاً حضوری یا پیامک) به کاربر اطلاع دهید.</p>
@@ -2514,8 +2478,7 @@ async function resetUserPassword(id){
   document.body.appendChild(overlay);
   overlay.querySelector('[data-copy]').addEventListener('click',()=>{
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(newPassword).then(()=>toast('رمز کپی شد.','success')).catch(()=>toast('کپی 
-ناموفق بود. رمز را دستی انتخاب کنید.','warning'));
+      navigator.clipboard.writeText(newPassword).then(()=>toast('رمز کپی شد.','success')).catch(()=>toast('کپی ناموفق بود. رمز را دستی انتخاب کنید.','warning'));
     }else{
       toast('مرورگر از کپی خودکار پشتیبانی نمی‌کند. رمز را دستی کپی کنید.','warning');
     }
@@ -2525,8 +2488,7 @@ async function resetUserPassword(id){
     if(e.target.hasAttribute('data-overlay-close')) overlay.remove();
   });
   log('بازنشانی رمز کاربر',u.name);
-  toast('رمز عبور کاربر تغییر یافت. رمز جدید 
-در پنجره نمایش داده شد.','success');
+  toast('رمز عبور کاربر تغییر یافت. رمز جدید در پنجره نمایش داده شد.','success');
 }
 
 async function resolvePasswordRequest(reqId){
@@ -2567,14 +2529,14 @@ async function resolvePasswordRequest(reqId){
   overlay.style.inset='0';
   overlay.style.zIndex='9999';
   overlay.innerHTML=`
-    <div class="pdate-overlay" style="display:flex;align-items:center" data-overlay-close>
+    <div class="pdate-overlay" style
+="display:flex;align-items:center" data-overlay-close>
       <div class="pdate-box" style="width:440px;max-width:100%">
         <div class="pdate-header">
           <h3 style="font-size:15px;font-weight:800">رمز جدید ${esc(u.name)}</h3>
           <button type="button" class="pdate-nav-btn" data-close>×</button>
         </div>
-        <p style="font-size:13px;color:var(--mu
-ted);margin-bottom:8px">این رمز را به صورت امن به کاربر اطلاع دهید.</p>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:8px">این رمز را به صورت امن به کاربر اطلاع دهید.</p>
         <div class="password-display">${esc(newPassword)}</div>
         <div class="pdate-actions">
           <span></span>
@@ -2586,7 +2548,8 @@ ted);margin-bottom:8px">این رمز را به صورت امن به کاربر 
   document.body.appendChild(overlay);
   overlay.querySelector('[data-copy]').addEventListener('click',()=>{
     if(navigator.clipboard&&navigator.clipboard.writeText){
-      navigator.clipboard.writeText(newPassword).then(()=>toast('رمز کپی شد.','success')).catch(()=>toast('کپی ناموفق بود. رمز را دستی کپی کنید.','warning'));
+      navigator.clipboard.writeText(newPassword).then(()=>toast('رمز کپی 
+شد.','success')).catch(()=>toast('کپی ناموفق بود. رمز را دستی کپی کنید.','warning'));
     }else{
       toast('مرورگر از کپی خودکار پشتیبانی نمی‌کند.','warning');
     }
@@ -2595,7 +2558,8 @@ ted);margin-bottom:8px">این رمز را به صورت امن به کاربر 
   overlay.querySelector('[data-overlay-close]').addEventListener('click',e=>{
     if(e.target.hasAttribute('data-overlay-close')) overlay.remove();
   });
-  toast('درخواست بازنشانی رمز پردازش شد. رمز جدید در پنجره نمایش داده شد.','success');
+  toast('درخواست بازنشانی رمز پردازش 
+شد. رمز جدید در پنجره نمایش داده شد.','success');
   shell();
 }
 
@@ -2608,7 +2572,8 @@ function toggleUser(id){
   }
   if(!confirm(`${u.active?'غیرفعال':'فعال'} کردن کاربر «${u.name}»؟`)) return;
   u.active=!u.active;
-  log(u.active?'فعال‌سازی کاربر':'غیرفعال‌سازی کاربر',u.name);
+  log(u.active?'فعال‌سازی 
+کاربر':'غیرفعال‌سازی کاربر',u.name);
   save();
   toast(u.active?'کاربر فعال شد.':'کاربر غیرفعال شد.','success');
   shell();
@@ -2618,8 +2583,7 @@ function toggleUser(id){
 initAuth();
 
 /* ============ همگام‌سازی session بین تب‌ها ============ */
-window.addEventListener('storage',
-e=>{
+window.addEventListener('storage',e=>{
   if(e.key===SESSION_KEY){
     if(!e.newValue){
       session=null;
@@ -2631,9 +2595,9 @@ e=>{
         toast('نشست شما در تب دیگری بسته شد. دوباره وارد شوید.','warning');
       }
     }else{
-      if(!session&&document.get
-ElementById('authScreen')&&!document.getElementById('authScreen').classList.contains('hidden')){
-        if(typeof initAuth==='function') initAuth();
+      if(!session&&document.getElementById('authScreen')&&!document.getElementById('authScreen').classList.contains('hidden')){
+        if(typeof initAuth==='function') 
+initAuth();
       }
     }
   }
@@ -2645,8 +2609,7 @@ ElementById('authScreen')&&!document.getElementById('authScreen').classList.cont
 (function() {
   'use strict';
 
-  const SUPABASE_URL = (function()
-{
+  const SUPABASE_URL = (function(){
     try { return localStorage.getItem('hall_supabase_url') || 'https://fbmzbanvvsshmoypqejh.supabase.co'; }
     catch(e) { return 'https://fbmzbanvvsshmoypqejh.supabase.co'; }
   })();
@@ -2689,8 +2652,7 @@ ElementById('authScreen')&&!document.getElementById('authScreen').classList.cont
   } catch (e) {
     window.SupabaseConfigured = false;
     setSyncStatus('offline', 'خطای اتصال');
-    console.error('[Supabase] خطای 
-راه‌اندازی:', e);
+    console.error('[Supabase] خطای راه‌اندازی:', e);
   }
 
   if (!supabaseClient) return;
@@ -2701,35 +2663,15 @@ ElementById('authScreen')&&!document.getElementById('authScreen').classList.cont
     pendingSync = setTimeout(async () => {
       setSyncStatus('syncing', 'در حال سینک...');
       const writeToken = localStorage.getItem('hall_write_token') || 'salon_secret_1403';
-      if (!writeToken) {
-        setSyncStatus('offline', 'بدون توکن');
-        return;
-      }
       try {
-        const { error } = await supabaseClient.rpc('secure_upsert_salon', {
-          secret_token: writeToken,
-          data_payload: db
-        });
+        const { error } = await supabaseClient.rpc('secure_upsert_salon', { secret_token: writeToken, data_payload: db });
         if (error) {
           console.error('[Supabase] خطای آپلود:', error.message);
-          if (error.message.includes('Unauthorized')) {
-            setSyncStatus('offline', 'توکن نامعتبر');
-          } else if (error.message.includes('does 
-not exist') || error.message.includes('function')) {
-            setSyncStatus('offline', 'RPC یافت نشد');
-            if(!window._rpcWarned){window._rpcWarned=true;toast('⚠ تابع secure_upsert_salon یافت نشد! SQL را اجرا کنید.','error',10000);}
-          } else {
-            setSyncStatus('offline', 'خطای سینک');
-          }
-        } else {
-          lastSyncAt = new Date();
-          setSyncStatus('online', 'آنلاین');
-          window._rpcWarned=false;
-        }
-      } catch (e) {
-        console.error('[Supabase] استثنای آپلود:', e);
-        setSyncStatus('offline', 'خطای شبکه');
-      }
+          if (error.message.includes('Unauthorized')) { setSyncStatus('offline', 'توکن نامعتبر'); }
+          else if (error.message.includes('does not exist')||error.message.includes('function')) { setSyncStatus('offline', 'RPC یافت نشد'); if(!window._rpcWarned){window._rpcWarned=true;toast('⚠ SQL را در Supabase اجرا کنید.','error',10000);} }
+          else { setSyncStatus('offline', 'خطای سینک'); }
+        } else { lastSyncAt = new Date(); setSyncStatus('online', 'آنلاین'); window._rpcWarned=false; }
+      } catch (e) { console.error('[Supabase] استثنای آپلود:', e); setSyncStatus('offline', 'خطای شبکه'); }
     }, 300);
   }
 
@@ -2742,8 +2684,7 @@ not exist') || error.message.includes('function')) {
         .maybeSingle();
 
       if (error) {
-        console.log('[Supabase] خطا:', 
-error.message);
+        console.log('[Supabase] خطا:', error.message);
         return 'error';
       }
 
@@ -2751,8 +2692,7 @@ error.message);
         const cloudData = data.json_data;
         const cloudHasUsers = Array.isArray(cloudData.users) && cloudData.users.length > 0;
         const localHasUsers = Array.isArray(db.users) && db.users.length > 0;
-        const cloudUpdatedAt = cloudData._localUpdatedAt || data.updated_at || 
-'1970-01-01T00:00:00Z';
+        const cloudUpdatedAt = cloudData._localUpdatedAt || data.updated_at || '1970-01-01T00:00:00Z';
         const localUpdatedAt = db._localUpdatedAt || '1970-01-01T00:00:00Z';
         const cloudIsNewer = new Date(cloudUpdatedAt) > new Date(localUpdatedAt);
 
@@ -2765,7 +2705,6 @@ error.message);
 
         if (cloudIsNewer) {
           db = cloudData;
-          sanitizeDB();
           migrateData();
           autoCompletePassedReservations();
           const REQ_ARRAYS=['halls','equipment','checks','issues','units','logs','slots','applicants','users','passwordRequests'];
@@ -2775,8 +2714,7 @@ error.message);
           try { localStorage.setItem(KEY, JSON.stringify(db)); } catch(e) {}
 
           if (typeof session !== 'undefined' && session) {
-            const u = db.users.find(x => 
-x.id === session.userId);
+            const u = db.users.find(x => x.id === session.userId);
             if (!u || !u.active) {
               try { localStorage.removeItem('hall_session_v1'); } catch(e) {}
               session = null;
@@ -2803,7 +2741,8 @@ x.id === session.userId);
           return 'pushed';
         }
       }
-      console.log('[Supabase] هنوز ردیفی در جدول وجود ندارد - اولین بار است');
+      console.log('[Supabase] هنوز ردیفی 
+در جدول وجود ندارد - اولین بار است');
       return 'none';
     } catch (e) {
       console.error('[Supabase] استثنای بارگذاری:', e);
@@ -2829,7 +2768,8 @@ x.id === session.userId);
     setSyncStatus('syncing', 'سینک دستی...');
     const result = await syncFromCloud();
     if (result === 'loaded') {
-      toast('داده‌ها از دیتابیس ابری بارگذاری شد.', 'success');
+      toast('داده‌ها از دیتابیس ابری بارگذاری 
+شد.', 'success');
     } else if (result === 'pushed') {
       toast('داده‌های محلی به دیتابیس ابری آپلود شد (محلی جدیدتر بود).', 'success');
     } else if (result === 'none') {
@@ -2855,8 +2795,7 @@ x.id === session.userId);
       if (loaded === 'none') {
         await syncToCloud();
       } else if (loaded === 'error') {
-        toast('اتصال به دیتابیس ابری برقرار نشد. داده‌ی محلی استفاده می‌شود.', 
-'warning', 4000);
+        toast('اتصال به دیتابیس ابری برقرار نشد. داده‌ی محلی استفاده می‌شود.', 'warning', 4000);
       } else {
         toast('اتصال به دیتابیس ابری برقرار شد.', 'success', 2000);
       }
